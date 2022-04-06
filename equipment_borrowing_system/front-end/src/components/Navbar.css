@@ -20,9 +20,8 @@
   }
   
   .navbar-logo {
-    color: rgb(0, 0, 0);
     justify-self: start;
-    margin-left: 20px;
+    margin-left: 40px;
     cursor: pointer;
     text-decoration: none;
     font-size: 2rem;
@@ -39,7 +38,7 @@
     text-align: center;
     /* width: 60vw; */
     /* justify-content: end; */
-    margin-left: 5rem;
+    margin-left: 3rem;
   }
   
   .nav-item {
@@ -73,11 +72,32 @@
   .menu-icon {
     display: none;
   }
+  .btn-signin-contaier{
+    position: absolute;
+    right: 0;
+    padding-right: 40px;
+  }
+  .btn-signin{
+    background-color: #2196F3;
+    color: white;
+    font-size: 20px;
+    padding: 10px 40px;
+    border-radius: 15px;
+    margin: 10px 0px;
+    cursor: pointer;
+    /* border-color: #2196F3; */
+    border-style: hidden;
+  }
+
+  .btn-signin:hover{
+    background-color: #0076d6;
+  }
   
   @media screen and (max-width: 960px) {
     .NavbarItems {
       position: relative;
     }
+
   
     .nav-menu {
       display: flex;
@@ -86,10 +106,10 @@
       /* height: 90vh; */
       position: absolute;
       top: 80px;
-      left: -100%;
+      left: -120%;
       opacity: 1;
       transition: all 0.5s ease;
-      grid-gap: 00px;
+      grid-gap: 0px;
     }
   
     .nav-menu.active {

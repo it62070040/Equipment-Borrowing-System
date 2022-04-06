@@ -3,7 +3,7 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 const clientId = "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
 
-function SignIn() {
+function GoogleSignIn() {
 
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
@@ -47,4 +47,4 @@ function SignIn() {
         </div>
     );
 }
-export default SignIn;
+export default GoogleSignIn;

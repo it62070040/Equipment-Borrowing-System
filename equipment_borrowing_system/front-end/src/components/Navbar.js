@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import SignIn from "./SignIn";
-import './Navbar.css'
+import SignIn from "./GoogleSignIn";
+import "./Navbar.css";
+import logo from "../assets/EQ-logo.png"
 
 function Navbar() {
   const [click, setClick] = useState(false);
@@ -11,25 +12,23 @@ function Navbar() {
   const closeMobileMenu = () => setClick(false);
 
   const showButton = () => {
-      if (window.innerWidth <= 960) {
-        setButton(false);
-      } else {
-          setButton(true);
-      }
-  }
+    if (window.innerWidth <= 960) {
+      setButton(false);
+      // console.log(button)
+    }};
+
 
   useEffect(() => {
     showButton();
-  }, []);
+  }, [button]);
 
-
-  window.addEventListener('resize', setButton);
+  window.addEventListener("resize", setButton);
   return (
     <>
       <nav className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-logo">
-            EQ
+            <img style={{ width: "70px", height: "auto"}} src={logo} alt="Logo" />
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />
@@ -58,16 +57,30 @@ function Navbar() {
                 Borrow History
               </Link>
             </li>
-            {/* <li className="nav-item">
+            <li >
               <Link
-                to="/sign-in"
-                className="nav-links"
+                to='/sign-in'
+                className='nav-links-mobile'
                 onClick={closeMobileMenu}
               >
-                <SignIn />
+                Sign In
               </Link>
-            </li> */}
+            </li>
           </ul>
+          <div className="btn-signin-contaier">
+            {button && (
+            <Link to="/sign-in" >
+              <button 
+                className="btn-signin"
+                // onClick={onClick}
+                // type={type}
+              >
+                Sign In
+              </button>
+            </Link>
+          )}
+          </div>
+          
         </div>
       </nav>
     </>
