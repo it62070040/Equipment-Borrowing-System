@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import "./Equipments.css";
 
-import SearchBar from "./Admin/components/SearchBar";
+import SearchBar from "./components/SearchBar";
 import { Box } from "@mui/material";
-import CardTable from "./Admin/components/CardTable";
 
 function Equipments() {
   return (
