@@ -16,7 +16,7 @@ function Equipments() {
             width: "100%",
             display: "flex",
             // justifyContent: "center",
-            alignContent: "center",
+            alignItems: "center",
             flexDirection: 'column',
             px: 5
           }}

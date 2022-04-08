@@ -30,11 +30,10 @@ export default function SearchBar() {
 
   return (
     <>
-    <div sx={{ display: "flex", flexDirection: "column"}}>
     <Paper
         className="searchBar-search"
         component="form"
-        sx={{ p: "2px 4px", display: "flex", width: "100%" }}
+        sx={{ p: "2px 4px", display: 'flex', width: '60%'}}
       >
         <SearchIcon sx={{ m: 1 }} />
         <InputBase
@@ -44,7 +43,6 @@ export default function SearchBar() {
         />
          
       </Paper>
-    </div>
       
       
       {/* วิธีเอาตัวแปรมาใช้

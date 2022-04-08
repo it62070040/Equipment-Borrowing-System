@@ -79,7 +79,8 @@ export default function CardTable({searchResult}) {
               >
                 <Grid container>
                   <Grid item xs={3}>
-                    <p className="style-status">available</p>
+                    {item.status === 'availble' ? <div style={{width: "10px", height: "10px", backgroundColor: "#008000"}}></div> : <div style={{width: "10px", height: "10px", backgroundColor: "red"}}></div>}
+                    <p className="style-status">{item.status}</p>
                   </Grid>
                   <Grid item xs={9}>
                     <p className="style-btn">test</p>
