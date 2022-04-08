@@ -11,27 +11,41 @@ import Menu from '@mui/material/Menu';
 import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
+import Modal from '@mui/material/Modal';
 
 const clientId = "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
 const settings = ['Logout'];
+const styleModal = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 function Navbar() {
 
   const [showloginButton, setShowloginButton] = useState(true);
-    const [showlogoutButton, setShowlogoutButton] = useState(false);
-    const [showUsername, setShowUsername] = useState(false);
-    const [info, setInfo] = useState({});
-    const onLoginSuccess = (res) => {
+  const [showlogoutButton, setShowlogoutButton] = useState(false);
+  const [showUsername, setShowUsername] = useState(false);
+  const [info, setInfo] = useState({});
+  const onLoginSuccess = (res) => {
         console.log('Login Success:', res.profileObj);
         setShowloginButton(false);
         setShowUsername(true);
+        setOpen(false)
         setInfo(res.profileObj)
     };
 
-    const onLoginFailure = (res) => {
+  const onLoginFailure = (res) => {
         console.log('Login Failed:', res);
     };
 
-    const onSignoutSuccess = () => {
+  const onSignoutSuccess = () => {
         alert("You have been logged out successfully");
         console.clear();
         setShowloginButton(true);
@@ -50,16 +64,18 @@ function Navbar() {
       // console.log(button)
     }};
 
-    const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
   
-    const handleOpenUserMenu = (event) => {
+  const handleOpenUserMenu = (event) => {
       setAnchorElUser(event.currentTarget);
     };
   
-    const handleCloseUserMenu = () => {
+  const handleCloseUserMenu = () => {
       setAnchorElUser(null);
     };
-
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   useEffect(() => {
     showButton();
   }, [button]);
@@ -110,16 +126,32 @@ function Navbar() {
             </li>
           </ul>
           <div className="btn-signin-contaier">
-          <button className="btn-signin">Sign In</button>
           { showloginButton ?
-                <GoogleLogin
+              <Button onClick={handleOpen} className="btn-signin">Sign In</Button>
+              : null}
+          <Modal
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description">
+          <Box sx={styleModal}>
+          <Typography id="modal-modal-title" variant="h6" component="h2" style={{textAlign: "center"}}>
+            Sign In
+          </Typography>
+          <Typography id="modal-modal-description" sx={{mt:2}} style={{textAlign: "center"}}>
+          <GoogleLogin
+                    theme="dark"
                     clientId={clientId}
-                    buttonText="Sign In"
+                    buttonText="Sign in with Google"
                     onSuccess={onLoginSuccess}
                     onFailure={onLoginFailure}
                     cookiePolicy={'single_host_origin'}
                     isSignedIn={true}
-                /> : null}
+                    />
+          </Typography>
+          </Box>
+          </Modal>
+
             {showUsername ?
                <Box sx={{ flexGrow: 0 }}>
                <Tooltip title="Logout">
