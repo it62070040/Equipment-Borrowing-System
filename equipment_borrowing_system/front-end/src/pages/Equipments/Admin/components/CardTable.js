@@ -1,5 +1,6 @@
 import { Box, Button, Grid } from "@mui/material";
 import * as React from "react";
+import "../Equipments.css"
 
 export default function CardTable({ searchResult }) {
   return (
@@ -16,10 +17,10 @@ export default function CardTable({ searchResult }) {
           </Grid>
           <Grid item xs={4}>
             <Grid container>
-              <Grid item xs={3}>
+              <Grid item xs={4}>
                 <p className="table-status">Status</p>
               </Grid>
-              <Grid item xs={9}></Grid>
+              <Grid item xs={8}></Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -71,22 +72,32 @@ export default function CardTable({ searchResult }) {
                 }}
               >
                 <Grid container>
-                  <Grid item xs={4}>
+                  <Grid item xs={4} className="style-status">
                     {item.status === "availble" ? (
-                      <p className="style-status" style={{ color: "#008000" }}>
+                      <p style={{ color: "#008000" }}>
                         {item.status}
                       </p>
                     ) : (
-                      <p className="style-status" style={{ color: "#FF0000" }}>
+                      <p style={{ color: "#FF0000" }}>
                         {item.status}
                       </p>
                     )}
                   </Grid>
-                  <Grid item xs={8} sx={{ backgroundColor: "pink" }}>
-                    <p className="style-btn">test</p>
-                    <Button variant="contained" sx={{backgroundColor: "#FF0000", textTransform: 'lowercase'}}>
+                  <Grid item xs={8} className="style-btn">
+                    <button
+                      className="btn-edit"
+                      // onClick={onClick}
+                      // type={type}
+                    >
+                      edit
+                    </button>
+                    <button
+                      className="btn-del"
+                      // onClick={onClick}
+                      // type={type}
+                    >
                       delete
-                    </Button>
+                    </button>
                   </Grid>
                 </Grid>
               </Grid>
