@@ -20,7 +20,7 @@ function App() {
                     <Route path='/sign-in' element={<SignIn/>} />
                 </Routes>
             </Router>
-
+            {/* <Equipments/> */}
         </div>
 
     )
