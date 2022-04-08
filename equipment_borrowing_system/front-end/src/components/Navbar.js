@@ -28,7 +28,7 @@ function Navbar() {
       <nav className="navbar">
         <div className="navbar-container">
           <Link to="/" className="navbar-logo">
-            <img style={{ width: "70px", height: "auto"}} src={logo} alt="Logo" />
+            <img style={{ width: "60px", height: "auto"}} src={logo} alt="Logo" />
           </Link>
           <div className="menu-icon" onClick={handleClick}>
             <i className={click ? "fas fa-times" : "fas fa-bars"} />

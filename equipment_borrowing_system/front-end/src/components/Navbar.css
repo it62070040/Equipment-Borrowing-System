@@ -10,12 +10,14 @@
     z-index: 999;
   }
   
-
+li {
+  font-size: 16px;
+}
   .navbar-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 80px;
+    height: 70px;
     max-width: 1500px;
   }
   
@@ -42,7 +44,7 @@
   }
   
   .nav-item {
-    height: 80px;
+    height: 70px;
   }
   
   .nav-links {
@@ -80,20 +82,28 @@
   .btn-signin{
     background-color: #2196F3;
     color: white;
-    font-size: 20px;
-    padding: 10px 40px;
+    font-size: 18px;
+    padding: 8px 35px;
     border-radius: 15px;
     margin: 10px 0px;
     cursor: pointer;
     /* border-color: #2196F3; */
+    font-weight: 500;
     border-style: hidden;
   }
 
   .btn-signin:hover{
     background-color: #0076d6;
+    transition: 0.3s;
   }
   
   @media screen and (max-width: 960px) {
+
+    .navbar-logo {
+      margin-left: 20px;
+
+    }
+
     .NavbarItems {
       position: relative;
     }
@@ -105,7 +115,7 @@
       width: 100%;
       /* height: 90vh; */
       position: absolute;
-      top: 80px;
+      top: 70px;
       left: -120%;
       opacity: 1;
       transition: all 0.5s ease;
@@ -120,6 +130,7 @@
       transition: all 0.5s ease;
       z-index: 1;
       margin-left: 0px;
+      top: 70px;
     }
   
     .nav-links {
@@ -133,9 +144,11 @@
     }
   
     .nav-links:hover {
-      background-color: #fff;
-      color: #242424;
+      background-color: rgb(255, 255, 255);
+      color: #474747;
       border-radius: 0;
+      transition: 0.4s;
+
     }
   
     .navbar-logo {
@@ -161,11 +174,11 @@
     .nav-links-mobile {
       display: block;
       text-align: center;
-      margin: 2rem auto;
+      margin: 1rem auto;
       border-radius: 4px;
       width: 80%;
       text-decoration: none;
-      font-size: 1.5rem;
+      font-size: 1.2rem;
       background-color: transparent;
       color: #fff;
       padding: 14px 20px;
