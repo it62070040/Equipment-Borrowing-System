@@ -13,6 +13,7 @@ function Home() {
                 <h1>System</h1>
                 <Button variant="contained" size="large" style={{backgroundColor: "#6AB4FA", fontSize: "1.5vw"}}>Borrow Equipments</Button>
             </div>
+                <img src="../../../assets/Home_background.png"></img>
         </div>
     )
 }
