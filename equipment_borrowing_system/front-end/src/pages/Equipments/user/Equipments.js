@@ -4,22 +4,31 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import BasicTable from "./components/table";
+import { display } from "@mui/system";
 
 function Equipments() {
   const [click, setClick] = useState(false);
-  const [pickCateArr, setPickCateArr] = useState(["All"]);
+  const [button, setButton] = useState(true);
+  const [pickCateArr, setPickCateArr] = useState(["All","Dog", "Cat", "Bat"]);
   const [chooseCate, setChooseCate] = useState(false);
   const handleClick = () => setClick(!click);
-  const checkoutCate = (item) => {
-    setChooseCate(!chooseCate);
-    console.log(item);
+
+  const checkoutCate = (category) => {
+    // setChooseCate(!chooseCate);
+    const updateArr = [...pickCateArr]
+    const cateIndex = pickCateArr.findIndex((e) => e === category)
+    updateArr.splice(cateIndex, 1)
+    console.log(updateArr);
+    console.log(cateIndex);
+    setPickCateArr(updateArr)
   };
 
-  const category = ["Dog", "Cat", "Bat"];
+  
 
   return (
     <div className="equipments">
       <div className="eq-container">
+
         <div className="eq-header">
           Equipments
           <Link to="/equipments">Admin Site</Link>
@@ -46,7 +55,7 @@ function Equipments() {
               <h3>Equipment Category</h3>
               <div className="search-category-border">
                 <div className="picked-cate">
-                  {category.map((pick, i) => (
+                  {pickCateArr.map((pick, i) => (
                     <button
                       style={{ marginRight: 5 }}
                       key={i}
@@ -65,12 +74,15 @@ function Equipments() {
                 </div>
                 <div className="choose-category" style={{ textAlign: "right" }}>
                   <i
-                    style={{ paddingTop: 11, paddingRight: 10 }}
-                    className={click ? "fas fa-times" : "fas fa-bars"}
+                    style={{ paddingTop: 11, paddingRight: 10, fontSize: "22px" }}
+                    className={click ? "fas fa-times" : "fas fa-caret-down"}
                     onClick={handleClick}
                   />
                 </div>
               </div>
+              <div className={ click ? "dropdown-container": { display: "hidden"}} >
+        
+        </div>
               <button
                 className="btn-search"
                 // onClick={onClick}
