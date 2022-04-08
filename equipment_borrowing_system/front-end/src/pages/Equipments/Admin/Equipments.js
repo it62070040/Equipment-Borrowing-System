@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Equipments.css";
+import { Link } from "react-router-dom";
 
 import SearchBar from "./components/SearchBar";
 import { Box } from "@mui/material";
@@ -8,7 +9,10 @@ function Equipments() {
   return (
     <div className="equipments">
       <div className="equipments-container">
-        <h1 className="Header-title">Equipments</h1>
+        <h1 className="Header-title">Equipments
+        <Link to="/equipments-user">
+                User Site
+              </Link></h1>
         <Box
           className="search-bar"
           sx={{
