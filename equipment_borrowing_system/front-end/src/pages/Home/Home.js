@@ -17,7 +17,7 @@ function Home() {
                             <h1>Equipment</h1>
                 <h1>Borrowing</h1>
                 <h1>System</h1>
-                <Button variant="contained" size="large" style={{backgroundColor: "#6AB4FA", fontSize: "1.5vw"}}>Borrow Equipments</Button>
+                <Button variant="contained" size="large" style={{backgroundColor: "#6AB4FA", fontSize: "1.5vw", fontFamily: "sans-serif"}}>Borrow Equipments</Button>
             </div>
                
             </Box>

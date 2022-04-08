@@ -127,7 +127,7 @@ function Navbar() {
           </ul>
           <div className="btn-signin-contaier">
           { showloginButton ?
-              <Button onClick={handleOpen} variant="contained" size="large" sx={{backgroundColor: "#2196F3"}}>Sign In</Button>
+              <Button onClick={handleOpen} variant="contained" size="large" sx={{backgroundColor: "#2196F3", fontFamily: "sans-serif"}}>Sign In</Button>
               : null}
           <Modal
               open={open}
