@@ -1,0 +1,41 @@
+.Header-title{
+    text-align: center;
+    padding: 20px;
+}
+.table-title{
+    font-size: 30;
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-left: 10px;
+}
+.table-status{
+    font-size: 30;
+    font-weight: bold;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+.table-img{
+    width: 150px;
+    height: 122px;
+    border-radius: 10px;   
+}
+.style-name{
+    font-size: 30;
+    font-weight: bold;
+    margin-left: 10px;
+}
+.style-des{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.style-status{
+   text-align: center;
+}
+.style-btn{
+    text-align: center;
+}
