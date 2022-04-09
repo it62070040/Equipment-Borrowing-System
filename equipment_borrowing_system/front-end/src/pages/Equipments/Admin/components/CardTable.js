@@ -1,8 +1,23 @@
-import { Box, Button, Grid } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import * as React from "react";
-import "../Equipments.css"
+import "../Equipments.css";
+import EquipmentsEdit from "../EquipmentsEdit";
 
 export default function CardTable({ searchResult }) {
+  const toEdit = (id) => {
+    window.location = `/equipment-edit/${id}`;
+    linkId(id);
+  };
+  const linkId = (index) =>{
+    const result = searchResult?.filter(e => e.id === index)
+    // GetInfo(result)
+    console.log(result)
+    
+  };
+  // function GetInfo(result) {
+  //   return <EquipmentsEdit equipmentsDetail={result} />;
+   
+  // };
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -24,8 +39,8 @@ export default function CardTable({ searchResult }) {
             </Grid>
           </Grid>
         </Grid>
-        {/* list equipment */}{" "}
-        {searchResult?.map((item) => (
+        {/* list equipment */}
+        {searchResult?.map((item, index) => (
           <Box
             sx={{
               flexGrow: 1,
@@ -74,19 +89,16 @@ export default function CardTable({ searchResult }) {
                 <Grid container>
                   <Grid item xs={4} className="style-status">
                     {item.status === "availble" ? (
-                      <p style={{ color: "#008000" }}>
-                        {item.status}
-                      </p>
+                      <p style={{ color: "#008000" }}>{item.status}</p>
                     ) : (
-                      <p style={{ color: "#FF0000" }}>
-                        {item.status}
-                      </p>
+                      <p style={{ color: "#FF0000" }}>{item.status}</p>
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn">
                     <button
                       className="btn-edit"
-                      // onClick={onClick}
+                      onClick={() => toEdit(item.id)}
+                      key={index}
                       // type={type}
                     >
                       edit
