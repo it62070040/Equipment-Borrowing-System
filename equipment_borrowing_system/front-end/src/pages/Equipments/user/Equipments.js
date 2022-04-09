@@ -2,17 +2,17 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./Equipments.css";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
-import data from "../Admin/components/ListData.json"
+import data from "../Admin/components/ListData.json";
 import BasicTable from "./components/table";
 
 function Equipments() {
   const [searchResult, setSearchResult] = useState(data);
   const [searchInput, setSearchInput] = useState("");
   const [click, setClick] = useState(false);
-  const [pickCateArr, setPickCateArr] = useState(["All"]);
+  const [pickCateArr, setPickCateArr] = useState([]);
 
   const dropdownClick = () => setClick(!click);
-  const category = ["All", "Arduinos", "อื่น ๆ", "Games", "Dog", "Cat", "Fish"];
+  const category = ["Arduinos", "อื่น ๆ", "Games", "Dog", "Cat", "Fish"];
 
   const chooseCateClick = (cate) => {
     const updateArr = [...pickCateArr];
@@ -23,23 +23,30 @@ function Equipments() {
       updateArr.push(cate);
     }
     setPickCateArr(updateArr);
-    console.log(cate);
   };
   const checkoutCate = (category) => {
     const updateArr = [...pickCateArr];
     const cateIndex = pickCateArr.findIndex((e) => e === category);
     updateArr.splice(cateIndex, 1);
-    console.log(updateArr);
-    console.log(cateIndex);
     setPickCateArr(updateArr);
   };
 
   const searchItem = () => {
+    let result;
     const lowerCase = searchInput.toLowerCase();
-    const result = data.filter((e) => e.name.toLowerCase().includes(lowerCase));
+    if (pickCateArr.length === 0) {
+      result = data.filter((e) => e.name.toLowerCase().includes(lowerCase));
+    } else {
+      result = data.filter(
+        (e) =>
+          pickCateArr.some((r) => e.category.includes(r)) &&
+          e.name.toLowerCase().includes(lowerCase)
+      );
+    }
+
     setSearchResult(result);
-    console.log(searchInput)
-  }
+    console.log(result);
+  };
 
   return (
     <div className="equipments">
@@ -76,8 +83,6 @@ function Equipments() {
                       style={{ marginRight: 5 }}
                       key={i}
                       className="btn-cate"
-                      // onClick={onClick}
-                      // type={type}
                     >
                       {pick}
                       <i
@@ -130,19 +135,14 @@ function Equipments() {
                 </div>
               ) : null}
               <div className="btn-search-container">
-                <button
-                  className="btn-search"
-                  onClick={() => searchItem()}
-                  // type={type}
-                >
+                <button className="btn-search" onClick={() => searchItem()}>
                   Search
-                </button>         
+                </button>
               </div>
-              
             </div>
 
             <div className="eq-item-container">
-              <BasicTable searchResult={searchResult}/>
+              <BasicTable searchResult={searchResult} />
             </div>
           </Box>
         </div>
