@@ -2,10 +2,12 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./Equipments.css";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
-
+import data from "../Admin/components/ListData.json"
 import BasicTable from "./components/table";
 
 function Equipments() {
+  const [searchResult, setSearchResult] = useState(data);
+  const [searchInput, setSearchInput] = useState("");
   const [click, setClick] = useState(false);
   const [pickCateArr, setPickCateArr] = useState(["All"]);
 
@@ -32,6 +34,13 @@ function Equipments() {
     setPickCateArr(updateArr);
   };
 
+  const searchItem = () => {
+    const lowerCase = searchInput.toLowerCase();
+    const result = data.filter((e) => e.name.toLowerCase().includes(lowerCase));
+    setSearchResult(result);
+    console.log(searchInput)
+  }
+
   return (
     <div className="equipments">
       <div className="eq-container">
@@ -56,6 +65,7 @@ function Equipments() {
                 <input
                   className="search-input"
                   placeholder="Equipment name..."
+                  onChange={(e) => setSearchInput(e.target.value)}
                 />
               </div>
               <h3>Equipment Category</h3>
@@ -122,7 +132,7 @@ function Equipments() {
               <div className="btn-search-container">
                 <button
                   className="btn-search"
-                  // onClick={onClick}
+                  onClick={() => searchItem()}
                   // type={type}
                 >
                   Search
@@ -132,7 +142,7 @@ function Equipments() {
             </div>
 
             <div className="eq-item-container">
-              <BasicTable />
+              <BasicTable searchResult={searchResult}/>
             </div>
           </Box>
         </div>

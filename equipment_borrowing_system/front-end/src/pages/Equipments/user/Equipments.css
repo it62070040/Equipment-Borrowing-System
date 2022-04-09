@@ -23,12 +23,7 @@
     /* text-align: center; */
 }
 
-.eq-item-container{
-    background-color: #fff;
-    padding: 20px;
-    text-align: center;
-    border-radius: 10px;
-}
+
 
 
 .search-border{
@@ -119,7 +114,7 @@
     width: 353px;
     max-width: calc(100% - 20px);
     border-radius: 10px;
-    background-color: #a7a7a7;
+    background-color: #b3b3b3;
     z-index: 900;
     position: absolute;
 }
@@ -134,7 +129,6 @@
     border-radius: 10px;
     /* margin-bottom: 2px; */
     cursor: pointer;
-    border-color: #5a5a5a;
 }
 
 .btn-search-container{
