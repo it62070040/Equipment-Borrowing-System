@@ -4,31 +4,37 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 
 import BasicTable from "./components/table";
-import { display } from "@mui/system";
 
 function Equipments() {
   const [click, setClick] = useState(false);
-  const [button, setButton] = useState(true);
-  const [pickCateArr, setPickCateArr] = useState(["All","Dog", "Cat", "Bat"]);
-  const [chooseCate, setChooseCate] = useState(false);
-  const handleClick = () => setClick(!click);
+  const [pickCateArr, setPickCateArr] = useState(["All"]);
 
+  const dropdownClick = () => setClick(!click);
+  const category = ["All", "Arduinos", "อื่น ๆ", "Games", "Dog", "Cat", "Fish"];
+
+  const chooseCateClick = (cate) => {
+    const updateArr = [...pickCateArr];
+    const cateIndex = pickCateArr.findIndex((e) => e === cate);
+    if (cateIndex >= 0) {
+      updateArr.splice(cateIndex, 1);
+    } else {
+      updateArr.push(cate);
+    }
+    setPickCateArr(updateArr);
+    console.log(cate);
+  };
   const checkoutCate = (category) => {
-    // setChooseCate(!chooseCate);
-    const updateArr = [...pickCateArr]
-    const cateIndex = pickCateArr.findIndex((e) => e === category)
-    updateArr.splice(cateIndex, 1)
+    const updateArr = [...pickCateArr];
+    const cateIndex = pickCateArr.findIndex((e) => e === category);
+    updateArr.splice(cateIndex, 1);
     console.log(updateArr);
     console.log(cateIndex);
-    setPickCateArr(updateArr)
+    setPickCateArr(updateArr);
   };
-
-  
 
   return (
     <div className="equipments">
       <div className="eq-container">
-
         <div className="eq-header">
           Equipments
           <Link to="/equipments">Admin Site</Link>
@@ -74,22 +80,55 @@ function Equipments() {
                 </div>
                 <div className="choose-category" style={{ textAlign: "right" }}>
                   <i
-                    style={{ paddingTop: 11, paddingRight: 10, fontSize: "22px" }}
+                    style={{
+                      paddingTop: 11,
+                      paddingRight: 10,
+                      fontSize: "22px",
+                    }}
                     className={click ? "fas fa-times" : "fas fa-caret-down"}
-                    onClick={handleClick}
+                    onClick={dropdownClick}
                   />
                 </div>
               </div>
-              <div className={ click ? "dropdown-container": { display: "hidden"}} >
-        
-        </div>
-              <button
-                className="btn-search"
-                // onClick={onClick}
-                // type={type}
-              >
-                Search
-              </button>
+
+              {click ? (
+                <div className="dropdown-container">
+                  <ul
+                    className={click ? "category-list" : { display: "hidden" }}
+                  >
+                    {category.map((cate, i) => (
+                      <li
+                        key={i}
+                        className="category-row"
+                        onClick={() => chooseCateClick(cate)}
+                      >
+                        <i
+                          style={{
+                            paddingRight: 10,
+                            fontSize: "22px",
+                          }}
+                          className={
+                            pickCateArr.findIndex((e) => e === cate) >= 0
+                              ? "fas fa-check-square"
+                              : "fas fa-square"
+                          }
+                        />
+                        {cate}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
+              <div className="btn-search-container">
+                <button
+                  className="btn-search"
+                  // onClick={onClick}
+                  // type={type}
+                >
+                  Search
+                </button>         
+              </div>
+              
             </div>
 
             <div className="eq-item-container">
