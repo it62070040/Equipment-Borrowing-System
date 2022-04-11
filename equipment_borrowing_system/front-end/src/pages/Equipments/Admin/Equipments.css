@@ -108,3 +108,8 @@
     background-color: #1d7fd0;
     transition: 0.3s;
 }
+.Header-title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

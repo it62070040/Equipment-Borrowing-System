@@ -2,6 +2,9 @@ import React from "react";
 import { Box, Grid } from "@mui/material";
 
 class ImageUploadCard extends React.Component {
+
+  // wait for research easy way to upload
+
   state = {
     mainState: "initial", // initial,  uploaded
     imageUploaded: 0,

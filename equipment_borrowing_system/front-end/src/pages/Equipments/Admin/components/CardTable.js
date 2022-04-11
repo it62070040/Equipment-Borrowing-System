@@ -1,9 +1,10 @@
 import { Box, Grid } from "@mui/material";
 import * as React from "react";
 import "../Equipments.css";
-import EquipmentsEdit from "../EquipmentsEdit";
 
 export default function CardTable({ searchResult }) {
+
+  // find how to get info to edit equipment by id
   const toEdit = (id) => {
     window.location = `/equipment-edit/${id}`;
     linkId(id);
@@ -18,6 +19,16 @@ export default function CardTable({ searchResult }) {
   //   return <EquipmentsEdit equipmentsDetail={result} />;
    
   // };
+
+  // delete equipment by id
+
+  const toDelete = (id) => {
+    // const eqId = searchResult?.filter(e => e.id === id)
+
+    // wait to research how to delete by api (backend)
+    console.log(id)
+  }
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -105,7 +116,7 @@ export default function CardTable({ searchResult }) {
                     </button>
                     <button
                       className="btn-del"
-                      // onClick={onClick}
+                      onClick={() => toDelete(item.id)}
                       // type={type}
                     >
                       delete
