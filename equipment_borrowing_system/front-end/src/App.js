@@ -6,8 +6,9 @@ import Home from './pages/Home/Home';
 // import Equipments from './pages/Equipments/User';
 import BorrowHis from './pages/BorrowHistory/BorrowHis';
 import SignIn from './pages/SignIn/SignIn';
-
 import EquipmentAdmin from './pages/Equipments/Admin/Equipments';
+import EquipmentsEdit from './pages/Equipments/Admin/EquipmentsEdit';
+import EquipmentsCreate from './pages/Equipments/Admin/EquipmentsCreate';
 
 function App() {
 
@@ -21,9 +22,14 @@ function App() {
                     <Route path='/equipments' element={<EquipmentAdmin/>} />
                     <Route path='/borrow-history' element={<BorrowHis/>} />
                     <Route path='/sign-in' element={<SignIn/>} />
+
+                    {/* link equipment detail */}
+                    <Route path='/equipment-edit/:id' element={<EquipmentsEdit/>} />
+                    <Route path='/equipment-create' element={<EquipmentsCreate/>} />
+
+
                 </Routes>
             </Router>
-            {/* <Equipments/> */}
         </div>
 
     )
