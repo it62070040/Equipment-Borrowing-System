@@ -1,0 +1,9 @@
+.eqIfo-container {
+    padding: 40px 60px;
+}
+
+@media screen and (max-width: 800px) {
+    .eqIfo-container {
+        padding: 20px 20px;
+    }
+}

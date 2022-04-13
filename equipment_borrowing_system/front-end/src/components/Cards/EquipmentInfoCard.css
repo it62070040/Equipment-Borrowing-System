@@ -1,0 +1,116 @@
+img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.eqInfoCard {
+    padding: 30px 40px;
+    background-color: #fff;
+}
+
+.eqInfoCard-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 2fr;
+
+}
+
+.eqInfo-text-body {
+    display: grid;
+    /* width: max-content; */
+    gap: 20px;
+
+}
+
+.eqInfo-pic {
+    text-align: center;
+    /* padding-bottom: 20px; */
+}
+
+.picker-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 3fr;
+    /* min-width: 370px; */
+
+}
+
+.label-picker {
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 120px;
+}
+
+.date-picker {
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.datePicker-border {
+    display: flex;
+    align-items: center;
+    background-color: darkgray;
+    height: 35px;
+    border-radius: 10px;
+    justify-content: center;
+    min-width: 150px;
+    max-width: 300px;
+}
+
+.datePicker-input {
+    background-color: darkgray;
+    border-style: hidden;
+    /* border-color: #fff; */
+    border-width: 0px;
+    font-size: 16px;
+    width: 100px;
+    color: black;
+
+}
+
+.amount-input {
+    background-color: darkgray;
+    border-style: hidden;
+    border-radius: 10px;
+    border-width: 0px;
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    min-width: 90px;
+}
+
+@media screen and (max-width: 700px) {
+    .eqInfoCard {
+        padding: 20px 20px;
+    }
+
+    .eqInfoCard-container {
+        /* display: grid; */
+        width: 100%;
+        gap: 0px;
+        grid-template-columns: 1fr;
+        /* grid-template-rows: 1fr; */
+
+    }
+
+    img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .eqInfo-text-body {
+        grid-template-rows: 7fr;
+        max-width: 700px;
+        gap: 10px;
+
+    }
+
+    .eqInfo-pic {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+}

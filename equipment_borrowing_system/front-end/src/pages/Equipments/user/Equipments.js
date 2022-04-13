@@ -58,7 +58,8 @@ function Equipments() {
         <div className="eq-body">
           <Box className="eq-body-container">
             <div className="searchEq-container">
-              <h3 style={{ textAlign: "center" }}>Search Equipments</h3>
+              <div className="searchEq">
+                <h3 style={{ textAlign: "center" }}>Search Equipments</h3>
               <div className="search-border">
                 <i
                   className="fas fa-search"
@@ -140,6 +141,8 @@ function Equipments() {
                 </button>
               </div>
             </div>
+              </div>
+              
 
             <div className="eq-item-container">
               <BasicTable searchResult={searchResult} />

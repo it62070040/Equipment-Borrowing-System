@@ -6,6 +6,7 @@ import Home from './pages/Home/Home';
 import EquipmentUser from './pages/Equipments/user/Equipments';
 import BorrowHis from './pages/BorrowHistory/BorrowHis';
 import SignIn from './pages/SignIn/SignIn';
+import EquipmentInfo from './pages/Equipments/user/EquipmentInfo';
 
 import EquipmentAdmin from './pages/Equipments/Admin/Equipments';
 
@@ -19,6 +20,7 @@ function App() {
                     <Route path='/' element={<Home/>} />
                     <Route path='/equipments-user' element={<EquipmentUser/>} />
                     <Route path='/equipments' element={<EquipmentAdmin/>} />
+                    <Route path='/equipmentInfo/:id' element={<EquipmentInfo/>} />
                     <Route path='/borrow-history' element={<BorrowHis/>} />
                     <Route path='/sign-in' element={<SignIn/>} />
                 </Routes>

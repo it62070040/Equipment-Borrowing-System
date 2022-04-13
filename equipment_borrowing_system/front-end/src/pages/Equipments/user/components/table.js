@@ -19,7 +19,7 @@ export default function BasicTable({searchResult}) {
         <div className="eq-item-row">
         <ul className="table-item-row">
           <li className="table-item-img">
-            <img style={{ width: "70px", height: "auto"}} src={row.url} alt="Logo" />
+            <img style={{ width: "70px", height: "70px", objectFit: "cover"}} src={row.url} alt="Logo" />
             <div className="table-item-title">
               <h4>{row.name}</h4>
               <p >{row.description}</p>
