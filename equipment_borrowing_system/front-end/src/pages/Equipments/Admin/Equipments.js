@@ -28,7 +28,7 @@ function Equipments() {
 
         <Link to="/equipments-user">
                 User Site
-              </Link></h1>
+              </Link>
 
         <Box
           className="search-bar"
