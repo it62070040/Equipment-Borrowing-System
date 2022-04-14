@@ -12,9 +12,9 @@
 
 @media screen and (max-width: 800px) {
     .eqIfo-container {
-        padding: 20px 20px;
+        padding: 0px 0px;
     }
     .eq-borrowed-name-container{
-        padding: 20px 10px;
+        padding: 20px 0px;
     }
 }

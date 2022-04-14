@@ -1,20 +1,20 @@
 li {
     font-size: 16px;
   }
-  .table-container{
+  .borrow-table-container{
     background-color: #fff;
     padding: 20px;
     text-align: center;
     border-radius: 10px;
   }
   
-  .table-header-row-con {
+  .borrow-table-header-row-con {
     padding-bottom: 20px;
     font-weight: bold;
     font-size: 20px;
   }
   
-  .table-header-row {
+  .borrow-table-header-row {
     display: grid;
     grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
     grid-gap: 20px;
@@ -22,7 +22,7 @@ li {
     text-align: center;
   }
   
-  .user-row-con {
+  .borrow-row-con {
     padding-bottom: 10px;
   
   
@@ -63,11 +63,7 @@ li {
   }
   
   @media screen and (max-width: 900px) {
-    .table-item-title {
-      display: inline;
-      align-items: center;
-    }
-    .table-container{
+    .borrow-table-container{
       padding: 20px 0px;
       text-align: center;
   
@@ -80,7 +76,7 @@ li {
     grid-gap: 0px;
    }
   
-   .table-header-row {
+   .borrow-table-header-row {
     grid-template-columns: 0.5fr 1fr 1fr 1fr 1fr;
     grid-gap: 0px;
    }
