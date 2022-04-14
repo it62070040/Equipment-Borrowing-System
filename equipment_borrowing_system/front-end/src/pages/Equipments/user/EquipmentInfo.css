@@ -1,0 +1,20 @@
+.eqIfo-container {
+    padding: 40px 60px;
+}
+.eq-borrowed-name-container{
+    padding: 30px 40px;
+    background-color: #fff;
+    margin-top: 20px;
+}
+.eq-borrowed-name-header{
+    text-align: center;
+}
+
+@media screen and (max-width: 800px) {
+    .eqIfo-container {
+        padding: 0px 0px;
+    }
+    .eq-borrowed-name-container{
+        padding: 20px 0px;
+    }
+}

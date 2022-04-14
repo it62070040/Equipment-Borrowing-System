@@ -1,0 +1,136 @@
+img {
+    width: 300px;
+    height: 300px;
+    object-fit: cover;
+}
+
+.eqInfoCard {
+    padding: 30px 40px;
+    background-color: #fff;
+}
+
+.eqInfoCard-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 2fr;
+
+}
+
+.eqInfo-text-body {
+    display: grid;
+    gap: 20px;
+
+}
+
+.eqInfo-pic {
+    text-align: center;
+}
+
+.picker-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr 3fr;
+
+}
+
+.label-picker {
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr 1fr 1fr;
+    width: 120px;
+}
+
+.date-picker {
+    display: grid;
+    gap: 10px;
+    grid-template-rows: 1fr 1fr 1fr;
+}
+
+.datePicker-border {
+    display: flex;
+    align-items: center;
+    background-color: darkgray;
+    height: 35px;
+    border-radius: 10px;
+    justify-content: center;
+    min-width: 150px;
+    max-width: 300px;
+    padding: 0px 10px;
+}
+
+.datePicker-input {
+    background-color: darkgray;
+    border-style: hidden;
+    border-width: 0px;
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    border-radius: 10px;
+    max-width: 250px;
+    min-width: 100px;
+}
+
+.amount-input {
+    background-color: darkgray;
+    border-style: hidden;
+    border-radius: 5px;
+    border-width: 0px;
+    font-size: 16px;
+    color: black;
+    text-align: center;
+    min-width: 100px;
+    max-width: 250px;
+}
+
+.btn-borrow-container{
+    text-align: center;
+}
+
+.btn-borrow{
+    background-color: #2196F3;
+    color: white;
+    font-size: 18px;
+    padding: 8px 40px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 500;
+    border-style: hidden;
+    margin-top: 10px;
+}
+
+.btn-borrow:hover {
+    background-color: #0076d6;
+    transition: 0.3s;
+
+}
+
+@media screen and (max-width: 700px) {
+    .eqInfoCard {
+        padding: 20px 20px;
+    }
+
+    .eqInfoCard-container {
+        width: 100%;
+        gap: 0px;
+        grid-template-columns: 1fr;
+
+    }
+
+    img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .eqInfo-text-body {
+        grid-template-rows: 7fr;
+        max-width: 700px;
+        gap: 10px;
+
+    }
+
+    .eqInfo-pic {
+        text-align: center;
+        padding-bottom: 20px;
+    }
+}
