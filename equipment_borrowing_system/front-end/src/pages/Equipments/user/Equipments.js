@@ -3,7 +3,7 @@ import "./Equipments.css";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 import data from "../Admin/components/ListData.json";
-import BasicTable from "./components/table";
+import EquipmentTable from "./components/EquipmentTable";
 
 function Equipments() {
   const [searchResult, setSearchResult] = useState(data);
@@ -145,7 +145,7 @@ function Equipments() {
               
 
             <div className="eq-item-container">
-              <BasicTable searchResult={searchResult} />
+              <EquipmentTable searchResult={searchResult} />
             </div>
           </Box>
         </div>

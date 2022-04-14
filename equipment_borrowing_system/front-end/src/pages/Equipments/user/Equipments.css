@@ -62,7 +62,6 @@ input:focus {
     border-radius: 15px;
     margin: 10px 0px;
     cursor: pointer;
-    /* border-color: #2196F3; */
     border-style: hidden;
 }
 

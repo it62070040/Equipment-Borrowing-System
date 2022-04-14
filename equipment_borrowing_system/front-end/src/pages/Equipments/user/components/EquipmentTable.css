@@ -22,8 +22,6 @@ li {
   grid-gap: 40px;
   list-style: none;
   text-align: center;
-  /* width: 60vw; */
-  /* justify-content: end; */
 }
 
 .eq-item-row-con {
@@ -66,10 +64,8 @@ li {
 
 p{
   overflow: hidden;
-  /* text-overflow: ellipsis; */
   display: -webkit-box;
   -webkit-line-clamp: 1;
-  /* number of lines to show */
   line-clamp: 1;
   -webkit-box-orient: vertical;
 }
@@ -77,12 +73,9 @@ p{
 @media screen and (max-width: 900px) {
   .table-item-title {
     display: inline;
-    /* font-size: 14px; */
     align-items: center;
-    /* font-size: 80%; */
   }
   .table-container{
-    /* padding-top: 20px; */
     padding: 20px 0px;
     text-align: center;
 

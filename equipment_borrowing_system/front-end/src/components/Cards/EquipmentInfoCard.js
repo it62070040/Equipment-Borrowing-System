@@ -5,7 +5,6 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-
 function EquipmentInfoCard() {
   const [borrowDate, setBorrowDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
@@ -32,49 +31,70 @@ function EquipmentInfoCard() {
                 <span>Return Date :</span>
                 <span>Amount :</span>
               </div>
-              
-            
-            <div className="date-picker">
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  label="Custom input"
-                  value={borrowDate}
-                  onChange={(newValue) => {
-                    setBorrowDate(newValue);
-                  }}
-                  renderInput={({ inputRef, inputProps, InputProps }) => (
-                    // <Box sx={{ display: "flex", alignItems: "center" }}>
+
+              <div className="date-picker">
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Custom input"
+                    value={borrowDate}
+                    onChange={(newValue) => {
+                      setBorrowDate(newValue);
+                    }}
+                    renderInput={({ inputRef, inputProps, InputProps }) => (
+                      // <Box sx={{ display: "flex", alignItems: "center" }}>
                       <div className="datePicker-border">
-                        <input className="datePicker-input" ref={inputRef} {...inputProps} />
+                        <input
+                          className="datePicker-input"
+                          ref={inputRef}
+                          {...inputProps}
+                        />
                         {InputProps?.endAdornment}
                       </div>
-                      
-                    // </Box>
-                  )}
-                />
-              </LocalizationProvider>
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <DatePicker
-                  label="Custom input"
-                  value={returnDate}
-                  onChange={(newValue) => {
-                    setReturnDate(newValue);
-                  }}
-                  renderInput={({ inputRef, inputProps, InputProps }) => (
-                    // <Box sx={{ display: "flex", alignItems: "center" }}>
+
+                      // </Box>
+                    )}
+                  />
+                </LocalizationProvider>
+                <LocalizationProvider dateAdapter={AdapterDateFns}>
+                  <DatePicker
+                    label="Custom input"
+                    value={returnDate}
+                    onChange={(newValue) => {
+                      setReturnDate(newValue);
+                    }}
+                    renderInput={({ inputRef, inputProps, InputProps }) => (
+                      // <Box sx={{ display: "flex", alignItems: "center" }}>
                       <div className="datePicker-border">
-                        <input className="datePicker-input" ref={inputRef} {...inputProps} />
+                        <input
+                          className="datePicker-input"
+                          ref={inputRef}
+                          {...inputProps}
+                        />
                         {InputProps?.endAdornment}
                       </div>
-                      
-                    // </Box>
-                  )}
-                />
-              </LocalizationProvider>
-                      <div className="datePicker-border">
-                        <input className="amount-input" type="number" placeholder="Number" onChange={(e) => setAmount(e.target.value)}/>
-                      </div>
+
+                      // </Box>
+                    )}
+                  />
+                </LocalizationProvider>
+                <div className="datePicker-border">
+                  <input
+                    className="amount-input"
+                    type="number"
+                    placeholder="Number"
+                    onChange={(e) => setAmount(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
+            <div className="btn-borrow-container">
+              <button
+                className="btn-borrow"
+                // onClick={onClick}
+                // type={type}
+              >
+                Borrow
+              </button>
             </div>
           </div>
         </div>

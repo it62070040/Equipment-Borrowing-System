@@ -1,9 +1,14 @@
-import * as React from "react";
+import  React, {useCallback} from "react";
 import logo from "../../../../assets/EQ-logo.png";
-import "./table.css";
+import "./EquipmentTable.css";
 // import data from "../../Admin/components/ListData.json"
 
-export default function BasicTable({searchResult}) {
+export default function EquipmentTable({searchResult}) {
+  const clickEqCard = useCallback(
+    (id) => (window.location.href =`/equipmentInfo/${id}`, { equipmentId: id }),
+    []
+  );
+
   return (
     <div className="table-container">
       {/* <img style={{ width: "60px", height: "auto"}} src={logo} alt="Logo" /> */}
@@ -15,7 +20,7 @@ export default function BasicTable({searchResult}) {
         </ul>
       </div>
       {searchResult.map((row) => (
-      <div className="eq-item-row-con" key={row.name}>
+      <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row.id)}>
         <div className="eq-item-row">
         <ul className="table-item-row">
           <li className="table-item-img">
