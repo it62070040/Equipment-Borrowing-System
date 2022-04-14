@@ -1,5 +1,6 @@
 import React from "react";
 import "./Equipments.css";
+import { Link } from "react-router-dom";
 
 import SearchBar from "./components/SearchBar";
 import { Box, Button, Stack, IconButton, Icon } from "@mui/material";
@@ -16,6 +17,7 @@ function Equipments() {
     <div className="equipments">
       <div className="equipments-container">
         <h1 className="Header-title">Equipments
+
         <Stack>
           <label htmlFor="icon-button-add" onClick={() => toAdd()}>
             <IconButton>
@@ -23,6 +25,11 @@ function Equipments() {
             </IconButton>
           </label>
         </Stack></h1>
+
+        <Link to="/equipments-user">
+                User Site
+              </Link></h1>
+
         <Box
           className="search-bar"
           sx={{
