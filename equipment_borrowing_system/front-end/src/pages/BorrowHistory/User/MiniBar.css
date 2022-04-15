@@ -1,0 +1,34 @@
+.btn-minibar{
+    font-weight: 600;
+    font-size: 16px;
+}
+.style-status-bor{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ }
+.style-btn-bor{
+     text-align: center;
+}
+.btn-del-bor{
+    background-color: #FF0000;
+    color: white;
+    font-size: 18px;
+    padding: 8px 35px;
+    border-radius: 15px;
+    margin: 10px 0px;
+    cursor: pointer;
+    font-weight: 500;
+    border-style: hidden;
+}
+.btn-return{
+    background-color: #008000;
+    color: white;
+    font-size: 18px;
+    padding: 8px 35px;
+    border-radius: 15px;
+    margin: 10px 0px;
+    cursor: pointer;
+    font-weight: 500;
+    border-style: hidden;
+  }

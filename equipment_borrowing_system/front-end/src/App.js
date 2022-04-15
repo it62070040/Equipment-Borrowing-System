@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css'
 import Navbar from './components/Navbar';
 import Home from './pages/Home/Home';
-import EquipmentUser from './pages/Equipments/user/Equipments';
+import EquipmentUser from './pages/Equipments/User/Equipments';
 import BorrowHis from './pages/BorrowHistory/BorrowHis';
 import SignIn from './pages/SignIn/SignIn';
 
 
-import EquipmentInfo from './pages/Equipments/user/EquipmentInfo';
+import EquipmentInfo from './pages/Equipments/User/EquipmentInfo';
 
 import EquipmentAdmin from './pages/Equipments/Admin/Equipments';
 import EquipmentsEdit from './pages/Equipments/Admin/EquipmentsEdit';
