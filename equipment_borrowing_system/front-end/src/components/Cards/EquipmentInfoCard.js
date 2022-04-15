@@ -14,7 +14,7 @@ function EquipmentInfoCard() {
     <div className="eqInfoCard">
       <div className="eqInfoCard-container">
         <div className="eqInfo-pic">
-          <img src={logo} alt="Logo" />
+          <img id="eq-img" src={logo} alt="Logo" />
         </div>
         <div className="eqInfo-text">
           <div className="eqInfo-text-header">
