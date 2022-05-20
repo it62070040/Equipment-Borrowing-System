@@ -1,10 +1,9 @@
 // import { schemaComposer } from 'graphql-compose'
 
-import { PostTC } from '../../models/post'
+import { EquipmentTC } from '../../models/equipment'
 
-export const posts = PostTC.getResolver('findMany')
-export const postId = PostTC.getResolver('findById')
-export const postPagination = PostTC.getResolver('pagination')
+export const equipments = EquipmentTC.getResolver('findMany')
+export const equipmentId = EquipmentTC.getResolver('findById')
 // export const relatedPosts = schemaComposer.createResolver({
 //   name: 'relatedPosts',
 //   kind: 'query',

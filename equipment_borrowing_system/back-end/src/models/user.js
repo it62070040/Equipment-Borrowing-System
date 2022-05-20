@@ -3,26 +3,13 @@ import { model, Schema } from 'mongoose'
 import mongooseBcrypt from 'mongoose-bcrypt'
 
 const UserSchema = new Schema({
-  firstname: {
+  studentId:{
     type: String,
-    required: true,
+    required: true
   },
-  lastname: {
+  fullname: {
     type: String,
     required: true,
-  },
-  username: {
-    type: String,
-    required: true,
-    index: true,
-    unique: true,
-    lowercase: true,
-    trim: true,
-  },
-  password: {
-    type: String,
-    required: true,
-    bcrypt: true,
   },
   email: {
     type: String,
@@ -30,6 +17,10 @@ const UserSchema = new Schema({
     trim: true,
     default: null,
   },
+  role: {
+    type: String,
+    enum: ['user', 'admin']
+  }
   // createdAt: {
   //   type: Date,
   // },
