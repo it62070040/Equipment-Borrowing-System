@@ -2,16 +2,16 @@ import { composeWithMongoose } from 'graphql-compose-mongoose'
 import { model, Schema } from 'mongoose'
 
 const OrderSchema = new Schema({
-  studentId: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'User',
     required: true,
     index: true,
   },
-  equipments: {
+  equipmentId: {
     type: Schema.Types.ObjectId,
     ref: 'Equipment',
-    required: true
+    required: true,
   },
   borrowDate: {
     type: Date,
@@ -19,21 +19,23 @@ const OrderSchema = new Schema({
   returnDate: {
     type: Date,
   },
-  timestamp: {
-    type: Date,
+  amount: {
+    type: Number,
   },
-  amount:{
-    type: Number
+  borrowstatus: {
+    type: String, // approved, pending, unapproved
+    // default: '',
   },
-  borrowstatus:{
-    type: String,//approve, pending, not approve
+  orderstatus: {
+    type: String, // return, borrow, cancel
+    // default: '',
   },
-  orderstatus:{
-    type: String//return, borrow, cancel
+  returnstatus: {
+    type: String, // pending, success, fail
+    // default: '',
   },
-  returnstatus:{
-    type: String//pending, success, fail
-  }
+}, {
+  timestamps: true,
 })
 export const OrderModel = model('Order', OrderSchema)
 
