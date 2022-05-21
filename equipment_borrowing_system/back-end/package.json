@@ -4,8 +4,7 @@
   "scripts": {
     "start": "node -r @babel/register -r dotenv/config src/app.js",
     "dev": "nodemon -r @babel/register -r dotenv/config src/app.js",
-    "preseed": "tsc",
-    "seed": "node -r dotenv/config ./dist/seed/index.js"
+
   },
   "dependencies": {
     "@babel/core": "^7.17.8",
