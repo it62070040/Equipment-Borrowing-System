@@ -1,17 +1,18 @@
-// import { UserTC } from '../../models/user'
+import { OrderTC } from '../../models/order'
+import { UserTC } from '../../models/user'
 
-// UserTC.addRelation(
-//   'posts',
-//   {
-//     resolver: PostTC.getResolver('findMany'),
-//     projection: { _id: 1 },
-//     prepareArgs: {
-//       filter: (user) => ({
-//         authorId: user._id,
-//       }),
-//     },
-//   },
-// )
+UserTC.addRelation(
+  'orders',
+  {
+    resolver: OrderTC.getResolver('findMany'),
+    projection: { _id: 1 },
+    prepareArgs: {
+      filter: (user) => ({
+        userId: user._id,
+      }),
+    },
+  },
+)
 // UserTC.addFields({
 //   fullname: {
 //     type: 'String',

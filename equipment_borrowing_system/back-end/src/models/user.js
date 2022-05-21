@@ -3,9 +3,9 @@ import { model, Schema } from 'mongoose'
 import mongooseBcrypt from 'mongoose-bcrypt'
 
 const UserSchema = new Schema({
-  studentId:{
+  studentId: {
     type: String,
-    required: true
+    required: true,
   },
   fullname: {
     type: String,
@@ -19,8 +19,8 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['user', 'admin']
-  }
+    enum: ['user', 'admin'],
+  },
   // createdAt: {
   //   type: Date,
   // },
