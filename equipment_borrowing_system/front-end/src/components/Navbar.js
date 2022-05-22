@@ -39,11 +39,17 @@ function Navbar() {
 
 
   const onLoginSuccess = (res) => {
-    console.log("Login Success:", res.profileObj);
-    setShowloginButton(false);
-    setShowUsername(true);
-    setOpen(false);
-    setInfo(res.profileObj);
+    if(String(res.profileObj.email).slice(-15) != '@it.kmitl.ac.th'){
+      alert("Please Login again Use only @it.kmitl.ac.th")
+    }
+    else{
+      console.log("Login Success:", res.profileObj);
+      setShowloginButton(false);
+      setShowUsername(true);
+      setOpen(false);
+      setInfo(res.profileObj);
+    }
+    
   };
 
   const onLoginFailure = (res) => {
