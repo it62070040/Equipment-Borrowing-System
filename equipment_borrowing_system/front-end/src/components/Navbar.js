@@ -39,7 +39,14 @@ function Navbar() {
 
 
   const onLoginSuccess = (res) => {
-    if(String(res.profileObj.email).slice(-15) != '@it.kmitl.ac.th'){
+    if(String(res.profileObj.email) == "ebsystem.adm@gmail.com"){
+      console.log("Login Success:", res.profileObj);
+      setShowloginButton(false);
+      setShowUsername(true);
+      setOpen(false);
+      setInfo(res.profileObj);
+    }
+    else if(String(res.profileObj.email).slice(-15) != '@it.kmitl.ac.th'){
       alert("Please Login again Use only @it.kmitl.ac.th")
     }
     else{
