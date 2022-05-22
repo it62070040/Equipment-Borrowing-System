@@ -4,9 +4,10 @@ import { GoogleLogin, GoogleLogout } from 'react-google-login';
 const clientId = "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
 
 function GoogleSignIn() {
-
+    
     const [showloginButton, setShowloginButton] = useState(true);
     const [showlogoutButton, setShowlogoutButton] = useState(false);
+
     const onLoginSuccess = (res) => {
         console.log('Login Success:', res.profileObj);
         setShowloginButton(false);
@@ -19,6 +20,7 @@ function GoogleSignIn() {
 
     const onSignoutSuccess = () => {
         alert("You have been logged out successfully");
+        console.log('Logout');
         console.clear();
         setShowloginButton(true);
         setShowlogoutButton(false);

@@ -1,8 +1,8 @@
 // import { AuthenticationError, UserInputError } from 'apollo-server-core'
 import { schemaComposer } from 'graphql-compose'
 
-import { generateUserToken } from '../../lib/generateUserToken'
-import { UserModel, UserTC } from '../../models/user'
+// import { generateUserToken } from '../../lib/generateUserToken'
+import { UserTC } from '../../models/user'
 
 export const createUser = UserTC.getResolver('createOne')
 const LoginPayloadOTC = schemaComposer.createObjectTC({

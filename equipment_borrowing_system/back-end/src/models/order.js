@@ -15,24 +15,27 @@ const OrderSchema = new Schema({
   },
   borrowDate: {
     type: Date,
+    required: true,
   },
   returnDate: {
     type: Date,
+    required: true,
   },
   amount: {
     type: Number,
+    default: 1,
   },
   borrowstatus: {
     type: String, // approved, pending, unapproved
-    // default: '',
+    default: 'pending',
   },
   orderstatus: {
     type: String, // return, borrow, cancel
-    // default: '',
+    default: 'borrow',
   },
   returnstatus: {
     type: String, // pending, success, fail
-    // default: '',
+    default: '',
   },
 }, {
   timestamps: true,
