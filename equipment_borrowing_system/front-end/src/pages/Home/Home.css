@@ -20,7 +20,7 @@ h1{
 .home-papar-left{
     background-color: white;
     border-radius: 20px;
-    padding: 30px 30px;
+    padding: 30px 30px 15px 30px;
     margin-top: 10px;
     max-height: 400px;
 }
@@ -51,6 +51,15 @@ h1{
   .btn-home-borrow:hover{
     background-color: #0f87e9;
     transition: 0.3s;
+  }
+
+  .btn-home-borrow-con {
+    text-align: center;
+  }
+  .home-papar-left-text {
+      padding: 0px 10px;
+      /* margin: 0px 10px 0px 0px; */
+      margin-bottom: 10px;
   }
 
 @media screen and (max-width: 800px) {
