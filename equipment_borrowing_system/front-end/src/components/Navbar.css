@@ -63,7 +63,7 @@ li {
   }
   
   .nav-links:hover {
-    color: rgb(0, 168, 163);
+    color: #45b8d3;
     transition: all 0.2s ease-out;
   }
   
