@@ -1,5 +1,5 @@
 .home{
-    padding: 20px 60px;
+    padding: 1vh 5vw;
 }
 h2 {
     font-size: 2.2vw;
@@ -13,7 +13,8 @@ h1{
     grid-template-columns: 2fr 3fr;
 }
 .home-papar-left-con {
-    padding-top: 40px;
+    /* padding-top: 40px; */
+    align-self: center;
     /* width: "80%", */
 
 }
