@@ -19,8 +19,7 @@ const EquipmentSchema = new Schema({
     required: true,
   },
   status: {
-    type: String,
-    enum: ['available', 'unavailable'],
+    type: String, // available, unavailable
     required: true,
   },
   why_unavailable: {
