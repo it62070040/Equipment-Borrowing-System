@@ -6,7 +6,7 @@ export const generateUserToken = (user) => jsonwebtoken.sign(
   }, // payload
   process.env.JWT_SECRET, // secret
   {
-    algorithm: 'HS256',
-    expiresIn: '1d',
+    algorithm: 'HS256'
+    // expiresIn: '1d',
   }, // options
 )
