@@ -47,7 +47,7 @@ function Navbar() {
   const [createUserMutation] = useMutation(USER_MUTATION);
 
 
-  const onLoginSuccess = (res) => {
+  const onLoginSuccess = async (res) => {
     if(String(res.profileObj.email) === "ebsystem.adm@gmail.com"){
       console.log("Login Success:", res.profileObj);
       setShowloginButton(false);
@@ -61,7 +61,7 @@ function Navbar() {
       let email = res.profileObj.email
       console.log("Login Success:", res.profileObj);
       try {
-         createUserMutation({
+        await createUserMutation({
           variables: {
             record: {
               studentId,
@@ -71,7 +71,11 @@ function Navbar() {
           },
         });
       } catch (err) {
-        console.error(err);
+        if ((err).message.startsWith('E11000')) {
+          console.log(`Logged in as ${email}`)
+        } else {
+          console.log('Server error')
+        }
       }
       setShowloginButton(false);
       setShowUsername(true);
