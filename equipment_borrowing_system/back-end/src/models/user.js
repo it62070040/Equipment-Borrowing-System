@@ -6,6 +6,7 @@ const UserSchema = new Schema({
   studentId: {
     type: String,
     required: true,
+    unique: true
   },
   fullname: {
     type: String,
@@ -13,21 +14,16 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
+    required: true,
     lowercase: true,
     trim: true,
-    default: null,
+    unique: true
   },
   role: {
     type: String,
     enum: ['user', 'admin'],
     default: 'user',
   },
-  // createdAt: {
-  //   type: Date,
-  // },
-  // updatedAt: {
-  //   type: Date,
-  // },
 }, {
   timestamps: true,
 })

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/EQ-logo.png";
@@ -11,6 +11,7 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
+import { gql, useMutation } from "@apollo/client";
 
 const clientId =
   "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
@@ -26,9 +27,16 @@ const styleModal = {
   boxShadow: 24,
   p: 4,
 };
+const USER_MUTATION = gql`
+  mutation ($record: CreateOneUserInput!) {
+    createUser(record: $record) {
+      recordId
+    }
+  }
+`;
+
 function Navbar() {
   const [showloginButton, setShowloginButton] = useState(true);
-  const [showlogoutButton, setShowlogoutButton] = useState(false);
   const [showUsername, setShowUsername] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -36,27 +44,44 @@ function Navbar() {
   const [info, setInfo] = useState({});
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
+  const [createUserMutation] = useMutation(USER_MUTATION);
 
 
   const onLoginSuccess = (res) => {
-    if(String(res.profileObj.email) == "ebsystem.adm@gmail.com"){
+    if(String(res.profileObj.email) === "ebsystem.adm@gmail.com"){
       console.log("Login Success:", res.profileObj);
       setShowloginButton(false);
       setShowUsername(true);
       setOpen(false);
       setInfo(res.profileObj);
     }
-    else if(String(res.profileObj.email).slice(-15) != '@it.kmitl.ac.th'){
-      alert("Please Login again Use only @it.kmitl.ac.th")
+    else if(String(res.profileObj.email).slice(-15) === '@it.kmitl.ac.th'){
+      let fullname = res.profileObj.name
+      let studentId = String(res.profileObj.email).slice(0, 8)
+      let email = res.profileObj.email
+      console.log("Login Success:", res.profileObj);
+      try {
+         createUserMutation({
+          variables: {
+            record: {
+              studentId,
+              fullname,
+              email
+            },
+          },
+        });
+      } catch (err) {
+        console.error(err);
+      }
+      setShowloginButton(false);
+      setShowUsername(true);
+      setOpen(false);
+      setInfo(res.profileObj);
     }
     else{
-      console.log("Login Success:", res.profileObj);
-      setShowloginButton(false);
-      setShowUsername(true);
-      setOpen(false);
-      setInfo(res.profileObj);
+        alert("Please Login again Use only @it.kmitl.ac.th")
     }
-    
+  
   };
 
   const onLoginFailure = (res) => {
@@ -67,7 +92,6 @@ function Navbar() {
     alert("You have been logged out successfully");
     console.clear();
     setShowloginButton(true);
-    setShowlogoutButton(false);
     setShowUsername(false);
   };
 
