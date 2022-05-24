@@ -21,7 +21,7 @@ const OrderSchema = new Schema({
     type: Date,
     required: true,
   },
-  amount: {
+  order_amount: {
     type: Number,
     default: 1,
   },
