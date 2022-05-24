@@ -20,11 +20,11 @@ export default function EquipmentTable({searchResult}) {
         </ul>
       </div>
       {searchResult.map((row) => (
-      <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row.id)}>
+      <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row._id)}>
         <div className="eq-item-row">
         <ul className="table-item-row">
           <li className="table-item-img">
-            <img style={{ width: "70px", height: "70px", objectFit: "cover"}} src={row.url} alt="Logo" />
+            <img style={{ width: "70px", height: "70px", objectFit: "cover"}} src={row.url_pic} alt="Logo" />
             <div className="table-item-title">
               <h4>{row.name}</h4>
               <p >{row.description}</p>

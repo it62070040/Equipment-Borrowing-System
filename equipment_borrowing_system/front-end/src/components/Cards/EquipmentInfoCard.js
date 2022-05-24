@@ -5,7 +5,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 
-function EquipmentInfoCard() {
+function EquipmentInfoCard({equipment}) {
   const [borrowDate, setBorrowDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
   const [amount, setAmount] = useState(null);
@@ -14,17 +14,18 @@ function EquipmentInfoCard() {
     <div className="eqInfoCard">
       <div className="eqInfoCard-container">
         <div className="eqInfo-pic">
-          <img id="eq-img" src={logo} alt="Logo" />
+          <img id="eq-img" src={equipment.url_pic} alt="Logo" />
         </div>
         <div className="eqInfo-text">
           <div className="eqInfo-text-header">
-            <h3>Name</h3>
+            <h2>{equipment.name}</h2>
             <br />
           </div>
 
           <div className="eqInfo-text-body">
-            <span>Description :</span>
-            <span>ช่องทางรับอุปกรณ์ :</span>
+            <span>Description : {equipment.description}</span>
+            <span>ช่องทางรับอุปกรณ์ : คณะเทคโนโลยีสารสนเทศ</span>
+            <span>จำนวนของที่มี : {equipment.amount} ชิ้น</span>
             <div className="picker-container">
               <div className="label-picker">
                 <span>Borrow Date :</span>
