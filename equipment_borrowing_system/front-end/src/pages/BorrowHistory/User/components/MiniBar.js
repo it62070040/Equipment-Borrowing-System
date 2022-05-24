@@ -9,15 +9,21 @@ import { gql, useQuery } from "@apollo/client";
 
 const ORDER_QUERY = gql`
 query {
-  equipments  {
-    _id
-    name
-    description
-    amount
-   	category
-    url_pic
+  orders {
+    id
+    borrow
+    return
+    order_amount
     status
-    why_unavailable
+    equipment {
+        name
+        description
+        category
+        url_pic
+        status
+        why_unavailable
+        amount
+    }
   }
 }
 `
