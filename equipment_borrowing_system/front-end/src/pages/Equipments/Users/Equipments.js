@@ -2,17 +2,49 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./Equipments.css";
 import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
-import data from "../Admin/components/ListData.json";
+// import data from "../Admin/components/ListData.json";
 import EquipmentTable from "./components/EquipmentTable";
+import { gql, useQuery } from "@apollo/client";
+
+const EQUIPMENTS_QUERY = gql`
+query {
+  equipments  {
+    _id
+    name
+    description
+    amount
+   	category
+    url_pic
+    status
+    why_unavailable
+  }
+}
+`
 
 function Equipments() {
-  const [searchResult, setSearchResult] = useState(data);
+  const [searchResult, setSearchResult] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [click, setClick] = useState(false);
   const [pickCateArr, setPickCateArr] = useState([]);
+  const { loading, error, data, refetch } = useQuery(EQUIPMENTS_QUERY)
+    
+  useEffect(() => {
+    if(loading === false && data){
+      setSearchResult(data.equipments);
+    }
+  }, [loading, data])
+
+  if (loading) {
+    return <h4>Loading...</h4>
+  }
+  if (error) {
+    return <h4> Error: {error.message}</h4>
+  }
+
+
 
   const dropdownClick = () => setClick(!click);
-  const category = ["Arduinos", "อื่น ๆ", "Games", "Dog", "Cat", "Fish"];
+  const category = ["Arduino", "Electronics", "Tools", "Recreations", "Furnitures"];
 
   const chooseCateClick = (cate) => {
     const updateArr = [...pickCateArr];
@@ -35,9 +67,9 @@ function Equipments() {
     let result;
     const lowerCase = searchInput.toLowerCase();
     if (pickCateArr.length === 0) {
-      result = data.filter((e) => e.name.toLowerCase().includes(lowerCase));
+      result = data.equipments.filter((e) => e.name.toLowerCase().includes(lowerCase));
     } else {
-      result = data.filter(
+      result = data.equipments.filter(
         (e) =>
           pickCateArr.some((r) => e.category.includes(r)) &&
           e.name.toLowerCase().includes(lowerCase)
@@ -145,7 +177,7 @@ function Equipments() {
               
 
             <div className="eq-item-container">
-              <EquipmentTable searchResult={searchResult} />
+              <EquipmentTable searchResult={searchResult} refetch={refetch}/>
             </div>
           </Box>
         </div>

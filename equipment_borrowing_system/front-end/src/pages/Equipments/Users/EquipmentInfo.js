@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import EquipmentInfoCard from "../../../components/Cards/EquipmentInfoCard";
 import "./EquipmentInfo.css";
 import BorrowedUserTable from "./components/BorrowedUserTable"
+import { gql, useQuery } from '@apollo/client';
+
+const EQUIPMENTID_QUERY = gql`
+query($_id: MongoID!) {
+  equipmentId(_id: $_id) {
+		_id
+    name
+    description
+    amount
+    category
+    url_pic
+    status
+    why_unavailable
+  }
+}
+`
 
 function EquipmentInfo() {
+  const splitUrl = window.location.href.split('/')
+  const equipmentId = splitUrl[splitUrl.length-1]
+  // console.log(equipmentId)
+  const [equipment, setEquipment] = useState([]);
     const user = [
         {
             "id": 1,
@@ -24,10 +44,32 @@ function EquipmentInfo() {
 
         }
     ]
+
+    const { loading, error, data, refetch } = useQuery(
+      EQUIPMENTID_QUERY,
+      { 
+        variables: { 
+          _id: equipmentId
+        },
+
+      })
+
+      useEffect(() => {
+        if(loading === false && data){
+          setEquipment(data.equipmentId);
+        }
+      }, [loading, data])
+    
+    if (loading) {
+      return <h4>Loading...</h4>
+    }
+    if (error) {
+      return <h4> Error: {error.message}</h4>
+    }
   return (
     <div className="equipmentInfo">
       <div className="eqIfo-container">
-        <EquipmentInfoCard />
+        <EquipmentInfoCard equipment={equipment} />
         <div className="eq-borrowed-name-container">
             <div className="eq-borrowed-name">
                 <div className="eq-borrowed-name-header">
