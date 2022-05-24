@@ -40,9 +40,6 @@ function Equipments() {
         >
           <SearchBar />
         </Box>
-        {/* <Box className="table" sx={{p: 1, mx:5, mt:4, backgroundColor: '#fff', borderRadius: '10px'}}>
-          <CardTable />
-        </Box> */}
       </div>
     </div>
   );

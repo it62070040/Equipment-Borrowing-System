@@ -1,41 +1,54 @@
 import { Box, Grid } from "@mui/material";
 import * as React from "react";
 import "../Equipments.css";
+import { gql, useMutation } from "@apollo/client";
+import mongoose from "mongoose";
+import EquipmentsEdit from "../EquipmentsEdit"
 
+const EQUIPMENTS_MUTATION = gql`
+mutation($id: MongoID!){
+  deleteEquipmentId(_id: $id){
+    recordId
+  }
+}
+`;
 const CardTable = ({ searchResult, value }) => {
+  //mutation
+  const [deleteEquipmentId] = useMutation(EQUIPMENTS_MUTATION);
 
   // find how to get info to edit equipment by id
   const toEdit = (id) => {
     window.location = `/equipment-edit/${id}`;
-    linkId(id);
+    // linkId(id);
   };
-  const linkId = (index) => {
-    const result = searchResult.filter((e) => e.id === index);
-    // GetInfo(result)
-    console.log(result);
-  };
+  // const linkId = (index) => {
+  //   const result = searchResult.filter((e) => e.id === index);
+  //   GetInfo(result)
+  //   console.log(result);
+  // };
   // function GetInfo(result) {
   //   return <EquipmentsEdit equipmentsDetail={result} />;
-
   // };
 
-  // delete equipment by id
-
-  const toDelete = (id) => {
-    // const eqId = searchResult?.filter(e => e.id === id)
-
-    // wait to research how to delete by api (backend)
-    console.log(id);
+  const toDelete = async (current) => {
+    // const objectId = mongoose.Types.ObjectId(current);
+    let currentId = current
+    try {
+       await deleteEquipmentId({
+        variables: {
+          id: {
+            currentId
+          },
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
-
-  console.log(searchResult)
-
   return (
     <>
-      
-        <Box sx={{ flexGrow: 1 }}>
-     
-{value ? 
+      <Box sx={{ flexGrow: 1 }}>
+        {value ? (
           <Grid container>
             <Grid item xs={8}>
               <Grid container>
@@ -54,10 +67,11 @@ const CardTable = ({ searchResult, value }) => {
               </Grid>
             </Grid>
           </Grid>
-          : <h4 style={{textAlign: "center"}}>ไม่พบข้อมูลที่ค้นหา</h4>}
+        ) : (
+          <h4 style={{ textAlign: "center" }}>ไม่พบข้อมูลที่ค้นหา</h4>
+        )}
 
-          
-          {searchResult.map((item, index) => (
+        {searchResult.map((item, index) => (
           <Box
             key={item._id}
             sx={{
@@ -110,7 +124,7 @@ const CardTable = ({ searchResult, value }) => {
               >
                 <Grid container>
                   <Grid item xs={4} className="style-status">
-                    {item.status === "availble" ? (
+                    {item.status === "available" ? (
                       <p style={{ color: "#008000" }}>{item.status}</p>
                     ) : (
                       <p style={{ color: "#FF0000" }}>{item.status}</p>
@@ -119,7 +133,7 @@ const CardTable = ({ searchResult, value }) => {
                   <Grid item xs={8} className="style-btn">
                     <button
                       className="btn-edit"
-                      onClick={() => toEdit(item.id)}
+                      onClick={() => toEdit(item._id)}
                       key={index}
                       // type={type}
                     >
@@ -127,7 +141,7 @@ const CardTable = ({ searchResult, value }) => {
                     </button>
                     <button
                       className="btn-del"
-                      onClick={() => toDelete(item.id)}
+                      onClick={() => toDelete(item._id)}
                       // type={type}
                     >
                       delete
@@ -137,9 +151,8 @@ const CardTable = ({ searchResult, value }) => {
               </Grid>
             </Grid>
           </Box>
-          ))}
-        </Box>
-      
+        ))}
+      </Box>
     </>
   );
 };

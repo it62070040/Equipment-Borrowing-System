@@ -6,7 +6,7 @@ const UserSchema = new Schema({
   studentId: {
     type: String,
     required: true,
-    unique: true
+    unique: true,
   },
   fullname: {
     type: String,
@@ -17,12 +17,17 @@ const UserSchema = new Schema({
     required: true,
     lowercase: true,
     trim: true,
-    unique: true
+    unique: true,
   },
   role: {
     type: String,
     enum: ['user', 'admin'],
     default: 'user',
+  },
+  orderId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Order',
+
   },
 }, {
   timestamps: true,
