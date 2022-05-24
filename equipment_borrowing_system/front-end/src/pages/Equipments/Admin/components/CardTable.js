@@ -2,22 +2,21 @@ import { Box, Grid } from "@mui/material";
 import * as React from "react";
 import "../Equipments.css";
 
-export default function CardTable({ searchResult }) {
+const CardTable = ({ searchResult, value }) => {
 
   // find how to get info to edit equipment by id
   const toEdit = (id) => {
     window.location = `/equipment-edit/${id}`;
     linkId(id);
   };
-  const linkId = (index) =>{
-    const result = searchResult?.filter(e => e.id === index)
+  const linkId = (index) => {
+    const result = searchResult.filter((e) => e.id === index);
     // GetInfo(result)
-    console.log(result)
-    
+    console.log(result);
   };
   // function GetInfo(result) {
   //   return <EquipmentsEdit equipmentsDetail={result} />;
-   
+
   // };
 
   // delete equipment by id
@@ -26,33 +25,41 @@ export default function CardTable({ searchResult }) {
     // const eqId = searchResult?.filter(e => e.id === id)
 
     // wait to research how to delete by api (backend)
-    console.log(id)
-  }
+    console.log(id);
+  };
+
+  console.log(searchResult)
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
-        <Grid container>
-          <Grid item xs={8}>
-            <Grid container>
-              <Grid item xs={3}></Grid>
-              <Grid item xs={9}>
-                <p className="table-title">Title</p>
+      
+        <Box sx={{ flexGrow: 1 }}>
+     
+{value ? 
+          <Grid container>
+            <Grid item xs={8}>
+              <Grid container>
+                <Grid item xs={3}></Grid>
+                <Grid item xs={9}>
+                  <p className="table-title">Title</p>
+                </Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={4}>
+              <Grid container>
+                <Grid item xs={4}>
+                  <p className="table-status">Status</p>
+                </Grid>
+                <Grid item xs={8}></Grid>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <Grid container>
-              <Grid item xs={4}>
-                <p className="table-status">Status</p>
-              </Grid>
-              <Grid item xs={8}></Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-        {/* list equipment */}
-        {searchResult?.map((item, index) => (
+          : <h4 style={{textAlign: "center"}}>ไม่พบข้อมูลที่ค้นหา</h4>}
+
+          
+          {searchResult.map((item, index) => (
           <Box
+            key={item._id}
             sx={{
               flexGrow: 1,
               backgroundColor: "#f2f2f2",
@@ -72,7 +79,11 @@ export default function CardTable({ searchResult }) {
                     xs={3}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <img className="table-img" alt="complex" src={item.url} />
+                    <img
+                      className="table-img"
+                      alt="complex"
+                      src={item.url_pic}
+                    />
                   </Grid>
                   <Grid
                     item
@@ -126,8 +137,10 @@ export default function CardTable({ searchResult }) {
               </Grid>
             </Grid>
           </Box>
-        ))}
-      </Box>
+          ))}
+        </Box>
+      
     </>
   );
-}
+};
+export default CardTable;
