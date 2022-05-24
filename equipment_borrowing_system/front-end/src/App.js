@@ -4,7 +4,8 @@ import './App.css'
 import Navbar from './components/Navbar';
 import Home from './pages/Home/Home';
 import EquipmentUser from './pages/Equipments/Users/Equipments';
-import BorrowHis from './pages/BorrowHistory/BorrowHis';
+import BorrowHisAdmin from './pages/BorrowHistory/Admin/BorrowHisAdmin';
+import BorrowHisUser from './pages/BorrowHistory/User/BorrowHisUser';
 
 
 
@@ -25,7 +26,8 @@ function App() {
                     <Route path='/equipments-user' element={<EquipmentUser/>} />
                     <Route path='/equipments' element={<EquipmentAdmin/>} />
                     <Route path='/equipmentInfo/:id' element={<EquipmentInfo/>} />
-                    <Route path='/borrow-history' element={<BorrowHis/>} />
+                    <Route path='/borrow-history' element={<BorrowHisAdmin/>} />
+                    <Route path='/borrow-history-user' element={<BorrowHisUser/>} />
 
                     {/* link equipment detail */}
                     <Route path='/equipment-edit/:id' element={<EquipmentsEdit/>} />

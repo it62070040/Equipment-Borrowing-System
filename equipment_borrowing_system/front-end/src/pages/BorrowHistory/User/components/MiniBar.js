@@ -1,23 +1,55 @@
-import * as React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Box, Grid, Button } from "@mui/material";
 import "./MiniBar.css";
 import CardTable from "./CardTable";
 import dataBor from './ListData.json';
 import dataRe from './ListData2.json';
 import dataCan from './ListData3.json';
+import { gql, useQuery } from "@apollo/client";
+
+const ORDER_QUERY = gql`
+query {
+  equipments  {
+    _id
+    name
+    description
+    amount
+   	category
+    url_pic
+    status
+    why_unavailable
+  }
+}
+`
 
 export default function MiniBar() {
-  const [click, setClick] = React.useState("1");
-  const [data, setData] = React.useState(dataBor);
+  const [click, setClick] = useState("1");
+  const [order, setOrder] = useState(dataBor);
+  const { loading, error, data, refetch } = useQuery(ORDER_QUERY)
+
+  useEffect(() => {
+    if(loading === false && data){
+      setOrder(data.orders);
+      console.log(order);
+    }
+  }, [loading, data])
+
+  if (loading) {
+    return <h4>Loading...</h4>
+  }
+  if (error) {
+    return <h4> Error: {error.message}</h4>
+  }
+
   const handleClick = (value) => {
     setClick(value);
-    if( value === '1'){
-      setData(dataBor)
-    }else if( value === '2' ) {
-      setData(dataRe)
-    }else if( value === '3' ) {
-      setData(dataCan)
-    }
+    // if( value === '1'){
+    //   setOrder(dataBor)
+    // }else if( value === '2' ) {
+    //   setOrder(dataRe)
+    // }else if( value === '3' ) {
+    //   setOrder(dataCan)
+    // }
   };
   return (
     <div style={{ width: '100%' }}>
@@ -91,7 +123,7 @@ export default function MiniBar() {
             width: "100%",
           }}
         >
-          <CardTable data={data} />
+          <CardTable data={order} refetch={refetch}/>
         </Box>
       </Box>
     </div>
