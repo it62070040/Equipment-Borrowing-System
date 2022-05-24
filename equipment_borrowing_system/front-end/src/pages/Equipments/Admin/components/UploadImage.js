@@ -23,6 +23,7 @@ class ImageUploadCard extends React.Component {
       });
     }.bind(this);
     console.log(url); // see a path?
+    console.log(name);
 
     this.setState({
       mainState: "uploaded",

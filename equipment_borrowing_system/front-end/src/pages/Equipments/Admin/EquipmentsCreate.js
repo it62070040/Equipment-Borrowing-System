@@ -1,15 +1,8 @@
 import React, { useCallback, useState } from "react";
-import { Box, Grid, TextField, IconButton, Stack } from "@mui/material";
-import SelectRadio from "./components/SelectRadio";
-import SelectMenuItem from "./components/SelectMenuItem";
-import UploadImage from "./components/UploadImage";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
+import { Box, Grid, TextField, IconButton, Stack, FormControlLabel,FormControl, Radio, RadioGroup} from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -43,10 +36,18 @@ const EquipmentsCreate = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("อุปกรณ์อิเล็กทรอนิค");
   const [url_pic, setUrl_pic] = useState("");
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState("available");
   const [why_unavailable, setWhy_unavailable] = useState("");
   const [amount, setAmount] = useState(1);
 
+  // validation name
+  const [helperTextName, setHelperTextName] = useState("");
+  const [errorName, setErrorName] = useState(false);
+  // validation description
+  const [helperTextDescription, setHelperTextDescription] = useState("");
+  const [errorDescription, setErrorDescription] = useState(false);
+
+  //mutation
   const [createEquipmentMutation] = useMutation(EQUIPMENT_MUTATION);
 
   const handleCreateEquipments = async (e) => {
@@ -82,24 +83,45 @@ const EquipmentsCreate = () => {
 
   const toAdd = () => {
     console.log("add");
-    setAmount(amount + 1)
+    setAmount(amount + 1);
   };
   const toDel = () => {
     console.log("del");
-    if(amount <= 0) {
-      setAmount(0)
+    if (amount <= 1) {
+      setAmount(1);
+    } else {
+      setAmount(amount - 1);
     }
-    else{
-      setAmount(amount - 1)
-    }
-    
   };
 
+  const handleSetName = (e) => {
+    if (e.target.value.length <= 0) {
+      setName(e.target.value);
+      setErrorName(true);
+      setHelperTextName("กรุณากรอกชื่ออุปกรณ์");
+    } else {
+      setName(e.target.value);
+      setErrorName(false);
+      setHelperTextName("");
+    }
+  };
+
+  const handleSetDescription = (e) => {
+    if (e.target.value.length <= 0) {
+      setDescription(e.target.value);
+      setErrorDescription(true);
+      setHelperTextDescription("กรุณากรอกคำอธิบาย");
+    } else {
+      setDescription(e.target.value);
+      setErrorDescription(false);
+      setHelperTextDescription("");
+    }
+  };
+  console.log(status);
   return (
     <div className="equipments">
       <div className="equipments-container">
         <h1 className="Header-title">Create Equipments</h1>
-        {/* <form></form> */}
         <Box className="style-form" noValidate autoComplete="off">
           <Grid container>
             <Grid item xs={2} className="name" sx={{ alignSelf: "center" }}>
@@ -107,12 +129,14 @@ const EquipmentsCreate = () => {
             </Grid>
             <Grid item xs={10}>
               <TextField
-                required
+                label="Name"
                 id="outlined-required"
                 fullWidth
                 margin="normal"
+                helperText={helperTextName}
+                error={errorName}
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleSetName}
               />
             </Grid>
           </Grid>
@@ -122,45 +146,60 @@ const EquipmentsCreate = () => {
             </Grid>
             <Grid item xs={10}>
               <TextField
-                required
+                label="Description"
                 id="outlined-required"
                 fullWidth
                 margin="normal"
+                helperText={helperTextDescription}
+                error={errorDescription}
                 value={description}
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={handleSetDescription}
               />
             </Grid>
           </Grid>
-          <Grid container>
+          <Grid container sx={{my: 2}}>
             <Grid item xs={2} className="name" sx={{ alignSelf: "center" }}>
               Amount :
             </Grid>
-            <Grid item xs={10}>
-              {/* <TextField
-                required
-                id="outlined-required"
-                fullWidth
-                margin="normal"
-                value={amount}
-                onChange={(e) => setAmount(e.target.value)}
-              /> */}
-            {amount}
-              <Stack>
-                <label htmlFor="icon-button-add" onClick={toAdd}>
-                  <IconButton>
-                    <AddCircleOutlineIcon sx={{ color: "black", fontSize: "50px" }} />
-                  </IconButton>
-                </label>
-              </Stack>
-              <Stack>
-                <label htmlFor="icon-button-add" onClick={toDel}>
-                  <IconButton>
-                    <RemoveCircleOutlineIcon sx={{ color: "black", fontSize: "50px" }}/>
-                  </IconButton>
-                </label>
-              </Stack>
-              
-              
+            <Grid
+              item
+              xs={10}
+              sx={{ alignSelf: "center", textAlign: "center" }}
+            >
+              <Grid container>
+                <Grid item xs={1}>
+                  <Stack>
+                    <label htmlFor="icon-button-add" onClick={toDel}>
+                      <IconButton>
+                        <RemoveCircleOutlineIcon
+                          sx={{ color: "black", fontSize: "40px" }}
+                        />
+                      </IconButton>
+                    </label>
+                  </Stack>
+                </Grid>
+                <Grid
+                  item
+                  xs={1}
+                  
+                >
+                  <TextField
+                    disabled
+                    label={amount}
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <Stack>
+                    <label htmlFor="icon-button-add" onClick={toAdd}>
+                      <IconButton>
+                        <AddCircleOutlineIcon
+                          sx={{ color: "black", fontSize: "40px" }}
+                        />
+                      </IconButton>
+                    </label>
+                  </Stack>
+                </Grid>
+              </Grid>
             </Grid>
           </Grid>
           <Grid container>
@@ -244,6 +283,7 @@ const EquipmentsCreate = () => {
             </Grid>
             <Grid item xs={10}>
               {/* <UploadImage /> */}
+
               <TextField
                 required
                 id="outlined-number"
@@ -253,6 +293,8 @@ const EquipmentsCreate = () => {
                 value={url_pic}
                 onChange={(e) => setUrl_pic(e.target.value)}
               />
+
+
             </Grid>
           </Grid>
           <div className="button-submit" style={{ textAlign: "center" }}>
