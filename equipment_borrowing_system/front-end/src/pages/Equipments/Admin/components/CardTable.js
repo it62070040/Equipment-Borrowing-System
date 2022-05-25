@@ -3,16 +3,19 @@ import * as React from "react";
 import "../Equipments.css";
 import { gql, useMutation } from "@apollo/client";
 import mongoose from "mongoose";
-import EquipmentsEdit from "../EquipmentsEdit"
+import EquipmentsEdit from "../EquipmentsEdit";
+import Swal from "sweetalert2";
 
 const EQUIPMENTS_MUTATION = gql`
-mutation($id: MongoID!){
-  deleteEquipmentId(_id: $id){
-    recordId
+  mutation ($id: MongoID!) {
+    deleteEquipmentId(_id: $id) {
+      recordId
+    }
   }
-}
 `;
 const CardTable = ({ searchResult, value, refetch }) => {
+  // CommonJS
+  const Swal = require("sweetalert2");
   //mutation
   const [deleteEquipmentId] = useMutation(EQUIPMENTS_MUTATION);
 
@@ -32,17 +35,34 @@ const CardTable = ({ searchResult, value, refetch }) => {
 
   const toDelete = async (current) => {
     // const objectId = mongoose.Types.ObjectId(current);
-    let currentId = current
-    try {
-       await deleteEquipmentId({
-        variables: {
-          id: currentId
-        },
-      }).then(refetch);
-    } catch (err) {
-      console.error(err.message);
-    }
-  }
+    let currentId = current;
+    Swal.fire({
+      title: 'Do you want to delete?',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        try {
+           deleteEquipmentId({
+            variables: {
+              id: currentId,
+            },
+          }).then(refetch);
+        } catch (err) {
+          console.error(err.message);
+        }
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
+
+  };
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
