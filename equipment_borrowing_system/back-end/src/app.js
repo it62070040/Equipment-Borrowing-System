@@ -3,8 +3,9 @@ import { createServer } from 'http'
 import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import cors from 'cors'
+import cookieParser from 'cookie-parser'
 import express from 'express'
-import jsonwebtoken from 'jsonwebtoken'
+import { decodeToken, getReqToken } from './lib/generateUserToken'
 
 import './mongoose-connect'
 // eslint-disable-next-line import/order
@@ -14,7 +15,8 @@ const app = express()
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // app.use(cors({ origin: ['abc.com', '*.test.com'] }))
-app.use(cors())
+app.use(cookieParser())
+app.use(cors({ origin: ['http://localhost:3000'], credentials: true }))
 
 app.get('/', (req, res) => {
   res.json({ message: 'Server running' })
@@ -30,29 +32,26 @@ const startApolloServer = async () => {
       ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
     context: ({ req }) => {
-      const { cookies, headers } = req
-      let token = null
-      if (cookies?.token) {
-        token = cookies?.token
-      }
-      if (headers?.authorization?.split(' ')?.[0] === 'Bearer') {
-        // Authorization: Bearer TOKEN
-        // Authorization: Basic username:password
-        token = headers?.authorization?.split(' ')?.[1]
-      }
-      if (token) {
-        const payload = jsonwebtoken.verify(token, process.env.JWT_SECRET)
-        console.log(payload)
-        return { userId: payload.userId }
-      }
-      return { userId: null }
+      const token = getReqToken(req)
+      // if(token){
+      //   console.log(token)
+      // }
+      const user = decodeToken(token, process.env.JWT_SECRET ?? '')
+      console.log(user)
+      return { user }
+      // if (token) {
+      //   const payload = jsonwebtoken.verify(token, process.env.JWT_SECRET)
+      //   console.log(payload)
+      //   return { userId: payload.userId }
+      // }
+      // return { userId: null }
     },
   })
   await apolloServer.start()
   apolloServer.applyMiddleware({
     app,
     path: '/graphql',
-    // cors: { origin: ['*'] },
+    cors: {origin: ['http://localhost:3000'], credentials: true },
   })
   httpServer.listen({ port: process.env.PORT })
 }
