@@ -5,16 +5,13 @@ UserTC.addRelation(
   'orders',
   {
     resolver: OrderTC.getResolver('findMany'),
-    projection: { orderId: 1 },
+    projection: { _id: 1 },
     prepareArgs: {
-      _id: (user) => user.equipmentId,
+      filter: (user) => ({
+        userId: user._id,
+      }),
     },
   },
+
 )
-// UserTC.addFields({
-//   fullname: {
-//     type: 'String',
-//     projection: { firstname: 1, lastname: 1 },
-//     resolve: (user) => `${user.firstname} ${user.lastname}`,
-//   },
-// })
+
