@@ -1,10 +1,11 @@
-import { UserInputError } from 'apollo-server-core'
-import { schemaComposer } from 'graphql-compose'
+// import { UserInputError } from 'apollo-server-core'
+// import { schemaComposer } from 'graphql-compose'
 
-import { UserModel, UserTC } from '../../models/user'
+import { UserTC } from '../../models/user'
 
 export const users = UserTC.getResolver('findMany')
 export const userId = UserTC.getResolver('findById')
+export const me = UserTC.getResolver('findById')
 
 export const me = schemaComposer.createResolver({
   name: 'me',
@@ -37,3 +38,4 @@ export const studentUserId = schemaComposer.createResolver({
     return user
   },
 })
+

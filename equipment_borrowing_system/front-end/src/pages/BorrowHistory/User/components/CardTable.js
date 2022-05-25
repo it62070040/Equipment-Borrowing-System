@@ -1,17 +1,60 @@
 import { Box, Grid } from "@mui/material";
-import * as React from "react";
+import React, { useState, useEffect, useCallback } from "react";
 // import data from './ListData.json';
 import "./MiniBar.css";
+import Moment from 'moment';
+import { gql, useMutation } from "@apollo/client";
+
+const ORDER_MUTATION = gql`
+  mutation ($id: MongoID!, $record: UpdateByIdOrderInput!) {
+    updateOrderId(_id: $id, record: $record) {
+      recordId
+    }
+  }
+`;
+
 
 export default function CardTable({ data }) {
-  const returnEquipment = (id) => {
-    data[id].status = "wait for check";
-    console.log(data[id]);
+  const [updateOrderId] = useMutation(ORDER_MUTATION);
+
+  const handleReturn = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              orderstatus: "return",
+              borrowstatus: "",
+              returnstatus: "pending",
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
-  const cancel = (id) => {
-    data[id].status = "cancel";
-    console.log(data[id]);
+
+  const handleCancel = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              orderstatus: "cancel",
+              borrowstatus: "",
+              returnstatus: "",
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
+
   return (
     <div style={{ width: "100%" }}>
       <Box>
@@ -23,10 +66,10 @@ export default function CardTable({ data }) {
                 <p className="table-title">Title</p>
               </Grid>
               <Grid item xs={3}>
-                <p className="table-title">Borrow date</p>
+                <p className="table-status">Borrow date</p>
               </Grid>
               <Grid item xs={3}>
-                <p className="table-title">Borrow date</p>
+                <p className="table-status">Borrow date</p>
               </Grid>
             </Grid>
           </Grid>
@@ -61,7 +104,11 @@ export default function CardTable({ data }) {
                     xs={3}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <img className="table-img" alt="complex" src={item.url} />
+                    <img
+                      className="table-img"
+                      alt="complex"
+                      src={item.equipment.url_pic}
+                    />
                   </Grid>
                   <Grid
                     item
@@ -72,7 +119,8 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.name}</p>
+                    <p className="style-name">{item.equipment.name}</p>
+                    <p className="style-name">amount : {item.order_amount}</p>
                   </Grid>
                   <Grid
                     item
@@ -83,7 +131,7 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.borrow}</p>
+                    <p className="style-status-bor">{Moment(item.borrowDate).format('DD/MM/YYYY')}</p>
                   </Grid>
                   <Grid
                     item
@@ -94,7 +142,7 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.return}</p>
+                    <p className="style-status-bor">{Moment(item.returnDate).format('DD/MM/YYYY')}</p>
                   </Grid>
                 </Grid>
               </Grid>
@@ -109,27 +157,42 @@ export default function CardTable({ data }) {
               >
                 <Grid container>
                   <Grid item xs={4} className="style-status-bor">
-                    {item.status === "success" ? (
-                      <p style={{ color: "#008000" }}>{item.status}</p>
-                    ) : item.status === "cancel" ? (
-                      <p style={{ color: "#FF0000" }}>{item.status}</p>
+                    {item.returnstatus === "success" ||
+                    item.borrowstatus === "approved" ? (
+                      <p style={{ color: "#008000" }}>
+                        {item.returnstatus}
+                        {item.borrowstatus}
+                      </p>
+                    ) : item.returnstatus === "fail" ||
+                      item.borrowstatus === "unapproved" ? (
+                      <p style={{ color: "#FF0000" }}>
+                        {item.returnstatus}
+                        {item.borrowstatus}
+                      </p>
+                    ) : item.orderstatus === "cancel" ? (
+                      <p style={{ color: "#FF0000" }}>{item.orderstatus}</p>
                     ) : (
-                      <p style={{ color: "#2196F3" }}>{item.status}</p>
+                      <p style={{ color: "#2196F3" }}>
+                        {item.borrowstatus}
+                        {item.returnstatus}
+                      </p>
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn-bor">
-                    {item.status === "wait for approve" ? (
+                    {item.borrowstatus === "pending" &&
+                    item.orderstatus === "borrow" ? (
                       <button
                         className="btn-del-bor"
-                        onClick={(e) => cancel(e.target.value)}
+                        onClick={(e) => handleCancel(e.target.value)}
                         value={index}
                       >
                         cancel
                       </button>
-                    ) : item.status === "Borrow" ? (
+                    ) : item.orderstatus === "borrow" &&
+                      item.borrowstatus === "approved" ? (
                       <button
                         className="btn-return"
-                        onClick={(e) => returnEquipment(e.target.value)}
+                        onClick={(e) => handleReturn(e.target.value)}
                         value={index}
                       >
                         return equipment

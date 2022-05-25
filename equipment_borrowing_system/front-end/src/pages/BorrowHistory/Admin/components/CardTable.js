@@ -2,26 +2,88 @@ import { Box, Grid } from "@mui/material";
 import * as React from "react";
 // import data from './ListData.json';
 import "./MiniBar.css";
+import Moment from 'moment';
+import { gql, useMutation } from "@apollo/client";
+
+const ORDER_MUTATION = gql`
+  mutation ($id: MongoID!, $record: UpdateByIdOrderInput!) {
+    updateOrderId(_id: $id, record: $record) {
+      recordId
+    }
+  }
+`;
 
 export default function CardTable({ data }) {
-  const approve = (id) => {
-    data[id].status = "approve"
-    console.log(data[id]);
-    data[id].status = "return equipment"
-    console.log(data[id]);
+  const [updateOrderId] = useMutation(ORDER_MUTATION);
+
+  const approved = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              borrowstatus: "approved",
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
-  const notApprove = (id) => {
-    data[id].status = "not approve"
-    console.log(data[id]);
+
+  const unApproved = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              borrowstatus: "unapproved",
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
-  const success = (id) => {
-    data[id].status = "success"
-    console.log(data[id]);
+
+  const success = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              returnstatus: "success",
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
-  const fail = (id) => {
-    data[id].status = "fail"
-    console.log(data[id]);
+
+  const fail = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              returnstatus: "fail",
+          }
+        },
+      });
+    } catch (err) {
+      console.error(err.message);
+    }
   };
+
   return (
     <div style={{ width: "100%" }}>
       <Box>
@@ -74,7 +136,7 @@ export default function CardTable({ data }) {
                     xs={3}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <img className="table-img" alt="complex" src={item.url} />
+                    <img className="table-img" alt="complex" src={item.equipment.url_pic} />
                   </Grid>
                   <Grid
                     item
@@ -85,7 +147,7 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.name}</p>
+                    <p className="style-name">{item.equipment.name}</p>
                   </Grid>
                   <Grid
                     item
@@ -96,8 +158,8 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.user_id}</p>
-                    <p className="style-name">{item.username}</p>
+                    <p className="style-name">{item.user.studentId}</p>
+                    <p className="style-name">{item.user.fullname}</p>
                   </Grid>
                   <Grid
                     item
@@ -108,7 +170,7 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.borrow}</p>
+                    <p className="style-name">{Moment(item.borrowDate).format('DD/MM/YYYY')}</p>
                   </Grid>
                   <Grid
                     item
@@ -119,7 +181,7 @@ export default function CardTable({ data }) {
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-name">{item.return}</p>
+                    <p className="style-name">{Moment(item.returnDate).format('DD/MM/YYYY')}</p>
                   </Grid>
                 </Grid>
               </Grid>
@@ -134,29 +196,26 @@ export default function CardTable({ data }) {
               >
                 <Grid container>
                   <Grid item xs={4} className="style-status-bor">
-                    {item.status === "success" ? (
-                      <p style={{ color: "#008000" }}>{item.status}</p>
-                    ) : item.status === "cancel" ||
-                      item.status === "not approve" || item.status === "fail" ? (
-                      <p style={{ color: "#FF0000" }}>{item.status}</p>
-                    ) : item.status === "approve" ? (
-                      <p style={{ color: "#2196F3" }}>{item.status}</p>
+                    {item.returnstatus === "success" || item.borrowstatus === "approved" ? (
+                      <p style={{ color: "#008000" }}>{item.returnstatus}{item.borrowstatus}</p>
+                    ) : item.borrowstatus === "unapproved" || item.returnstatus === "fail" ? (
+                      <p style={{ color: "#FF0000" }}>{item.returnstatus}{item.borrowstatus}</p>
                     ) : (
-                      <p style={{ color: "#000" }}>{item.status}</p>
+                      <p style={{ color: "#2196F3" }}>{item.returnstatus}{item.borrowstatus}</p>
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn-bor">
                     <Grid>
-                      {item.status === "wait for approve" ? (
+                      {item.borrowstatus === "pending" ? (
                         <button
                           className="btn-return"
                           style={{ backgroundColor: "#2196F3" }}
-                          onClick={(e) => approve(e.target.value)}
+                          onClick={(e) => approved(e.target.value)}
                           value={index}
                         >
                           approve
                         </button>
-                      ) : item.status === "return equipment" ? (
+                      ) : item.returnstatus === "pending" ? (
                         <button
                           className="btn-return"
                           onClick={(e) => success(e.target.value)}
@@ -169,15 +228,15 @@ export default function CardTable({ data }) {
                       )}
                     </Grid>
                     <Grid>
-                      {item.status === "wait for approve" ? (
+                      {item.borrowstatus === "pending" ? (
                         <button
                           className="btn-del-bor"
-                          onClick={(e) => notApprove(e.target.value)}
+                          onClick={(e) => unApproved(e.target.value)}
                           value={index}
                         >
                           not approve
                         </button>
-                      ) : item.status === "return equipment" ? (
+                      ) : item.returnstatus === "pending" ? (
                         <button
                           className="btn-del-bor"
                           onClick={(e) => fail(e.target.value)}

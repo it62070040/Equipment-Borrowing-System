@@ -7,7 +7,7 @@ import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { gql, useMutation } from "@apollo/client";
 
 const EQUIPMENT_MUTATION = gql`
-  mutation ($record: CreateOneEquipmentInput!) {
+  mutation ($_id: MongoID!) {
     createEquipment(record: $record) {
       recordId
     }
