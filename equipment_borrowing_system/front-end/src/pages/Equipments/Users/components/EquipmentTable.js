@@ -1,5 +1,4 @@
 import  React, {useCallback} from "react";
-import logo from "../../../../assets/EQ-logo.png";
 import "./EquipmentTable.css";
 // import data from "../../Admin/components/ListData.json"
 

@@ -27,15 +27,15 @@ const OrderSchema = new Schema({
     required: true,
   },
   borrowstatus: {
-    type: String, // approved, pending, unapproved
-    default: 'pending',
+    type: String, // Approved, Pending, Unapproved
+    default: 'Pending',
   },
   orderstatus: {
-    type: String, // return, borrow, cancel
-    default: 'borrow',
+    type: String, // Return, Borrow, Cancel
+    default: 'Borrow',
   },
   returnstatus: {
-    type: String, // pending, success, fail
+    type: String, // Borrowing, Success, Fail
     default: '',
   },
 }, {

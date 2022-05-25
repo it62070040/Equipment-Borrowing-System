@@ -24,26 +24,6 @@ function EquipmentInfo() {
   const equipmentId = splitUrl[splitUrl.length-1]
   // console.log(equipmentId)
   const [equipment, setEquipment] = useState([]);
-    const user = [
-        {
-            "id": 1,
-            "firstName": "ชนากานต์",
-            "lastName": "ประสมแก้ว",
-            "borrowDate": "09/22/22",
-            "returnDate": "09/30/22",
-            "returnStatus": "Success"
-
-        },
-        {
-            "id": 2,
-            "firstName": "ทวีวัฒน์",
-            "lastName": "ศรีเมฆ",
-            "borrowDate": "09/22/22",
-            "returnDate": "09/30/22",
-            "returnStatus": "Pending"
-
-        }
-    ]
 
     const { loading, error, data, refetch } = useQuery(
       EQUIPMENTID_QUERY,
@@ -63,9 +43,9 @@ function EquipmentInfo() {
     if (loading) {
       return <h4>Loading...</h4>
     }
-    if (error) {
-      return <h4> Error: {error.message}</h4>
-    }
+    // if (error) {
+    //   return <h4> Error: {error.message}</h4>
+    // }
   return (
     <div className="equipmentInfo">
       <div className="eqIfo-container">
@@ -74,7 +54,7 @@ function EquipmentInfo() {
             <div className="eq-borrowed-name">
                 <div className="eq-borrowed-name-header">
                 <h3>รายชื่อผู้ยืมอุปกรณ์</h3>
-                <BorrowedUserTable user={user}/>
+                <BorrowedUserTable equipment={equipment}/>
                 </div>
                 
             </div>
