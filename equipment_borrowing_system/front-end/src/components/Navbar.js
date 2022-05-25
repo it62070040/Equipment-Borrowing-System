@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/EQ-logo.png";
@@ -11,7 +11,9 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation} from "@apollo/client";
+import { useApp } from '../context/AppContext'
+
 
 const clientId =
   "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
@@ -27,7 +29,7 @@ const styleModal = {
   boxShadow: 24,
   p: 4,
 };
-const USER_MUTATION = gql`
+const USER_MUTATION_REG = gql`
   mutation ($record: CreateOneUserInput!) {
     createUser(record: $record) {
       recordId
@@ -35,7 +37,11 @@ const USER_MUTATION = gql`
   }
 `;
 
+
 function Navbar() {
+  const  {login}  = useApp()
+  const {logout} = useApp()
+  const {user} = useApp()
   const [showloginButton, setShowloginButton] = useState(true);
   const [showUsername, setShowUsername] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -44,21 +50,33 @@ function Navbar() {
   const [info, setInfo] = useState({});
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
-  const [createUserMutation] = useMutation(USER_MUTATION);
+  const [createUserMutation] = useMutation(USER_MUTATION_REG);
+  const [studentId, setStudentId] = useState("");
+  const [fullname, setFullname] = useState("");
+  const [email, setEmail] = useState("");
 
-
-  const onLoginSuccess = async (res) => {
+  const onLoginSuccess = useCallback ( async (res) => {
     if(String(res.profileObj.email) === "ebsystem.adm@gmail.com"){
-      console.log("Login Success:", res.profileObj);
-      setShowloginButton(false);
-      setShowUsername(true);
-      setOpen(false);
-      setInfo(res.profileObj);
+      try{
+        console.log("Login Success:", res.profileObj);
+        setEmail(res.profileObj.email)
+        setShowloginButton(false);
+        setShowUsername(true);
+        setOpen(false);
+        setInfo(res.profileObj);
+        await login(email)
+      }catch(err){
+        console.log(err.message)
+      }
     }
     else if(String(res.profileObj.email).slice(-15) === '@it.kmitl.ac.th'){
+      setFullname(res.profileObj.name)
+      setStudentId(String(res.profileObj.email).slice(0, 8))
+      setEmail(res.profileObj.email)
       let fullname = res.profileObj.name
       let studentId = String(res.profileObj.email).slice(0, 8)
       let email = res.profileObj.email
+      let info = user
       console.log("Login Success:", res.profileObj);
       try {
         await createUserMutation({
@@ -70,9 +88,17 @@ function Navbar() {
             },
           },
         });
+        await login(email)
+        console.log(studentId, fullname, email)
       } catch (err) {
         if ((err).message.startsWith('E11000')) {
-          console.log(`Logged in as ${email}`)
+          try{
+            await login(email)
+            console.log(`Logged in as : ${email}`)
+            console.log(info)
+          }catch(err){
+            console.log("You're not logged in")
+          }
         } else {
           console.log('Server error')
         }
@@ -86,18 +112,19 @@ function Navbar() {
         alert("Please Login again Use only @it.kmitl.ac.th")
     }
   
-  };
+  }, [login, email, fullname, studentId, createUserMutation])
 
   const onLoginFailure = (res) => {
     console.log("Login Failed:", res);
   };
 
-  const onSignoutSuccess = () => {
+  const onSignoutSuccess = useCallback(() => {
+    logout()
     alert("You have been logged out successfully");
     console.clear();
     setShowloginButton(true);
     setShowUsername(false);
-  };
+  })
 
 
   const handleClick = () => setClick(!click);

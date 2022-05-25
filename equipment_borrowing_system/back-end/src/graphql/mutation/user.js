@@ -33,6 +33,12 @@ export const login = schemaComposer.createResolver({
         token: null,
       }
     }
+    const token = generateUserToken(user)
+    return {
+      status: 'success',
+      message: 'Login success',
+      token,
+    }
     // const validPassword = await user.verifyPassword(password)
     // if (!validPassword) {
     //   // throw new AuthenticationError('Password incorrect')
@@ -42,11 +48,6 @@ export const login = schemaComposer.createResolver({
     //     token: null,
     //   }
     // }
-    const token = generateUserToken(user)
-    return {
-      status: 'success',
-      message: 'Login success',
-      token,
-    }
+    
   },
 })
