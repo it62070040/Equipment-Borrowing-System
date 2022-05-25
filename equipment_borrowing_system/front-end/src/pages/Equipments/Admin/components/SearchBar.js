@@ -26,7 +26,7 @@ const SearchBar = () => {
   const [inputText, setInputText] = React.useState("");
   const [searchResult, setSearchResult] = React.useState([]);
   const [value, setValue] = React.useState(true);
-  const { loading, error, data} = useQuery(EQUIPMENTS_QUERY);
+  const { loading, error, data, refetch} = useQuery(EQUIPMENTS_QUERY);
 
   useEffect(() => {
     if (loading === false && data) {
@@ -89,7 +89,7 @@ const SearchBar = () => {
           width: "100%"
         }}
       >
-        <CardTable searchResult={searchResult} value={value} />
+        <CardTable searchResult={searchResult} value={value} refetch={refetch}/>
         {/* {data.equipments.map((eq) => (
           <div key={eq._id}>
             <p>{eq.name}</p>

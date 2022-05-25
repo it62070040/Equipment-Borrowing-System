@@ -12,7 +12,7 @@ mutation($id: MongoID!){
   }
 }
 `;
-const CardTable = ({ searchResult, value }) => {
+const CardTable = ({ searchResult, value, refetch }) => {
   //mutation
   const [deleteEquipmentId] = useMutation(EQUIPMENTS_MUTATION);
 
@@ -36,15 +36,13 @@ const CardTable = ({ searchResult, value }) => {
     try {
        await deleteEquipmentId({
         variables: {
-          id: {
-            currentId
-          },
+          id: currentId
         },
-      });
+      }).then(refetch);
     } catch (err) {
       console.error(err.message);
     }
-  };
+  }
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
