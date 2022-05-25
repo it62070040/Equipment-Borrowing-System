@@ -5,7 +5,8 @@ import Navbar from './components/Navbar';
 import RequireAuth from './components/RequireAuth';
 import Home from './pages/Home/Home';
 import EquipmentUser from './pages/Equipments/Users/Equipments';
-import BorrowHis from './pages/BorrowHistory/BorrowHis';
+import BorrowHisAdmin from './pages/BorrowHistory/Admin/BorrowHisAdmin';
+import BorrowHisUser from './pages/BorrowHistory/User/BorrowHisUser';
 import EquipmentInfo from './pages/Equipments/Users/EquipmentInfo';
 import EquipmentAdmin from './pages/Equipments/Admin/Equipments';
 import EquipmentsEdit from './pages/Equipments/Admin/EquipmentsEdit';
@@ -32,7 +33,8 @@ function App() {
                     {/* link equipment detail */}
                     {/* <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}> */}
                         <Route path='/equipments' element={<EquipmentAdmin/>} />
-                        <Route path='/borrow-history' element={<BorrowHis/>} />
+                        <Route path='/borrow-history' element={<BorrowHisAdmin/>} />
+                        <Route path='/borrow-history-user' element={<BorrowHisUser/>} />
                         <Route path='/equipment-edit/:id' element={<EquipmentsEdit/>} />
                         <Route path='/equipment-create' element={<EquipmentsCreate/>} />
                     {/* </Route> */}

@@ -42,7 +42,8 @@ export default function MiniBar() {
   const [order, setOrder] = useState([]);
   const { loading, error, data, refetch } = useQuery(ORDER_QUERY, {
     variables: {
-      _id: "628d0745dfb3813290a7fd15",
+      // _id: "628d0745dfb3813290a7fd15",
+      _id: "628e8b43fa4afc6042f93168",
     },
   });
 
