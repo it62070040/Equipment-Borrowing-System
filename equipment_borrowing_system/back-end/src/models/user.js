@@ -14,6 +14,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
+    required: true,
     lowercase: true,
     trim: true,
     unique: true,
@@ -23,12 +24,11 @@ const UserSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  // createdAt: {
-  //   type: Date,
-  // },
-  // updatedAt: {
-  //   type: Date,
-  // },
+  orderId: {
+    type: Schema.Types.ObjectId,
+    ref: 'Order',
+    required: true,
+  },
 }, {
   timestamps: true,
 })
