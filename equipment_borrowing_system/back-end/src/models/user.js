@@ -24,11 +24,6 @@ const UserSchema = new Schema({
     enum: ['user', 'admin'],
     default: 'user',
   },
-  orderId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Order',
-
-  },
 }, {
   timestamps: true,
 })

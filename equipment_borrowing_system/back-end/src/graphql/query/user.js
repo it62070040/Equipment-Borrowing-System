@@ -20,3 +20,21 @@ export const me = UserTC.getResolver('findById')
 //     return user
 //   },
 // })
+
+export const studentUserId = schemaComposer.createResolver({
+  name: 'studentUserId',
+  kind: 'query',
+  type: UserTC.getType(),
+  args: {
+    studentId: 'String!',
+    // password: 'String!',
+  },
+  resolve: async ({ args }) => {
+    const { studentId } = args
+    const user = await UserModel.findOne({ studentId })
+    if (!user) {
+      throw new UserInputError('User ID not found in studentId')
+    }
+    return user
+  },
+})
