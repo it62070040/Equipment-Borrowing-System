@@ -33,19 +33,13 @@ function Equipments() {
         <Box
           className="search-bar"
           sx={{
-            width: "100%",
             display: "flex",
-            // justifyContent: "center",
-            alignItems: "center",
             flexDirection: "column",
             px: 5,
           }}
         >
           <SearchBar />
         </Box>
-        {/* <Box className="table" sx={{p: 1, mx:5, mt:4, backgroundColor: '#fff', borderRadius: '10px'}}>
-          <CardTable />
-        </Box> */}
       </div>
     </div>
   );

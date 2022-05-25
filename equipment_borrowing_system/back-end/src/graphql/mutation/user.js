@@ -1,8 +1,8 @@
 // import { AuthenticationError, UserInputError } from 'apollo-server-core'
 import { schemaComposer } from 'graphql-compose'
 
-// import { generateUserToken } from '../../lib/generateUserToken'
-import { UserTC } from '../../models/user'
+import { generateUserToken } from '../../lib/generateUserToken'
+import { UserModel, UserTC } from '../../models/user'
 
 export const createUser = UserTC.getResolver('createOne')
 const LoginPayloadOTC = schemaComposer.createObjectTC({
@@ -18,26 +18,18 @@ export const login = schemaComposer.createResolver({
   kind: 'mutation',
   type: LoginPayloadOTC,
   args: {
-    username: 'String!',
-    password: 'String!',
+    email: 'String!',
+    // password: 'String!',
   },
   resolve: async ({ args }) => {
-    const { username, password } = args
-    const user = await UserModel.findOne({ username: username.toLowerCase() })
+    // const { username, password } = args
+    const { email} = args
+    const user = await UserModel.findOne({ email: email.toLowerCase() })
     if (!user) {
       // throw new UserInputError('Username not found')
       return {
         status: 'failed',
-        message: 'Username not found',
-        token: null,
-      }
-    }
-    const validPassword = await user.verifyPassword(password)
-    if (!validPassword) {
-      // throw new AuthenticationError('Password incorrect')
-      return {
-        status: 'failed',
-        message: 'Password incorrect',
+        message: 'Email not found',
         token: null,
       }
     }
@@ -47,5 +39,15 @@ export const login = schemaComposer.createResolver({
       message: 'Login success',
       token,
     }
+    // const validPassword = await user.verifyPassword(password)
+    // if (!validPassword) {
+    //   // throw new AuthenticationError('Password incorrect')
+    //   return {
+    //     status: 'failed',
+    //     message: 'Password incorrect',
+    //     token: null,
+    //   }
+    // }
+    
   },
 })

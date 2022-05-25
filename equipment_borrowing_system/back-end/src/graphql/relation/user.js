@@ -10,11 +10,6 @@ UserTC.addRelation(
       _id: (user) => user.equipmentId,
     },
   },
+
 )
-// UserTC.addFields({
-//   fullname: {
-//     type: 'String',
-//     projection: { firstname: 1, lastname: 1 },
-//     resolve: (user) => `${user.firstname} ${user.lastname}`,
-//   },
-// })
+
