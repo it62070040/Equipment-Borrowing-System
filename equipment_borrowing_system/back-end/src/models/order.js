@@ -24,6 +24,7 @@ const OrderSchema = new Schema({
   order_amount: {
     type: Number,
     default: 1,
+    required: true,
   },
   borrowstatus: {
     type: String, // approved, pending, unapproved

@@ -21,7 +21,7 @@ import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 const EQUIPMENT_MUTATION = gql`
-  mutation ($record: CreateOneEquipmentInput!) {
+  mutation ($_id: MongoID!) {
     createEquipment(record: $record) {
       recordId
     }

@@ -1,10 +1,9 @@
 import React from "react";
 import "./BorrowHis.css";
 import { Box } from "@mui/material";
-import MiniBarUser from "./User/MiniBar";
-import MiniBarAdmin from "./Admin/MiniBar";
+import MiniBarUser from "./components/MiniBar";
 
-function BorrowHis() {
+function BorrowHisUser() {
   return (
     <div className="borrow">
       <div className="borrow-container">
@@ -19,15 +18,11 @@ function BorrowHis() {
             px: 5,
           }}
         >
-          {/* <MiniBarUser /> */}
-          <MiniBarAdmin />
+          <MiniBarUser />
         </Box>
-        {/* <Box className="table" sx={{p: 1, mx:5, mt:4, backgroundColor: '#fff', borderRadius: '10px'}}>
-          <CardTable />
-        </Box> */}
       </div>
     </div>
   );
 }
 
-export default BorrowHis;
+export default BorrowHisUser;

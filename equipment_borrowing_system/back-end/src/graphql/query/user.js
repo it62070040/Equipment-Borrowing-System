@@ -1,25 +1,25 @@
 import { UserInputError } from 'apollo-server-core'
 import { schemaComposer } from 'graphql-compose'
 
-import { UserModel, UserTC } from '../../models/user'
+import { UserTC, UserModel } from '../../models/user'
 
 export const users = UserTC.getResolver('findMany')
 export const userId = UserTC.getResolver('findById')
-export const me = UserTC.getResolver('findById')
+// export const me = UserTC.getResolver('findById')
 
-// export const me = schemaComposer.createResolver({
-//   name: 'me',
-//   kind: 'query',
-//   type: UserTC.getType(),
-//   resolve: async ({ context }) => {
-//     const { userId: _id } = context
-//     if (!_id) {
-//       throw new UserInputError('User ID not found in token')
-//     }
-//     const user = await UserModel.findById(_id)
-//     return user
-//   },
-// })
+export const me = schemaComposer.createResolver({
+  name: 'me',
+  kind: 'query',
+  type: UserTC.getType(),
+  resolve: async ({ context }) => {
+    if (!context.user) {
+      throw new UserInputError('User ID not found in token')
+    }
+    // const { user: { _id: userId } } = context
+    const user = await UserModel.findById(context.user.userId)
+    return user
+  },
+})
 
 export const studentUserId = schemaComposer.createResolver({
   name: 'studentUserId',
@@ -38,3 +38,4 @@ export const studentUserId = schemaComposer.createResolver({
     return user
   },
 })
+
