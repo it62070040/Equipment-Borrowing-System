@@ -47,23 +47,30 @@ function Navbar() {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [info, setInfo] = useState({});
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
   const [createUserMutation] = useMutation(USER_MUTATION_REG);
   const [studentId, setStudentId] = useState("");
   const [fullname, setFullname] = useState("");
   const [email, setEmail] = useState("");
+  const [checkUserLogin, setCheckUserLogin] = useState(false);
+  useEffect(() => {
+    if(user === null){
+      setCheckUserLogin(false)
+    }
+    else{
+      setCheckUserLogin(true)
+      setShowUsername(true);
+      setShowloginButton(false)
+      setOpen(false)
+    }
+  }, [user, checkUserLogin])
 
   const onLoginSuccess = useCallback ( async (res) => {
     if(String(res.profileObj.email) === "ebsystem.adm@gmail.com"){
       try{
-        console.log("Login Success:", res.profileObj);
+        // console.log("Login Success:", res.profileObj);
         setEmail(res.profileObj.email)
-        setShowloginButton(false);
-        setShowUsername(true);
-        setOpen(false);
-        setInfo(res.profileObj);
         await login(email)
       }catch(err){
         console.log(err.message)
@@ -76,8 +83,7 @@ function Navbar() {
       let fullname = res.profileObj.name
       let studentId = String(res.profileObj.email).slice(0, 8)
       let email = res.profileObj.email
-      let info = user
-      console.log("Login Success:", res.profileObj);
+      // console.log("Login Success:", res.profileObj);
       try {
         await createUserMutation({
           variables: {
@@ -89,13 +95,12 @@ function Navbar() {
           },
         });
         await login(email)
-        console.log(studentId, fullname, email)
+        console.log(`Welcome new user, Your're logged in as : ${email}`)
       } catch (err) {
         if ((err).message.startsWith('E11000')) {
           try{
             await login(email)
             console.log(`Logged in as : ${email}`)
-            console.log(info)
           }catch(err){
             console.log("You're not logged in")
           }
@@ -103,16 +108,12 @@ function Navbar() {
           console.log('Server error')
         }
       }
-      setShowloginButton(false);
-      setShowUsername(true);
-      setOpen(false);
-      setInfo(res.profileObj);
     }
     else{
         alert("Please Login again Use only @it.kmitl.ac.th")
     }
   
-  }, [login, email, fullname, studentId, createUserMutation])
+  }, [login, email, fullname, studentId, createUserMutation, user])
 
   const onLoginFailure = (res) => {
     console.log("Login Failed:", res);
@@ -122,14 +123,13 @@ function Navbar() {
     logout()
     alert("You have been logged out successfully");
     console.clear();
-    setShowloginButton(true);
-    setShowUsername(false);
+    window.location.reload()
+    // setShowloginButton(true);
+    // setShowUsername(false);
   })
-
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => {
-    
     handleOpen()
   }
 
@@ -150,15 +150,16 @@ function Navbar() {
     setAnchorElUser(null);
   };
 
-  const showProfile = () => {
+  const showProfile = useCallback(() => {
     return (
+      
 
-      <div className={button  ?  "hi" : "profile-mobile"}>
+      <div className={checkUserLogin  ?  "hi" : "profile-mobile"}>
                 <Tooltip title="Logout">
                   <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar src={info.imageUrl} />
+                    <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
                     <div className="userName">
-                       {info.givenName}
+                       {user.fullname}
                     </div>
                    
                   </IconButton>
@@ -191,7 +192,7 @@ function Navbar() {
                 </Menu>
               </div>
     )
-  }
+  }, [user,anchorElUser])
 
   useEffect(() => {
     showButton();
@@ -237,18 +238,21 @@ function Navbar() {
               </Link>
             </li>
             <li>
-                { !button && showUsername ? showProfile() : <div className="nav-links-mobile" onClick={closeMobileMenu}>
+                { !checkUserLogin && showUsername ? showProfile() : <div className="nav-links-mobile" onClick={closeMobileMenu}>
                 Sign In
                 </div> }
 
             </li>
           </ul>
           <div className="btn-signin-contaier">
-            { button && showloginButton ? (
+            {!checkUserLogin ? (
               <button className="btn-signin" onClick={handleOpen}>
                 Sign In
               </button>
             ) : null}
+            {/* <button className="btn-signin" onClick={handleOpen}>
+                Sign In
+              </button> */}
             
             <Modal
               open={open}
@@ -283,7 +287,7 @@ function Navbar() {
               </Box>
             </Modal>
 
-            { button && showUsername ? showProfile() : null}
+            { checkUserLogin && showUsername ? showProfile() : null}
           </div>
         </div>
       </nav>
