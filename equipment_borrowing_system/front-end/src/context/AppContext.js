@@ -11,7 +11,10 @@ query {
     _id
     studentId
     fullname
-    role
+    roles{
+      User
+      Admin
+    }
   }
 }
 `
