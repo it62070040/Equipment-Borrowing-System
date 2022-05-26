@@ -5,11 +5,11 @@ UserTC.addRelation(
   'orders',
   {
     resolver: OrderTC.getResolver('findMany'),
-    projection: { orderId: 1 },
+    projection: { _id: 1 },
     prepareArgs: {
-      _id: (user) => user.equipmentId,
+      filter: (user) => ({
+        userId: user._id,
+      }),
     },
   },
-
 )
-
