@@ -3,25 +3,21 @@ import { Box, Grid, Button } from "@mui/material";
 import "./MiniBar.css";
 import CardTable from "./CardTable";
 import { gql, useQuery } from "@apollo/client";
+import { useApp } from '../../../../context/AppContext'
 
 const ORDER_QUERY = gql`
   query ($_id: MongoID!) {
-    me(_id: $_id) {
+    userId(_id: $_id) {
       _id
-      fullname
-      email
-      studentId
-      role
       orders {
         _id
-        orderstatus
-        borrowstatus
-        returnstatus
+        equipmentId
         borrowDate
         returnDate
         order_amount
-        equipmentId
-        userId
+        borrowstatus
+        orderstatus
+        returnstatus
         equipment {
           _id
           name
@@ -38,20 +34,20 @@ const ORDER_QUERY = gql`
 `;
 
 export default function MiniBar() {
-  const [click, setClick] = useState("borrow");
+  const [click, setClick] = useState("Borrow");
   const [order, setOrder] = useState([]);
+  const { user } = useApp()
   const { loading, error, data, refetch } = useQuery(ORDER_QUERY, {
     variables: {
-      // _id: "628d0745dfb3813290a7fd15",
-      _id: "628e8b43fa4afc6042f93168",
+      _id: user._id,
     },
   });
 
   useEffect(() => {
     if (loading === false && data) {
-      const neworder = data.me.orders
-      setOrder(neworder.filter(item => item.orderstatus === click))
-      // console.log(data.me.orders);
+      const neworder = data.userId.orders;
+      setOrder(neworder.filter((item) => item.orderstatus === click));
+      // console.log(data.userId);
     }
   }, [loading, data, order, click]);
 
@@ -63,15 +59,15 @@ export default function MiniBar() {
   }
   const handleClick = (value) => {
     setClick(value);
-    if( value === 'borrow'){
-      const filorder = order.filter(item => item.orderstatus === "borrow")
-      setOrder(filorder)
-    }else if( value === 'return' ) {
-      const filorder = order.filter(item => item.orderstatus === "return")
-      setOrder(filorder)
-    }else if( value === 'cancel' ) {
-      const filorder = order.filter(item => item.orderstatus === "cancel")
-      setOrder(filorder)
+    if (value === "Borrow") {
+      const filorder = order.filter((item) => item.orderstatus === "Borrow");
+      setOrder(filorder);
+    } else if (value === "Return") {
+      const filorder = order.filter((item) => item.orderstatus === "Return");
+      setOrder(filorder);
+    } else if (value === "Cancel") {
+      const filorder = order.filter((item) => item.orderstatus === "Cancel");
+      setOrder(filorder);
     }
   };
   return (
@@ -90,12 +86,12 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "borrow" ? "#2196F3" : "#000",
-                textDecoration: click === "borrow" ? "underline" : "none",
+                color: click === "Borrow" ? "#2196F3" : "#000",
+                textDecoration: click === "Borrow" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}
               onClick={(e) => handleClick(e.target.value)}
-              value="borrow"
+              value="Borrow"
             >
               Borrow
             </Button>
@@ -107,12 +103,12 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "return" ? "#2196F3" : "#000",
-                textDecoration: click === "return" ? "underline" : "none",
+                color: click === "Return" ? "#2196F3" : "#000",
+                textDecoration: click === "Return" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}
               onClick={(e) => handleClick(e.target.value)}
-              value="return"
+              value="Return"
             >
               Return
             </Button>
@@ -124,12 +120,12 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "cancel" ? "#2196F3" : "#000",
-                textDecoration: click === "cancel" ? "underline" : "none",
+                color: click === "Cancel" ? "#2196F3" : "#000",
+                textDecoration: click === "Cancel" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}
               onClick={(e) => handleClick(e.target.value)}
-              value="cancel"
+              value="Cancel"
             >
               Cancel
             </Button>

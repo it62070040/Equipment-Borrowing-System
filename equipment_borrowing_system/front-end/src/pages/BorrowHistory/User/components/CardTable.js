@@ -14,7 +14,7 @@ const ORDER_MUTATION = gql`
 `;
 
 
-export default function CardTable({ data }) {
+export default function CardTable({ data, refetch }) {
   const [updateOrderId] = useMutation(ORDER_MUTATION);
 
   const handleReturn = async (id) => {
@@ -25,12 +25,12 @@ export default function CardTable({ data }) {
         variables: {
           id: item._id,
           record: {
-              orderstatus: "return",
-              borrowstatus: "",
-              returnstatus: "pending",
+              orderstatus: "Return",
+              returnstatus: "Pending",
           }
         },
       });
+      refetch()
     } catch (err) {
       console.error(err.message);
     }
@@ -44,12 +44,13 @@ export default function CardTable({ data }) {
         variables: {
           id: item._id,
           record: {
-              orderstatus: "cancel",
+              orderstatus: "Cancel",
               borrowstatus: "",
               returnstatus: "",
           }
         },
       });
+      refetch()
     } catch (err) {
       console.error(err.message);
     }
@@ -157,19 +158,19 @@ export default function CardTable({ data }) {
               >
                 <Grid container>
                   <Grid item xs={4} className="style-status-bor">
-                    {item.returnstatus === "success" ||
-                    item.borrowstatus === "approved" ? (
+                    {item.borrowstatus === "Approved" && item.returnstatus === "Borrowing" ? (
                       <p style={{ color: "#008000" }}>
                         {item.returnstatus}
-                        {item.borrowstatus}
                       </p>
-                    ) : item.returnstatus === "fail" ||
-                      item.borrowstatus === "unapproved" ? (
-                      <p style={{ color: "#FF0000" }}>
+                    ) : item.returnstatus === "Success" ? (
+                      <p style={{ color: "#008000" }}>
                         {item.returnstatus}
-                        {item.borrowstatus}
                       </p>
-                    ) : item.orderstatus === "cancel" ? (
+                    ) : item.borrowstatus === "Unapproved" ? (
+                      <p style={{ color: "#FF0000" }}>{item.borrowstatus}</p>
+                    ) : item.returnstatus === "Fail" ? (
+                      <p style={{ color: "#FF0000" }}>{item.returnstatus}</p>
+                    ) : item.orderstatus === "Cancel" ? (
                       <p style={{ color: "#FF0000" }}>{item.orderstatus}</p>
                     ) : (
                       <p style={{ color: "#2196F3" }}>
@@ -179,23 +180,23 @@ export default function CardTable({ data }) {
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn-bor">
-                    {item.borrowstatus === "pending" &&
-                    item.orderstatus === "borrow" ? (
+                    {item.borrowstatus === "Pending" &&
+                    item.orderstatus === "Borrow" ? (
                       <button
                         className="btn-del-bor"
                         onClick={(e) => handleCancel(e.target.value)}
                         value={index}
                       >
-                        cancel
+                        Cancel
                       </button>
-                    ) : item.orderstatus === "borrow" &&
-                      item.borrowstatus === "approved" ? (
+                    ) : item.orderstatus === "Borrow" &&
+                      item.borrowstatus === "Approved" ? (
                       <button
                         className="btn-return"
                         onClick={(e) => handleReturn(e.target.value)}
                         value={index}
                       >
-                        return equipment
+                        Return Equipment
                       </button>
                     ) : (
                       <div></div>

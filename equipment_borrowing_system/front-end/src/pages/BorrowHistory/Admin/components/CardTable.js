@@ -13,7 +13,7 @@ const ORDER_MUTATION = gql`
   }
 `;
 
-export default function CardTable({ data }) {
+export default function CardTable({ data, refetch }) {
   const [updateOrderId] = useMutation(ORDER_MUTATION);
 
   const approved = async (id) => {
@@ -24,10 +24,12 @@ export default function CardTable({ data }) {
         variables: {
           id: item._id,
           record: {
-              borrowstatus: "approved",
+              borrowstatus: "Approved",
+              returnstatus: "Borrowing"
           }
         },
       });
+      refetch()
     } catch (err) {
       console.error(err.message);
     }
@@ -41,10 +43,11 @@ export default function CardTable({ data }) {
         variables: {
           id: item._id,
           record: {
-              borrowstatus: "unapproved",
+              borrowstatus: "Unapproved",
           }
         },
       });
+      refetch()
     } catch (err) {
       console.error(err.message);
     }
@@ -58,10 +61,11 @@ export default function CardTable({ data }) {
         variables: {
           id: item._id,
           record: {
-              returnstatus: "success",
+              returnstatus: "Success",
           }
         },
       });
+      refetch()
     } catch (err) {
       console.error(err.message);
     }
@@ -75,10 +79,11 @@ export default function CardTable({ data }) {
         variables: {
           id: item._id,
           record: {
-              returnstatus: "fail",
+              returnstatus: "Fail",
           }
         },
       });
+      refetch()
     } catch (err) {
       console.error(err.message);
     }
@@ -196,53 +201,57 @@ export default function CardTable({ data }) {
               >
                 <Grid container>
                   <Grid item xs={4} className="style-status-bor">
-                    {item.returnstatus === "success" || item.borrowstatus === "approved" ? (
-                      <p style={{ color: "#008000" }}>{item.returnstatus}{item.borrowstatus}</p>
-                    ) : item.borrowstatus === "unapproved" || item.returnstatus === "fail" ? (
-                      <p style={{ color: "#FF0000" }}>{item.returnstatus}{item.borrowstatus}</p>
+                    {item.returnstatus === "Success" ? (
+                      <p style={{ color: "#008000" }}>{item.returnstatus}</p>
+                    ) : item.borrowstatus === "Approved" && item.returnstatus === "Borrowing" ? (
+                      <p style={{ color: "#008000" }}>{item.borrowstatus}</p>
+                    ) : item.borrowstatus === "Unapproved" ? (
+                      <p style={{ color: "#FF0000" }}>{item.borrowstatus}</p>
+                    ) : item.returnstatus === "Fail" ? (
+                      <p style={{ color: "#FF0000" }}>{item.returnstatus}</p>
                     ) : (
                       <p style={{ color: "#2196F3" }}>{item.returnstatus}{item.borrowstatus}</p>
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn-bor">
                     <Grid>
-                      {item.borrowstatus === "pending" ? (
+                      {item.borrowstatus === "Pending" ? (
                         <button
                           className="btn-return"
                           style={{ backgroundColor: "#2196F3" }}
                           onClick={(e) => approved(e.target.value)}
                           value={index}
                         >
-                          approve
+                          Approve
                         </button>
-                      ) : item.returnstatus === "pending" ? (
+                      ) : item.returnstatus === "Pending" ? (
                         <button
                           className="btn-return"
                           onClick={(e) => success(e.target.value)}
                           value={index}
                         >
-                          success
+                          Success
                         </button>
                       ) : (
                         <div></div>
                       )}
                     </Grid>
                     <Grid>
-                      {item.borrowstatus === "pending" ? (
+                      {item.borrowstatus === "Pending" ? (
                         <button
                           className="btn-del-bor"
                           onClick={(e) => unApproved(e.target.value)}
                           value={index}
                         >
-                          not approve
+                          Unapprove
                         </button>
-                      ) : item.returnstatus === "pending" ? (
+                      ) : item.returnstatus === "Pending" ? (
                         <button
                           className="btn-del-bor"
                           onClick={(e) => fail(e.target.value)}
                           value={index}
                         >
-                          fail
+                          Fail
                         </button>
                       ) : (
                         <div></div>

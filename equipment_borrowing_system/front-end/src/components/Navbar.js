@@ -229,7 +229,7 @@ function Navbar() {
             </li>
             <li className="nav-item">
               <Link
-                to="/borrow-history"
+                to="/borrow-history-user"
                 className="nav-links"
                 onClick={() => setClick(!click)}
               >

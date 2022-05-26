@@ -35,7 +35,7 @@ query {
 `;
 
 export default function MiniBar() {
-  const [click, setClick] = useState("borrow");
+  const [click, setClick] = useState("Borrow");
   const [order, setOrder] = useState([]);
   const { loading, error, data, refetch } = useQuery(ORDER_QUERY);
 
@@ -43,7 +43,7 @@ export default function MiniBar() {
     if (loading === false && data) {
       const neworder = data.Orders;
       setOrder(neworder.filter((item) => item.orderstatus === click));
-      console.log(data.Orders);
+      // console.log(data.Orders);
     }
   }, [loading, data, order, click]);
 
@@ -56,11 +56,11 @@ export default function MiniBar() {
 
   const handleClick = (value) => {
     setClick(value);
-    if (value === "borrow") {
-      const filorder = order.filter((item) => item.orderstatus === "borrow");
+    if (value === "Borrow") {
+      const filorder = order.filter((item) => item.orderstatus === "Borrow");
       setOrder(filorder);
-    } else if (value === "return") {
-      const filorder = order.filter((item) => item.orderstatus === "return");
+    } else if (value === "Return") {
+      const filorder = order.filter((item) => item.orderstatus === "Return");
       setOrder(filorder);
     }
   };
@@ -80,12 +80,12 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "borrow" ? "#2196F3" : "#000",
-                textDecoration: click === "borrow" ? "underline" : "none",
+                color: click === "Borrow" ? "#2196F3" : "#000",
+                textDecoration: click === "Borrow" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}
               onClick={(e) => handleClick(e.target.value)}
-              value="borrow"
+              value="Borrow"
             >
               Borrow
             </Button>
@@ -97,12 +97,12 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "return" ? "#2196F3" : "#000",
-                textDecoration: click === "return" ? "underline" : "none",
+                color: click === "Return" ? "#2196F3" : "#000",
+                textDecoration: click === "Return" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}
               onClick={(e) => handleClick(e.target.value)}
-              value="return"
+              value="Return"
             >
               Return
             </Button>
