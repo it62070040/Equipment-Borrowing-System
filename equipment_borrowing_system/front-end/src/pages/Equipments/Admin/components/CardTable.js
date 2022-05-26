@@ -142,7 +142,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
               >
                 <Grid container>
                   <Grid item xs={4} className="style-status">
-                    {item.status === "available" ? (
+                    {item.status === "Available" ? (
                       <p style={{ color: "#008000" }}>{item.status}</p>
                     ) : (
                       <p style={{ color: "#FF0000" }}>{item.status}</p>
