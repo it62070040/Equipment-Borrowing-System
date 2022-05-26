@@ -70,6 +70,11 @@ p{
   -webkit-box-orient: vertical;
 }
 
+a{
+  color: black;
+  text-decoration: none;
+}
+
 @media screen and (max-width: 900px) {
   .table-item-title {
     display: inline;

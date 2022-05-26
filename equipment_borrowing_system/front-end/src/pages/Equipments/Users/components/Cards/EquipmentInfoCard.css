@@ -104,6 +104,13 @@ img {
 
 }
 
+.outOrder-container {
+    justify-self: center;
+    color: red;
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
 @media screen and (max-width: 700px) {
     .eqInfoCard {
         padding: 20px 20px;

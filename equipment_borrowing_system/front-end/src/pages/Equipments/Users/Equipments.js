@@ -77,7 +77,7 @@ function Equipments() {
     }
 
     setSearchResult(result);
-    console.log(result);
+    // console.log(result);
   };
 
   return (
