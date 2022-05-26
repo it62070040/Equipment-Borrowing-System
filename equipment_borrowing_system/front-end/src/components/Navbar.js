@@ -13,7 +13,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { gql, useMutation} from "@apollo/client";
 import { useApp } from '../context/AppContext'
-
+import useAuth from "../hooks/useAuth";
 
 const clientId =
   "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
@@ -42,6 +42,7 @@ function Navbar() {
   const  {login}  = useApp()
   const {logout} = useApp()
   const {user} = useApp()
+  const {setAuth} = useAuth()
   const [showloginButton, setShowloginButton] = useState(true);
   const [showUsername, setShowUsername] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -59,6 +60,7 @@ function Navbar() {
       setCheckUserLogin(false)
     }
     else{
+      setAuth(user)
       setCheckUserLogin(true)
       setShowUsername(true);
       setShowloginButton(false)
