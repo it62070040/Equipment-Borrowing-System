@@ -69,9 +69,8 @@ function Navbar() {
   const onLoginSuccess = useCallback ( async (res) => {
     if(String(res.profileObj.email) === "ebsystem.adm@gmail.com"){
       try{
-        // console.log("Login Success:", res.profileObj);
-        setEmail(res.profileObj.email)
-        await login(email)
+        await login(res.profileObj.email)
+        console.log("Logged in as Admin")
       }catch(err){
         console.log(err.message)
       }
