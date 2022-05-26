@@ -21,7 +21,7 @@ import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
 import { gql, useMutation, useQuery } from "@apollo/client";
 
 const EQUIPMENT_MUTATION = gql`
-  mutation ($_id: MongoID!) {
+  mutation ($record: CreateOneEquipmentInput!) {
     createEquipment(record: $record) {
       recordId
     }
@@ -49,57 +49,54 @@ const EquipmentsCreate = () => {
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [newCategory, setNewCategory] = useState("");
-  const [url_pic, setUrl_pic] = useState("");
-  const [status, setStatus] = useState("available");
+  const [status, setStatus] = useState("Available");
   const [why_unavailable, setWhy_unavailable] = useState("");
   const [amount, setAmount] = useState(1);
 
-  // const [images, setImages] = useState("");
-  // const [selected, setSelected] = useState("");
-  // const [toggle, setToggle] = useState(false);
-  // const [selectedImage, setSelectedImage] = useState(null);
-
-  const [file, setFile] = useState("");
   const [imagePreview, setImagePreview] = useState("");
-  const [base64, setBase64] = useState("");
   const [nameFile, setNameFile] = useState("");
-  const [test, setTest] = useState("");
+  const [fileImage, setFileImage] = useState();
+  const [fileI, setFileI] = useState("");
 
-  const onChange = (e) => {
-    const reader = new FileReader();
-    reader.onload = (a) => {
-      setBase64(a.target.result);
+  var FormData = require("form-data");
+  const formData = new FormData();
 
-
-      // let test = new Buffer(base64, 'base64')
-      // console.log(test)
-      // setUrl_pic(test)
-    };
-    reader.readAsDataURL(e);
-  };
-
-  const photoUpload = (e) => {
+  const onFileChange = (e) => {
     e.preventDefault();
     const reader = new FileReader();
-    const file = e.target.files[0];
-    if (reader !== undefined && file !== undefined) {
+    const f = e.target.files[0];
+    if (reader !== undefined && f !== undefined) {
       reader.onloadend = () => {
-        setFile(file);
-        setNameFile(file.name);
         setImagePreview(reader.result);
-        onChange(file);
-        setTest(file)
+        setFileImage(f);
+        setFileI(f);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(f);
     }
   };
-  console.log(url_pic)
+
+  //  const  handleOnsubmit = async (event) =>  {
+  //   event.preventDefault();
+  //   if (event.target && fileImage) {
+  //     formData.append("file", fileImage);
+  //   }
+  //   formData.append("upload_preset", "my-uploads");
+  //   const data = await fetch(
+  //     "https://api.cloudinary.com/v1_1/fswdproject/image/upload",
+  //     {
+  //       method: "POST",
+  //       body: formData,
+  //     }
+  //   ).then((r) => r.json());
+
+  //   console.log(data.secure_url);
+  //   console.log(url_pic)
+  // }
 
   const remove = () => {
-    setFile("");
     setImagePreview("");
-    setBase64("");
     setNameFile("");
+    setFileI("");
   };
 
   // validation name
@@ -133,16 +130,19 @@ const EquipmentsCreate = () => {
 
   const handleCreateEquipments = async (e) => {
     e.preventDefault();
-    console.log(
-      name,
-      description,
-      category,
-      url_pic,
-      status,
-      why_unavailable,
-      amount
-    );
     try {
+      formData.append("file", fileImage);
+
+      formData.append("upload_preset", "my-uploads");
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/fswdproject/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((r) => r.json());
+      var url_pic = data.secure_url;
+
       await createEquipmentMutation({
         variables: {
           record: {
@@ -159,7 +159,7 @@ const EquipmentsCreate = () => {
     } catch (err) {
       console.error(err.message);
     }
-    // window.location = `/equipments`;
+    window.location = `/equipments`;
   };
 
   const handleCreateCategory = async (e) => {
@@ -314,18 +314,18 @@ const EquipmentsCreate = () => {
                   <Grid container>
                     <Grid item>
                       <FormControlLabel
-                        value="available"
+                        value="Available"
                         control={<Radio />}
-                        label="available"
+                        label="Available"
                       />
                     </Grid>
                   </Grid>
                   <Grid container>
                     <Grid item xs={3} sx={{ alignSelf: "center" }}>
                       <FormControlLabel
-                        value="unavailable"
+                        value="Unavailable"
                         control={<Radio />}
-                        label="unavailable"
+                        label="Unavailable"
                       />
                     </Grid>
                     <Grid item xs={9}>
@@ -367,9 +367,21 @@ const EquipmentsCreate = () => {
                     error={errorCategory}
                     onChange={(e) => setNewCategory(e.target.value)}
                   />
-                  <button className="btn-add" onClick={handleCreateCategory}>
+                  <Button
+                    variant="contained"
+                    component="span"
+                    sx={{
+                      mt: 1,
+                      py: 1.5,
+                      ml: 2,
+                      borderRadius: "15px",
+                      boxShadow: 0,
+                      backgroundColor: "#2196F3",
+                    }}
+                    onClick={handleCreateCategory}
+                  >
                     เพิ่ม
-                  </button>
+                  </Button>
                 </div>
               </Box>
             </Grid>
@@ -396,8 +408,8 @@ const EquipmentsCreate = () => {
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                   >
-                    {queryCategory.map((option) => (
-                      <MenuItem key={option} value={option.category}>
+                    {queryCategory.map((option, i) => (
+                      <MenuItem key={i} value={option.category}>
                         {option.category}
                       </MenuItem>
                     ))}
@@ -411,56 +423,18 @@ const EquipmentsCreate = () => {
             <Grid item xs={2} className="name" sx={{ alignSelf: "center" }}>
               Picture :
             </Grid>
-            <Grid item xs={10}>
-              {/* <UploadImage /> */}
-
-              {/* <TextField
-                required
-                id="outlined-number"
-                type="string"
-                fullWidth
-                margin="normal"
-                value={url_pic}
-                onChange={(e) => setUrl_pic(e.target.value)}
-              /> */}
-
-              {/* <input
-                class="custom-file-input"
-                type="file"
-                accept="image/png, image/jpeg, image/webp"
-                onChange={console.log("click")}
-                onClick={selectImages}
-                required
-              />
-              <label class="custom-file-label" for="customFile">
-                กรุณาเลือกรูปภาพของคุณ
-              </label>
-
-              <div class="text-center" id="card-img-top">
-                <img src={images} alt="Placeholder image" class="w-25" />
-              </div>
-
-              <button onClick={deleteSelectImage} class="btn btn-secondary">
-                ยกเลิกการเลือก
-              </button> */}
-              {/* ล่าสุด */}
+            <Grid>
               <Stack>
-                <label htmlFor="icon-button-file">
-                  <input
-                    accept="image/*"
-                    id="icon-button-file"
-                    type="file"
-                    style={{ display: "none" }}
-                    onChange={photoUpload}
-                    src={imagePreview}
-                  />
-                  {/* <FileBase64
-                    type="file"
-                    multiple={false}
-                    onDone={({ base64 }) => setUrl_pic({ test, image: base64 })}
-                  /> */}
-
-                  {imagePreview === "" ? (
+                {imagePreview === "" ? (
+                  <label htmlFor="icon-button-file">
+                    <input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={onFileChange}
+                      src={imagePreview}
+                    />
                     <Button
                       variant="outlined"
                       component="span"
@@ -468,20 +442,28 @@ const EquipmentsCreate = () => {
                     >
                       กรุณาเลือกรูปภาพของคุณ
                     </Button>
-                  ) : (
-                    <img src={imagePreview} alt="Icone adicionar" />
-                  )}
-                  {imagePreview !== "" && (
-                    <>
-                      <section>
-                        <p>{nameFile}</p>
-                      </section>
-                      <button type="button" onClick={remove}>
-                        Remover
-                      </button>
-                    </>
-                  )}
-                </label>
+                  </label>
+                ) : (
+                  <div>
+                    <Grid
+                      container
+                      sx={{ flexDirection: "column", alignItems: "center" }}
+                    >
+                      <Grid sx={{mt: 2}}>
+                        <img src={imagePreview} alt="Icone adicionar" />
+                      </Grid>
+                      <Grid>
+                        <button
+                          type="button"
+                          className="btn-remove"
+                          onClick={remove}
+                        >
+                          Remover
+                        </button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                )}
               </Stack>
             </Grid>
           </Grid>
