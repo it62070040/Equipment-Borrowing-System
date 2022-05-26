@@ -10,7 +10,7 @@ const USERS = [
     studentId: 'admin1',
     fullname: 'Admin',
     email: 'ebsystem.adm@gmail.com',
-    role: 'admin',
+    roles: {Admin : 5150},
   },
 ]
 
