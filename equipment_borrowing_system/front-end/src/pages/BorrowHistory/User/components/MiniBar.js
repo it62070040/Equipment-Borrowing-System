@@ -44,6 +44,7 @@ export default function MiniBar() {
   });
 
   useEffect(() => {
+    refetch()
     if (loading === false && data) {
       const neworder = data.userId.orders;
       setOrder(neworder.filter((item) => item.orderstatus === click));
