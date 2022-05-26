@@ -1,5 +1,6 @@
 import React from "react";
 import "./Home.css";
+import { Link } from "react-router-dom";
 
 
 function Home() {
@@ -16,11 +17,21 @@ function Home() {
 
             </div>
             <div className="btn-home-borrow-con">
-            <button
+            {/* <button
               className="btn-home-borrow"
             >
               Borrow Equipments
-            </button>
+            </button> */}
+            <div className="btn-home-borrow">
+
+            <Link
+                to="/equipments-user"
+                
+              >
+                Borrow Equipments
+              </Link>
+            </div>
+
             </div>
           </div>
         </div>
