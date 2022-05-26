@@ -28,8 +28,7 @@ const EQUIPMENTAMOUNT_MUTATION = gql`
 
 function EquipmentInfoCard({equipment, refetch }) {
   const { user } = useApp();
-  const [userId, setUserId] = useState("628d0745dfb3813290a7fd15");
-  // console.log(userId);
+  const [userId, setUserId] = useState(user._id);
   const [borrowDate, setBorrowDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
   const [order_amount, setAmount] = useState(1);
