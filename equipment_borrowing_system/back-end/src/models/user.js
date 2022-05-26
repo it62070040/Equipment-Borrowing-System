@@ -19,19 +19,19 @@ const UserSchema = new Schema({
     trim: true,
     unique: true,
   },
-  // role: {
-  //   type: String,
-  //   enum: ['user', 'admin'],
-  //   default: 'user',
-  // },
-  roles: {
-    User: {
-      type: Number,
-      default: 2001
-    },
-    Editor: Number,
-    Admin: Number
-  }
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user',
+  },
+  // roles: {
+  //   User: {
+  //     type: Number,
+  //     default: 2001
+  //   },
+  //   Editor: Number,
+  //   Admin: Number
+  // }
 }, {
   timestamps: true,
 })

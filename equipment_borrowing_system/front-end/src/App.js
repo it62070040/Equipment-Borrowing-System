@@ -12,10 +12,6 @@ import EquipmentAdmin from './pages/Equipments/Admin/Equipments';
 import EquipmentsEdit from './pages/Equipments/Admin/EquipmentsEdit';
 import EquipmentsCreate from './pages/Equipments/Admin/EquipmentsCreate';
 
-const ROLES = {
-    'User': 2001,
-    'Admin': 5150
-  }
 function App() {
 
     return(
@@ -25,19 +21,19 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home/>} />
 
-                    {/* <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}> */}
+                    <Route element={<RequireAuth allowedRoles={"user"} />}>
                         <Route path='/equipments-user' element={<EquipmentUser/>} />
                         <Route path='/equipmentInfo/:id' element={<EquipmentInfo/>}/>
-                    {/* </Route> */}
+                    </Route>
 
                     {/* link equipment detail */}
-                    {/* <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}> */}
+                    <Route element={<RequireAuth allowedRoles={"admin"} />}>
                         <Route path='/equipments' element={<EquipmentAdmin/>} />
                         <Route path='/borrow-history' element={<BorrowHisAdmin/>} />
                         <Route path='/borrow-history-user' element={<BorrowHisUser/>} />
                         <Route path='/equipment-edit/:id' element={<EquipmentsEdit/>} />
                         <Route path='/equipment-create' element={<EquipmentsCreate/>} />
-                    {/* </Route> */}
+                    </Route>
                     
                 </Routes>
             </Router>
