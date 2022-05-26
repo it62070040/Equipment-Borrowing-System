@@ -14,8 +14,9 @@ export const OrderEquipmentId = schemaComposer.createResolver({
   },
   resolve: async ({ args }) => {
     const { equipmentId } = args
+    const borrowstatus = 'Approved'
     // eslint-disable-next-line object-shorthand
-    let order = await OrderModel.find({ equipmentId: equipmentId }).sort({ createdAt: -1 }).lean()
+    let order = await OrderModel.find({ equipmentId: equipmentId, borrowstatus: borrowstatus }).sort({ createdAt: -1 }).lean()
     if (!order) {
       // throw new orderInputError('order ID not found in equipmentId')
       order = []

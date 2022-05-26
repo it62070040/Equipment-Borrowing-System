@@ -30,19 +30,11 @@ export default function BorrowedUserTable({ equipment }) {
     })
 
     useEffect(() => {
-      
       if(loading === false && data){
-        const dataFetch = data.OrderEquipmentId
-        let arr = []
-        dataFetch.map((row, i) => {
-          if (row.returnstatus !== '') {
-            arr.push(row)
-          }
-      })
-        // console.log(arr);
-        setOrder([...arr]);
+        setOrder(data.OrderEquipmentId);
       }
-    }, [loading, data, equipment])
+    }, [loading, data])
+
   
   if (loading) {
     return <h4>Loading...</h4>
@@ -51,9 +43,10 @@ export default function BorrowedUserTable({ equipment }) {
     return <h4> Error: {error.message}</h4>
   }
 
-
-  return (
-    <div className="borrow-table-container">
+  const returnData = () => {
+    console.log(Object.keys(order).length === 0)
+    return (
+      <>
       <div className="borrow-table-header-row-con">
         <ul className="borrow-table-header-row">
           <li className="borrow-table-header">No.</li>
@@ -66,7 +59,7 @@ export default function BorrowedUserTable({ equipment }) {
       {order.map((row, i) => (
         <div
           className="borrow-row-con"
-          key={row.id}
+          key={i}
           //   onClick={() => clickEqCard(row.id)}
         >
           <div className="user-row">
@@ -80,6 +73,14 @@ export default function BorrowedUserTable({ equipment }) {
           </div>
         </div>
       ))}
-    </div>
+      </>
+      )
+    }
+    
+    return (
+      <div className="borrow-table-container">
+        {Object.keys(order).length === 0 ? <p>ยังไม่มีข้อมูลการยืม</p> :  returnData()}
+      </div>
+      
   );
 }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import EquipmentInfoCard from "../../../components/Cards/EquipmentInfoCard";
+import EquipmentInfoCard from "./components/Cards/EquipmentInfoCard";
 import "./EquipmentInfo.css";
 import BorrowedUserTable from "./components/BorrowedUserTable"
 import { gql, useQuery } from '@apollo/client';
@@ -43,18 +43,16 @@ function EquipmentInfo() {
     if (loading) {
       return <h4>Loading...</h4>
     }
-    // if (error) {
-    //   return <h4> Error: {error.message}</h4>
-    // }
+
   return (
     <div className="equipmentInfo">
       <div className="eqIfo-container">
-        <EquipmentInfoCard equipment={equipment} />
+        <EquipmentInfoCard equipment={equipment} refetch={refetch}/>
         <div className="eq-borrowed-name-container">
             <div className="eq-borrowed-name">
                 <div className="eq-borrowed-name-header">
                 <h3>รายชื่อผู้ยืมอุปกรณ์</h3>
-                <BorrowedUserTable equipment={equipment}/>
+                <BorrowedUserTable equipment={equipment} refetch={refetch}/>
                 </div>
                 
             </div>

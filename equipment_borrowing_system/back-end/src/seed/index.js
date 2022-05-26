@@ -7,18 +7,6 @@ import '../mongoose-connect'
 
 const USERS = [
   {
-    studentId: '62070014',
-    fullname: 'Kanapa',
-    email: 'k@gmail.com',
-    role: 'user',
-  },
-  {
-    studentId: '62070041',
-    fullname: 'Chanakarn',
-    email: 'k2@gmail.com',
-    role: 'user',
-  },
-  {
     studentId: 'admin1',
     fullname: 'Admin',
     email: 'ebsystem.adm@gmail.com',
@@ -27,14 +15,6 @@ const USERS = [
 ]
 
 const EQUIPMENTS = [
-  {
-    name: 'Arduino s3',
-    description: 'nothing on you',
-    category: 'Arduino',
-    url_pic: 'https://inwfile.com/s-fp/sxp4qa.jpg',
-    status: 'available',
-    amount: 10,
-  },
   {
     name: 'เมาส์มีสาย (Wired Mouse)',
     description: 'เมาส์ สีดำ MD Tech MD-17',

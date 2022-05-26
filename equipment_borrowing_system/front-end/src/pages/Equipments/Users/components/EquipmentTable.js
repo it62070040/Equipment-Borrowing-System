@@ -1,12 +1,9 @@
 import  React, {useCallback} from "react";
+import { Link } from "react-router-dom";
 import "./EquipmentTable.css";
 // import data from "../../Admin/components/ListData.json"
 
 export default function EquipmentTable({searchResult}) {
-  const clickEqCard = useCallback(
-    (id) => (window.location.href =`/equipmentInfo/${id}`, { equipmentId: id }),
-    []
-  );
 
   return (
     <div className="table-container">
@@ -18,8 +15,15 @@ export default function EquipmentTable({searchResult}) {
           <li className="table-header">Status</li>
         </ul>
       </div>
-      {searchResult.map((row) => (
-      <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row._id)}>
+      {searchResult.map((row, i) => (
+        <Link
+        className="eq-link"
+        key={i}
+        to={`/equipmentInfo/${row._id}`}
+        >
+
+      {/* <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row._id)}> */}
+      <div className="eq-item-row-con" key={row.name}>
         <div className="eq-item-row">
         <ul className="table-item-row">
           <li className="table-item-img">
@@ -32,11 +36,12 @@ export default function EquipmentTable({searchResult}) {
             
           </li>
           <li className="table-item">{row.amount}</li>
-          <li className="table-item">{row.status}</li>
+          <li className="table-item" style={row.status === "available" ? {color: "green"} : {color: "gray"}}>{row.status}</li>
         </ul>
          
         </div>
       </div>
+            </Link>
       ))}
     </div>
   );
