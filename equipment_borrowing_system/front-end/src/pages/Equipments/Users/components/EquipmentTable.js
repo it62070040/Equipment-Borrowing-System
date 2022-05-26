@@ -36,7 +36,7 @@ export default function EquipmentTable({searchResult}) {
             
           </li>
           <li className="table-item">{row.amount}</li>
-          <li className="table-item" style={row.status === "available" ? {color: "green"} : {color: "gray"}}>{row.status}</li>
+          <li className="table-item" style={row.status === "Available" ? {color: "green"} : {color: "gray"}}>{row.status}</li>
         </ul>
          
         </div>

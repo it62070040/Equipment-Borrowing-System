@@ -6,6 +6,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
+import { useApp } from '../../../../../context/AppContext'
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -26,9 +27,9 @@ const EQUIPMENTAMOUNT_MUTATION = gql`
 `;
 
 function EquipmentInfoCard({equipment, refetch }) {
-  // console.log(equipment);
-  const [userId, setUserId] = useState("628dae67eb6864bf91c76bfd");
-  // const [equipmentId, setEquipmentId] = useState(equipment._id);
+  const { user } = useApp();
+  const [userId, setUserId] = useState("628d0745dfb3813290a7fd15");
+  // console.log(userId);
   const [borrowDate, setBorrowDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
   const [order_amount, setAmount] = useState(1);
