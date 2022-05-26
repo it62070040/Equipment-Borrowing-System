@@ -3,15 +3,15 @@ import useAuth from "../hooks/useAuth";
 const RequireAuth = ({ allowedRoles }) => {
     const { auth } = useAuth();
     const location = useLocation();
-    console.log("This Site for "+allowedRoles+" Only")
-    console.log("You Role are "+auth.role)
+    if(!auth.role){
+        alert("Please Login")
+    }
     const check = () => {
         if(auth.role === allowedRoles){
             return true
         }
         else{return false}
     }
-    console.log(check())
     return (
         check()
             ? <Outlet />
