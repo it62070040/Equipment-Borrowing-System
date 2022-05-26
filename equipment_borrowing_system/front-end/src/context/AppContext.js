@@ -29,9 +29,7 @@ export const AppContext = createContext({})
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
-  // const [loadMe, { data, loading }] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
-  const [loadMe, { data, loading }] = useLazyQuery(ME_QUERY)
-
+  const [loadMe, { data, loading }] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
   const [loginMutation] = useMutation(LOGIN_MUTATION)
   const login = useCallback(
     async (email) => {
