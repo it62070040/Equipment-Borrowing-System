@@ -14,6 +14,7 @@ import Modal from "@mui/material/Modal";
 import { gql, useMutation} from "@apollo/client";
 import { useApp } from '../context/AppContext'
 import useAuth from "../hooks/useAuth";
+import Swal from "sweetalert2";
 
 const clientId =
   "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
@@ -39,6 +40,7 @@ const USER_MUTATION_REG = gql`
 
 
 function Navbar() {
+  const Swal = require("sweetalert2");
   const  {login}  = useApp()
   const {logout} = useApp()
   const {user} = useApp()
@@ -111,6 +113,15 @@ function Navbar() {
       }
     }
     else{
+      // alert 
+      // Swal.fire({
+      //   title: "Please Login again Use only @it.kmitl.ac.th",
+      //   icon: "warning",
+      //   showConfirmButton: false,
+      //   timer: 1000
+
+      // })
+      
         alert("Please Login again Use only @it.kmitl.ac.th")
     }
   
@@ -122,7 +133,7 @@ function Navbar() {
 
   const onSignoutSuccess = useCallback(() => {
     logout()
-    alert("You have been logged out successfully");
+    
     console.clear();
     window.location.reload()
     // setShowloginButton(true);
@@ -268,7 +279,7 @@ function Navbar() {
                   component="h2"
                   style={{ textAlign: "center" }}
                 >
-                  Sign In
+                  Sign In 3
                 </Typography>
                 <Typography
                   id="modal-modal-description"

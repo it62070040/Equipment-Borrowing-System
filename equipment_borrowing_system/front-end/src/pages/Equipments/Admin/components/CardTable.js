@@ -5,6 +5,7 @@ import { gql, useMutation } from "@apollo/client";
 import mongoose from "mongoose";
 import EquipmentsEdit from "../EquipmentsEdit";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 const EQUIPMENTS_MUTATION = gql`
   mutation ($id: MongoID!) {
@@ -19,11 +20,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
   //mutation
   const [deleteEquipmentId] = useMutation(EQUIPMENTS_MUTATION);
 
-  // find how to get info to edit equipment by id
-  const toEdit = (id) => {
-    window.location = `/equipment-edit/${id}`;
-    // linkId(id);
-  };
+
   // const linkId = (index) => {
   //   const result = searchResult.filter((e) => e.id === index);
   //   GetInfo(result)
@@ -149,14 +146,15 @@ const CardTable = ({ searchResult, value, refetch }) => {
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn">
+                  <Link to={`/equipment-edit/${item._id}`}>
                     <button
                       className="btn-edit"
-                      onClick={() => toEdit(item._id)}
                       key={index}
                       // type={type}
                     >
                       Edit
                     </button>
+                    </Link>;
                     <button
                       className="btn-del"
                       onClick={() => toDelete(item._id)}

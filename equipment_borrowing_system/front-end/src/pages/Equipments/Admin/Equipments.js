@@ -7,28 +7,24 @@ import { Box, Button, Stack, IconButton, Icon } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 function Equipments() {
-
   // add equipement but wait to research and DB
-  const toAdd = () => {
-    window.location = `/equipment-create`;
-    console.log("add");
-  };
   return (
     <div className="equipments">
       <div className="equipments-container">
-        <h1 className="Header-title">Equipments
+        <h1 className="Header-title">
+          Equipments
+          <Stack>
+          <Link to={`/equipment-create`}>
+            <label htmlFor="icon-button-add">
+              <IconButton>
+                <AddCircleIcon sx={{ color: "black", fontSize: "50px" }} />
+              </IconButton>
+            </label>
+            </Link>
+          </Stack>
+        </h1>
 
-        <Stack>
-          <label htmlFor="icon-button-add" onClick={() => toAdd()}>
-            <IconButton >
-              <AddCircleIcon sx={{ color: "black", fontSize: "50px" }}/>
-            </IconButton>
-          </label>
-        </Stack></h1>
-
-        <Link to="/equipments-user">
-                User Site
-              </Link>
+        <Link to="/equipments-user">User Site</Link>
 
         <Box
           className="search-bar"
