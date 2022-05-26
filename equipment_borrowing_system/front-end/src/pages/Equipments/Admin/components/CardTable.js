@@ -155,14 +155,14 @@ const CardTable = ({ searchResult, value, refetch }) => {
                       key={index}
                       // type={type}
                     >
-                      edit
+                      Edit
                     </button>
                     <button
                       className="btn-del"
                       onClick={() => toDelete(item._id)}
                       // type={type}
                     >
-                      delete
+                      Delete
                     </button>
                   </Grid>
                 </Grid>
