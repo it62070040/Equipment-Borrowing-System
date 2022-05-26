@@ -20,8 +20,8 @@ function Equipments() {
 
         <Stack>
           <label htmlFor="icon-button-add" onClick={() => toAdd()}>
-            <IconButton>
-              <AddCircleIcon sx={{ color: "black", fontSize: "50px" }} />
+            <IconButton >
+              <AddCircleIcon sx={{ color: "black", fontSize: "50px" }}/>
             </IconButton>
           </label>
         </Stack></h1>

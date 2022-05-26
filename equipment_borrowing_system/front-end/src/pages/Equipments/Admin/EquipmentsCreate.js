@@ -16,7 +16,7 @@ import MenuItem from "@mui/material/MenuItem";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import FileUploadOutlinedIcon from "@mui/icons-material/FileUploadOutlined";
-// import FileBase64 from "react-file-base64";
+import Swal from "sweetalert2";
 
 import { gql, useMutation, useQuery } from "@apollo/client";
 
@@ -44,6 +44,7 @@ const CATEGORY_MUTATION = gql`
 `;
 
 const EquipmentsCreate = () => {
+  const Swal = require("sweetalert2");
   const [queryCategory, setqueryCategory] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -54,9 +55,7 @@ const EquipmentsCreate = () => {
   const [amount, setAmount] = useState(1);
 
   const [imagePreview, setImagePreview] = useState("");
-  const [nameFile, setNameFile] = useState("");
   const [fileImage, setFileImage] = useState();
-  const [fileI, setFileI] = useState("");
 
   var FormData = require("form-data");
   const formData = new FormData();
@@ -69,34 +68,13 @@ const EquipmentsCreate = () => {
       reader.onloadend = () => {
         setImagePreview(reader.result);
         setFileImage(f);
-        setFileI(f);
       };
       reader.readAsDataURL(f);
     }
   };
 
-  //  const  handleOnsubmit = async (event) =>  {
-  //   event.preventDefault();
-  //   if (event.target && fileImage) {
-  //     formData.append("file", fileImage);
-  //   }
-  //   formData.append("upload_preset", "my-uploads");
-  //   const data = await fetch(
-  //     "https://api.cloudinary.com/v1_1/fswdproject/image/upload",
-  //     {
-  //       method: "POST",
-  //       body: formData,
-  //     }
-  //   ).then((r) => r.json());
-
-  //   console.log(data.secure_url);
-  //   console.log(url_pic)
-  // }
-
   const remove = () => {
     setImagePreview("");
-    setNameFile("");
-    setFileI("");
   };
 
   // validation name
@@ -132,7 +110,6 @@ const EquipmentsCreate = () => {
     e.preventDefault();
     try {
       formData.append("file", fileImage);
-
       formData.append("upload_preset", "my-uploads");
       const data = await fetch(
         "https://api.cloudinary.com/v1_1/fswdproject/image/upload",
@@ -141,6 +118,7 @@ const EquipmentsCreate = () => {
           body: formData,
         }
       ).then((r) => r.json());
+
       var url_pic = data.secure_url;
 
       await createEquipmentMutation({
@@ -156,10 +134,25 @@ const EquipmentsCreate = () => {
           },
         },
       });
+      // alert loading
+      Swal.fire({
+        icon: "success",
+        title: "Creat Equipment Success",
+        showConfirmButton: false,
+        // timer: 3000
+      });
+      window.location = `/equipments`;
     } catch (err) {
       console.error(err.message);
+      // alert error
+      Swal.fire({
+        title: "Please fill your equipment info.",
+        icon: "warning",
+        confirmButtonText: "Yes, I did it!",
+        confirmButtonColor: "#3085d6",
+        reverseButtons: true,
+      });
     }
-    window.location = `/equipments`;
   };
 
   const handleCreateCategory = async (e) => {
@@ -449,7 +442,7 @@ const EquipmentsCreate = () => {
                       container
                       sx={{ flexDirection: "column", alignItems: "center" }}
                     >
-                      <Grid sx={{mt: 2}}>
+                      <Grid sx={{ mt: 2 }}>
                         <img src={imagePreview} alt="Icone adicionar" />
                       </Grid>
                       <Grid>
