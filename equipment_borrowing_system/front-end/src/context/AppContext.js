@@ -1,20 +1,19 @@
-import { gql, useLazyQuery, useMutation } from '@apollo/client'
+import { gql, useLazyQuery, useMutation } from '@apollo/client';
 import {
   createContext, useCallback, useContext, useEffect, useMemo, useState,
-} from 'react'
-import { useCookies } from 'react-cookie'
-
+} from 'react';
+import { useCookies } from 'react-cookie';
 
 const ME_QUERY = gql`
-query {
-  me {
-    _id
-    studentId
-    fullname
-    role
-  }
-}
-`
+query{
+    me{
+      _id
+      studentId
+      email
+      role
+      fullname
+    }
+  }`;
 const LOGIN_MUTATION = gql`
 mutation ($email: String!) {
   login(email: $email) {
@@ -23,14 +22,14 @@ mutation ($email: String!) {
     token
   }
 }
-`
+`;
+
 export const AppContext = createContext({})
 
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [cookies, setCookie, removeCookie] = useCookies(['token'])
-  // const [loadMe, { data, loading }] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
-  const [loadMe, { data, loading }] = useLazyQuery(ME_QUERY)
+  const [loadMe, { data, loading, refetch }] = useLazyQuery(ME_QUERY, { fetchPolicy: 'network-only' })
   const [loginMutation] = useMutation(LOGIN_MUTATION)
   const login = useCallback(
     async (email) => {
@@ -56,11 +55,8 @@ export const AppProvider = ({ children }) => {
       if (data?.me) {
         setUser(data.me ?? null)
       }
-      else{
-        console.log(`User Data is : ${data}`)
-      }
     },
-    [data, cookies],
+    [data],
   )
   useEffect(
     () => {
@@ -80,12 +76,15 @@ export const AppProvider = ({ children }) => {
   )
   const value = useMemo(
     () => ({
+      refetch,
       loading,
       user,
       login,
       logout,
+      loadMe,
+      data
     }),
-    [loading, login, logout, user],
+    [refetch,loading, login, logout, user, loadMe, data],
   )
   return (
     <AppContext.Provider value={value}>
