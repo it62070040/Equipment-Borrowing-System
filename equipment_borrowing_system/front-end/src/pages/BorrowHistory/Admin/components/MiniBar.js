@@ -40,12 +40,13 @@ export default function MiniBar() {
   const { loading, error, data, refetch } = useQuery(ORDER_QUERY);
 
   useEffect(() => {
+    refetch()
     if (loading === false && data) {
       const neworder = data.Orders;
       setOrder(neworder.filter((item) => item.orderstatus === click));
       // console.log(data.Orders);
     }
-  }, [loading, data, order, click]);
+  }, [loading, data, order, click, refetch]);
 
   if (loading) {
     return <h4>Loading...</h4>;

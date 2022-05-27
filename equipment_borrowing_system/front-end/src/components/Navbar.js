@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 import logo from "../assets/EQ-logo.png";
@@ -11,8 +11,8 @@ import Avatar from "@mui/material/Avatar";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
-import { gql, useMutation} from "@apollo/client";
-import { useApp } from '../context/AppContext'
+import { gql, useMutation } from "@apollo/client";
+import { useApp } from "../context/AppContext";
 import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 
@@ -38,13 +38,13 @@ const USER_MUTATION_REG = gql`
   }
 `;
 
-
 function Navbar() {
   const Swal = require("sweetalert2");
-  const  {login}  = useApp()
-  const {logout} = useApp()
-  const {user} = useApp()
-  const {setAuth} = useAuth()
+  const { login } = useApp();
+  const { logout } = useApp();
+  const { user } = useApp();
+  const [userRole, setUserRole] = useState("");
+  const { setAuth } = useAuth();
   const [showloginButton, setShowloginButton] = useState(true);
   const [showUsername, setShowUsername] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -58,92 +58,94 @@ function Navbar() {
   const [email, setEmail] = useState("");
   const [checkUserLogin, setCheckUserLogin] = useState(false);
   useEffect(() => {
-    if(user === null){
-      setCheckUserLogin(false)
-    }
-    else{
-      setAuth(user)
-      setCheckUserLogin(true)
+    if (user === null) {
+      setCheckUserLogin(false);
+    } else {
+      setAuth(user);
+      setCheckUserLogin(true);
       setShowUsername(true);
-      setShowloginButton(false)
-      setOpen(false)
+      setShowloginButton(false);
+      setOpen(false);
+      setUserRole(user.role);
     }
-  }, [user, checkUserLogin])
+  }, [user, checkUserLogin]);
 
-  const onLoginSuccess = useCallback ( async (res) => {
-    if(String(res.profileObj.email) === "ebsystem.adm@gmail.com"){
-      try{
-        await login(res.profileObj.email)
-        console.log("Logged in as Admin")
-      }catch(err){
-        console.log(err.message)
-      }
-    }
-    else if(String(res.profileObj.email).slice(-15) === '@it.kmitl.ac.th'){
-      setFullname(res.profileObj.name)
-      setStudentId(String(res.profileObj.email).slice(0, 8))
-      setEmail(res.profileObj.email)
-      let fullname = res.profileObj.name
-      let studentId = String(res.profileObj.email).slice(0, 8)
-      let email = res.profileObj.email
-      // console.log("Login Success:", res.profileObj);
-      try {
-        await createUserMutation({
-          variables: {
-            record: {
-              studentId,
-              fullname,
-              email
-            },
-          },
-        });
-        await login(email)
-        console.log(`Welcome new user, Your're logged in as : ${email}`)
-      } catch (err) {
-        if ((err).message.startsWith('E11000')) {
-          try{
-            await login(email)
-            console.log(`Logged in as : ${email}`)
-          }catch(err){
-            console.log("You're not logged in")
-          }
-        } else {
-          console.log('Server error')
+  const onLoginSuccess = useCallback(
+    async (res) => {
+      if (String(res.profileObj.email) === "ebsystem.adm@gmail.com") {
+        try {
+          await login(res.profileObj.email);
+          console.log("Logged in as Admin");
+        } catch (err) {
+          console.log(err.message);
         }
-      }
-    }
-    else{
-      // alert 
-      // Swal.fire({
-      //   title: "Please Login again Use only @it.kmitl.ac.th",
-      //   icon: "warning",
-      //   showConfirmButton: false,
-      //   timer: 1000
+      } else if (
+        String(res.profileObj.email).slice(-15) === "@it.kmitl.ac.th"
+      ) {
+        setFullname(res.profileObj.name);
+        setStudentId(String(res.profileObj.email).slice(0, 8));
+        setEmail(res.profileObj.email);
+        let fullname = res.profileObj.name;
+        let studentId = String(res.profileObj.email).slice(0, 8);
+        let email = res.profileObj.email;
+        // console.log("Login Success:", res.profileObj);
+        try {
+          await createUserMutation({
+            variables: {
+              record: {
+                studentId,
+                fullname,
+                email,
+              },
+            },
+          });
+          await login(email);
+          console.log(`Welcome new user, Your're logged in as : ${email}`);
+        } catch (err) {
+          if (err.message.startsWith("E11000")) {
+            try {
+              await login(email);
+              console.log(`Logged in as : ${email}`);
+            } catch (err) {
+              console.log("You're not logged in");
+            }
+          } else {
+            console.log("Server error");
+          }
+        }
+      } else {
+        // alert
+        // Swal.fire({
+        //   title: "Please Login again Use only @it.kmitl.ac.th",
+        //   icon: "warning",
+        //   showConfirmButton: false,
+        //   timer: 1000
 
-      // })
-      
-        alert("Please Login again Use only @it.kmitl.ac.th")
-    }
-  
-  }, [login, email, fullname, studentId, createUserMutation, user])
+        // })
+
+        alert("Please Login again Use only @it.kmitl.ac.th");
+      }
+    },
+    [login, email, fullname, studentId, createUserMutation, user]
+  );
 
   const onLoginFailure = (res) => {
     console.log("Login Failed:", res);
   };
 
   const onSignoutSuccess = useCallback(() => {
-    logout()
-    
+    logout();
+
     console.clear();
-    window.location.reload()
+    window.location.reload();
     // setShowloginButton(true);
     // setShowUsername(false);
-  })
+  });
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => {
-    handleOpen()
-  }
+    handleOpen();
+  };
 
   const showButton = () => {
     if (window.innerWidth <= 960) {
@@ -164,47 +166,42 @@ function Navbar() {
 
   const showProfile = useCallback(() => {
     return (
-      
-
-      <div className={checkUserLogin  ?  "hi" : "profile-mobile"}>
-                <Tooltip title="Logout">
-                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                    <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
-                    <div className="userName">
-                       {user.fullname}
-                    </div>
-                   
-                  </IconButton>
-                </Tooltip>
-                <Menu
-                  sx={{ mt: "45px" }}
-                  id="menu-appbar"
-                  anchorEl={anchorElUser}
-                  anchorOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  keepMounted
-                  transformOrigin={{
-                    vertical: "top",
-                    horizontal: "right",
-                  }}
-                  open={Boolean(anchorElUser)}
-                  onClose={handleCloseUserMenu}
-                >
-                  {settings.map((setting) => (
-                    <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                      <GoogleLogout
-                        clientId={clientId}
-                        buttonText="Sign Out"
-                        onLogoutSuccess={onSignoutSuccess}
-                      ></GoogleLogout>
-                    </MenuItem>
-                  ))}
-                </Menu>
-              </div>
-    )
-  }, [user,anchorElUser])
+      <div className={checkUserLogin ? "hi" : "profile-mobile"}>
+        <Tooltip title="Logout">
+          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+            <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
+            <div className="userName">{user.fullname}</div>
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{ mt: "45px" }}
+          id="menu-appbar"
+          anchorEl={anchorElUser}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={Boolean(anchorElUser)}
+          onClose={handleCloseUserMenu}
+        >
+          {settings.map((setting) => (
+            <MenuItem key={setting} onClick={handleCloseUserMenu}>
+              <GoogleLogout
+                clientId={clientId}
+                buttonText="Sign Out"
+                onLogoutSuccess={onSignoutSuccess}
+              ></GoogleLogout>
+            </MenuItem>
+          ))}
+        </Menu>
+      </div>
+    );
+  }, [user, anchorElUser]);
 
   useEffect(() => {
     showButton();
@@ -227,33 +224,60 @@ function Navbar() {
           </div>
           <ul className={click ? "nav-menu active" : "nav-menu"}>
             <li className="nav-item">
-              <Link to="/" className="nav-links" onClick={() => setClick(!click)}>
+              <Link
+                to="/"
+                className="nav-links"
+                onClick={() => setClick(!click)}
+              >
                 Home
               </Link>
             </li>
             <li className="nav-item">
-              <Link
-                to="/equipments"
-                className="nav-links"
-                onClick={() => setClick(!click)}
-              >
-                Equipments
-              </Link>
+              {userRole === "admin" ? (
+                <Link
+                  to="/equipments"
+                  className="nav-links"
+                  onClick={() => setClick(!click)}
+                >
+                  Equipment Admin
+                </Link>
+              ) : (
+                <Link
+                  to="/equipments-user"
+                  className="nav-links"
+                  onClick={() => setClick(!click)}
+                >
+                  Equipments
+                </Link>
+              )}
             </li>
             <li className="nav-item">
-              <Link
-                to="/borrow-history-user"
-                className="nav-links"
-                onClick={() => setClick(!click)}
-              >
-                Borrow History
-              </Link>
+              {userRole === "admin" ? (
+                <Link
+                  to="/borrow-history"
+                  className="nav-links"
+                  onClick={() => setClick(!click)}
+                >
+                  Borrow Order
+                </Link>
+              ) : (
+                <Link
+                  to="/borrow-history-user"
+                  className="nav-links"
+                  onClick={() => setClick(!click)}
+                >
+                  Borrow History
+                </Link>
+              )}
             </li>
             <li>
-                { !checkUserLogin && showUsername ? showProfile() : <div className="nav-links-mobile" onClick={closeMobileMenu}>
-                Sign In
-                </div> }
-
+              {!checkUserLogin && showUsername ? (
+                showProfile()
+              ) : (
+                <div className="nav-links-mobile" onClick={closeMobileMenu}>
+                  Sign In
+                </div>
+              )}
             </li>
           </ul>
           <div className="btn-signin-contaier">
@@ -265,7 +289,7 @@ function Navbar() {
             {/* <button className="btn-signin" onClick={handleOpen}>
                 Sign In
               </button> */}
-            
+
             <Modal
               open={open}
               onClose={handleClose}
@@ -279,7 +303,7 @@ function Navbar() {
                   component="h2"
                   style={{ textAlign: "center" }}
                 >
-                  Sign In 3
+                  Sign In
                 </Typography>
                 <Typography
                   id="modal-modal-description"
@@ -299,7 +323,7 @@ function Navbar() {
               </Box>
             </Modal>
 
-            { checkUserLogin && showUsername ? showProfile() : null}
+            {checkUserLogin && showUsername ? showProfile() : null}
           </div>
         </div>
       </nav>

@@ -70,6 +70,7 @@ export default function MiniBar() {
       const filorder = order.filter((item) => item.orderstatus === "Cancel");
       setOrder(filorder);
     }
+    
   };
   return (
     <div style={{ width: "100%" }}>

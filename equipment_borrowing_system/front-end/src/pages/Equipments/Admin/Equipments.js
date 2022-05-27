@@ -24,7 +24,6 @@ function Equipments() {
           </Stack>
         </h1>
 
-        <Link to="/equipments-user">User Site</Link>
 
         <Box
           className="search-bar"
