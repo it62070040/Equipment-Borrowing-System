@@ -277,6 +277,7 @@ const main = async () => {
   await EquipmentModel.deleteMany({})
   await OrderModel.deleteMany({})
   await UserModel.deleteMany({})
+  await CategoryModel.deleteMany({})
   await UserModel.create(USERS)
   await CategoryModel.create(CATEGORYS)
   await EquipmentModel.create(EQUIPMENTS)

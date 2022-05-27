@@ -12,6 +12,31 @@ query {
     studentId
     fullname
     role
+    notifications {
+      _id
+      name
+      message
+      unread
+      createdAt
+    }
+		orders{
+      equipmentId
+      borrowDate
+      returnDate
+      borrowstatus
+      orderstatus
+      returnstatus
+      equipment{
+        _id
+        name
+        description
+        category
+        url_pic
+        status
+        amount
+        why_unavailable  
+      }
+    }
   }
 }
 `

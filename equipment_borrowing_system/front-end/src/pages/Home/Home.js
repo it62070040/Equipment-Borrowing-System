@@ -1,9 +1,12 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
+import { useApp } from "../../context/AppContext";
 
 
 function Home() {
+  const { user } = useApp();
+  const [userRole, setUserRole] = useState("");
   return (
     <div className="home">
       <div className="home-container">
@@ -23,13 +26,22 @@ function Home() {
               Borrow Equipments
             </button> */}
             <div className="btn-home-borrow">
-
+            {userRole === "admin" ? (
             <Link
                 to="/equipments-user"
                 
               >
                 Borrow Equipments
               </Link>
+            ) :
+             (
+             <Link
+              to="/equipments"
+              
+            >
+              Equipment Admin
+            </Link>
+            )}
             </div>
 
             </div>

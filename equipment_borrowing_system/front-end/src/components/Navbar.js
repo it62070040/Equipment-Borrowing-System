@@ -4,6 +4,8 @@ import "./Navbar.css";
 import logo from "../assets/EQ-logo.png";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import Box from "@mui/material/Box";
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import Badge from '@mui/material/Badge';
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
@@ -14,6 +16,7 @@ import Modal from "@mui/material/Modal";
 import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
 import Swal from "sweetalert2";
+import Notification from './Notification/Notification'
 
 const clientId =
   "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
@@ -42,6 +45,7 @@ function Navbar() {
   const { login } = useApp();
   const { logout } = useApp();
   const { user } = useApp();
+  const [userId, setUserId] = useState("");
   const [userRole, setUserRole] = useState("");
   const [showloginButton, setShowloginButton] = useState(true);
   const [showUsername, setShowUsername] = useState(false);
@@ -64,6 +68,7 @@ function Navbar() {
       setShowloginButton(false);
       setOpen(false);
       setUserRole(user.role);
+      setUserId(user._id);
     }
   }, [user, checkUserLogin]);
 
@@ -267,7 +272,7 @@ function Navbar() {
               )}
             </li>
             <li>
-              {!checkUserLogin && showUsername ? (
+              {checkUserLogin && showUsername && !button ? (
                 showProfile()
               ) : (
                 <div className="nav-links-mobile" onClick={closeMobileMenu}>
@@ -282,9 +287,6 @@ function Navbar() {
                 Sign In
               </button>
             ) : null}
-            {/* <button className="btn-signin" onClick={handleOpen}>
-                Sign In
-              </button> */}
 
             <Modal
               open={open}
@@ -320,6 +322,10 @@ function Navbar() {
             </Modal>
 
             {checkUserLogin && showUsername ? showProfile() : null}
+            <div className="notification-container">
+            {userRole === "user" ? 
+            <Notification /> : null}
+            </div>
           </div>
         </div>
       </nav>
