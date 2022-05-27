@@ -13,7 +13,6 @@ const RequireAuth = ({ allowedRoles }) => {
                     isAuth = true
                 }
                 else{isAuth = false}
-                console.log(user.role, isAuth)    
         }
     
     return (
