@@ -14,9 +14,9 @@ import Modal from "@mui/material/Modal";
 import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
 import Swal from "sweetalert2";
+import dotenv from "dotenv"
 
-const clientId =
-  "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
+const clientId = "1089120979699-n7sk5a13656m9rlrhcf3kkdvj77m1n4v.apps.googleusercontent.com"
 const settings = ["Logout"];
 const styleModal = {
   position: "absolute",
