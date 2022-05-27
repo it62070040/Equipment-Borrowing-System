@@ -1,6 +1,6 @@
 # Welcome to Equipment Borrowing System
 
-[Visit demo website](https://github.com/it62070040/Equipment-Borrowing-System)
+[Visit demo website](https://equipment-borrowing-system.vercel.app)
 
 ```
 git clone https://github.com/it62070040/Equipment-Borrowing-System.git
