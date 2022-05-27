@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import EquipmentsEdit from "../EquipmentsEdit";
 import Swal from "sweetalert2";
 import { Link } from "react-router-dom";
+import { useCallback, useEffect, useState } from "react";
 
 const EQUIPMENTS_MUTATION = gql`
   mutation ($id: MongoID!) {
@@ -19,6 +20,9 @@ const CardTable = ({ searchResult, value, refetch }) => {
   const Swal = require("sweetalert2");
   //mutation
   const [deleteEquipmentId] = useMutation(EQUIPMENTS_MUTATION);
+  
+  useEffect(() => {
+  }, [refetch]);
 
 
   // const linkId = (index) => {
@@ -146,7 +150,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn">
-                  <Link to={`/equipment-edit/${item._id}`}>
+                  <Link to={`/equipment-edit/${item._id}`} >
                     <button
                       className="btn-edit"
                       key={index}

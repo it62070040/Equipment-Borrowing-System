@@ -1,4 +1,5 @@
 import React from "react";
+import { Link, useNavigate  } from "react-router-dom";
 import {
   Box,
   Grid,
@@ -10,13 +11,15 @@ import {
   Radio,
   RadioGroup,
   MenuItem,
+  Button
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 
-import { gql, useQuery, useMutation  } from "@apollo/client";
+import { gql, useQuery, useMutation, defaultDataIdFromObject  } from "@apollo/client";
+import Swal from "sweetalert2";
 
 const EQUIPMENTS_QUERY = gql`
   query ($id: MongoID!) {
@@ -40,26 +43,65 @@ const EQUIPMENT_MUTATION = gql`
     }
   }
 `;
-const currencies = [
-  "Arduino",
-  "Electronics",
-  "Tools",
-  "Recreations",
-  "Furnitures",
-];
+
+const CATEGORY_QUERY = gql`
+  query {
+    categorys {
+      category
+    }
+  }
+`;
+
+const CATEGORY_MUTATION = gql`
+  mutation ($record: CreateOneCategoryInput!) {
+    createCategory(record: $record) {
+      recordId
+    }
+  }
+`;
+
+const EQUIPMENTS_QUERY_Many = gql`
+  query {
+    equipments {
+      _id
+      name
+      description
+      amount
+      category
+      url_pic
+      status
+      why_unavailable
+    }
+  }
+`;
+
 
 function EquipmentsEdit() {
+  const navigate  = useNavigate()
+  const Swal = require("sweetalert2");
   const pathArray = window.location.pathname.split("/");
   const currentId = pathArray[2];
-  const { loading, error, data } = useQuery(EQUIPMENTS_QUERY, {
+  const { loading: loadingE, error: errorE, data: dataE } = useQuery(EQUIPMENTS_QUERY, {
     variables: { id: currentId },
   });
+  const {loading: loadingC ,error: errorC, data: dataC, refetch} = useQuery(CATEGORY_QUERY);
+  // mutation
+  const [updateEquipmentId] = useMutation(EQUIPMENT_MUTATION, {
+    refetchQueries: [{ query: EQUIPMENTS_QUERY_Many }],
+  });
+  const [createCategoryMutation] = useMutation(CATEGORY_MUTATION);
 
+  // category
+  const [queryCategory, setqueryCategory] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
+
+
+  // record
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("อุปกรณ์อิเล็กทรอนิค");
-  const [url_pic, setUrl_pic] = useState("");
-  const [status, setStatus] = useState("available");
+  const [category, setCategory] = useState("");
+  // const [url_pic, setUrl_pic] = useState("");
+  const [status, setStatus] = useState("Available");
   const [why_unavailable, setWhy_unavailable] = useState("");
   const [amount, setAmount] = useState(1);
 
@@ -69,27 +111,67 @@ function EquipmentsEdit() {
   // validation description
   const [helperTextDescription, setHelperTextDescription] = useState("");
   const [errorDescription, setErrorDescription] = useState(false);
+    // validation category
+  const [helperTextCategory, setHelperTextCategory] = useState("");
+  const [errorCategory, setErrorCategory] = useState(false);
 
-    //mutation
-    const [updateEquipmentId] = useMutation(EQUIPMENT_MUTATION);
+
+ // image
+    const [imagePreview, setImagePreview] = useState("");
+    const [fileImage, setFileImage] = useState();
+    const [queryUrl_pic, setQueryUrl_pic] = useState("");
+
+    var FormData = require("form-data");
+  const formData = new FormData();
+
+  const onFileChange =useCallback((e) => {
+    e.preventDefault();
+    const reader = new FileReader();
+    const f = e.target.files[0];
+    if (reader !== undefined && f !== undefined) {
+      reader.onloadend = () => {
+        setImagePreview(reader.result);
+        setFileImage(f);
+      };
+      reader.readAsDataURL(f);
+    }
+  });
+
+  const remove = () => {
+    setImagePreview("");
+  };
 
   useEffect(() => {
-    if (loading === false && data) {
-      setName(data.equipmentId.name);
-      setDescription(data.equipmentId.description);
-      setAmount(data.equipmentId.amount);
-      setCategory(data.equipmentId.category);
-      setWhy_unavailable(data.equipmentId.why_unavailable);
-      setUrl_pic(data.equipmentId.url_pic);
+    if (loadingE === false && dataE) {
+      setName(dataE.equipmentId.name);
+      setDescription(dataE.equipmentId.description);
+      setAmount(dataE.equipmentId.amount);
+      setCategory(dataE.equipmentId.category);
+      setWhy_unavailable(dataE.equipmentId.why_unavailable);
+      setQueryUrl_pic(dataE.equipmentId.url_pic);
+      if (loadingC === false && dataC) {
+            setqueryCategory(dataC.categorys);
+            console.log(queryCategory)
+          }
+      // previewUrl_pic()
     }
-  }, [loading, data]);
+  }, [loadingE, dataE, loadingC, dataC]);
 
-  if (loading) {
+  useEffect(() => {
+    setImagePreview(queryUrl_pic)
+  }, [queryUrl_pic])
+  
+
+  if (loadingE) {
     return <h4>Loading...</h4>;
   }
-  if (error) {
-    return <h4> Error: {error.message}</h4>;
+  if (errorE) {
+    return <h4> Error: {errorE.message}</h4>;
   }
+
+  
+
+  // console.log("query ", url_pic)
 
   const toAdd = () => {
     console.log("add");
@@ -116,6 +198,28 @@ function EquipmentsEdit() {
     }
   };
 
+  const handleCreateCategory = async (e) => {
+    e.preventDefault();
+    console.log("click");
+    try {
+      await createCategoryMutation({
+        variables: {
+          record: {
+            category: newCategory,
+          },
+        },
+      }).then(refetch);
+    } catch (err) {
+      if (err.message.startsWith("E11000")) {
+        setErrorCategory(true);
+        setHelperTextCategory("ชื่อ Category นี้มีอยู่แล้ว");
+      } else {
+        console.log("Server error");
+      }
+    }
+    setNewCategory("");
+  };
+
   const handleSetDescription = (e) => {
     if (e.target.value.length <= 0) {
       setDescription(e.target.value);
@@ -132,6 +236,34 @@ function EquipmentsEdit() {
     e.preventDefault();
     console.log("click");
     try {
+
+      formData.append("file", fileImage);
+      formData.append("upload_preset", "my-uploads");
+      const data = await fetch(
+        "https://api.cloudinary.com/v1_1/fswdproject/image/upload",
+        {
+          method: "POST",
+          body: formData,
+        }
+      ).then((r) => r.json());
+
+      var url_pic = data.secure_url;
+
+      if(!url_pic){
+        url_pic = imagePreview
+      }
+
+     
+      console.log(
+        currentId,
+        name,
+            description,
+            category,
+            url_pic,
+            status,
+            why_unavailable,
+            amount,
+      )
       await updateEquipmentId({
         variables: {
           id: currentId,
@@ -146,11 +278,20 @@ function EquipmentsEdit() {
           },
         },
       });
+      // alert loading
+      Swal.fire({
+        icon: "success",
+        title: "Update Equipment Success",
+        showConfirmButton: false,
+        timer: 2000
+      });
     } catch (err) {
       console.error(err.message);
     }
-    window.location = `/equipments`;
+    navigate("/equipments") 
+    // window.location = `/equipments`;
   };
+  
 
   return (
     <div className="equipments">
@@ -246,18 +387,18 @@ function EquipmentsEdit() {
                   <Grid container>
                     <Grid item>
                       <FormControlLabel
-                        value="available"
+                        value="Available"
                         control={<Radio />}
-                        label="available"
+                        label="Available"
                       />
                     </Grid>
                   </Grid>
                   <Grid container>
                     <Grid item xs={3} sx={{ alignSelf: "center" }}>
                       <FormControlLabel
-                        value="unavailable"
+                        value="Unavailable"
                         control={<Radio />}
-                        label="unavailable"
+                        label="Unavailable"
                       />
                     </Grid>
                     <Grid item xs={9}>
@@ -278,6 +419,50 @@ function EquipmentsEdit() {
 
           <Grid container>
             <Grid item xs={2} className="name" sx={{ alignSelf: "center" }}>
+              เพิ่ม Category อื่น :
+            </Grid>
+            <Grid item xs={10}>
+              <Box
+                // component="form"
+                sx={{
+                  "& .MuiTextField-root": { width: "25ch" },
+                }}
+                // noValidate
+                // autoComplete="off"
+              >
+                <div className="div-center">
+                  <TextField
+                    id="category"
+                    label="ชื่อ category"
+                    fullWidth
+                    margin="normal"
+                    value={newCategory}
+                    helperText={helperTextCategory}
+                    error={errorCategory}
+                    onChange={(e) => setNewCategory(e.target.value)}
+                  />
+                  <Button
+                    variant="contained"
+                    component="span"
+                    sx={{
+                      mt: 1,
+                      py: 1.5,
+                      ml: 2,
+                      borderRadius: "15px",
+                      boxShadow: 0,
+                      backgroundColor: "#2196F3",
+                    }}
+                    onClick={handleCreateCategory}
+                  >
+                    เพิ่ม
+                  </Button>
+                </div>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Grid container>
+            <Grid item xs={2} className="name" sx={{ alignSelf: "center" }}>
               Category :
             </Grid>
             <Grid item xs={10}>
@@ -293,13 +478,14 @@ function EquipmentsEdit() {
                   <TextField
                     id="outlined-select-currency"
                     select
+                    label="กรุณาเลือก Category"
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                   >
-                    {currencies.map((option) => (
-                      <MenuItem key={option} value={option}>
-                        {option}
-                      </MenuItem>
+                    {queryCategory.map((option,i) => (
+                      <MenuItem key={i} value={option.category}>
+                      {option.category}
+                    </MenuItem>
                     ))}
                   </TextField>
                 </div>
@@ -307,24 +493,55 @@ function EquipmentsEdit() {
             </Grid>
           </Grid>
 
-          <Grid container>
+          <Grid container sx={{ mt: 2 }}>
             <Grid item xs={2} className="name" sx={{ alignSelf: "center" }}>
               Picture :
             </Grid>
-            <Grid item xs={10}>
-              {/* <UploadImage /> */}
-
-              <TextField
-                required
-                id="outlined-number"
-                type="string"
-                fullWidth
-                margin="normal"
-                value={url_pic}
-                onChange={(e) => setUrl_pic(e.target.value)}
-              />
+            <Grid>
+              <Stack>
+                {imagePreview === "" ? (
+                  <label htmlFor="icon-button-file">
+                    <input
+                      accept="image/*"
+                      id="icon-button-file"
+                      type="file"
+                      style={{ display: "none" }}
+                      onChange={onFileChange}
+                      src={imagePreview}
+                    />
+                    <Button
+                      variant="outlined"
+                      component="span"
+                      sx={{ mt: 1, py: 1.5 }}
+                    >
+                      กรุณาเลือกรูปภาพของคุณ
+                    </Button>
+                  </label>
+                ) : (
+                  <div>
+                    <Grid
+                      container
+                      sx={{ flexDirection: "column", alignItems: "center" }}
+                    >
+                      <Grid sx={{ mt: 2 }}>
+                        <img src={imagePreview} alt="Icone adicionar" />
+                      </Grid>
+                      <Grid>
+                        <button
+                          type="button"
+                          className="btn-remove"
+                          onClick={remove}
+                        >
+                          Remover
+                        </button>
+                      </Grid>
+                    </Grid>
+                  </div>
+                )}
+              </Stack>
             </Grid>
           </Grid>
+
           <div className="button-submit" style={{ textAlign: "center" }}>
             <button className="btn-submit" onClick={handleEditEquipments}>
               Submit

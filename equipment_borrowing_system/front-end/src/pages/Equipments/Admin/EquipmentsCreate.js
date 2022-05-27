@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./EquipmentCreate.css";
-import { Link, useNavigate  } from "react-router-dom";
+import { Link, useNavigate, Navigate, useLocation  } from "react-router-dom";
 import {
   Box,
   Grid,
@@ -44,9 +44,25 @@ const CATEGORY_MUTATION = gql`
   }
 `;
 
+const EQUIPMENTS_QUERY = gql`
+  query {
+    equipments {
+      _id
+      name
+      description
+      amount
+      category
+      url_pic
+      status
+      why_unavailable
+    }
+  }
+`;
+
 const EquipmentsCreate = () => {
   const Swal = require("sweetalert2");
   const navigate  = useNavigate()
+  const location = useLocation();
   const [queryCategory, setqueryCategory] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -92,7 +108,10 @@ const EquipmentsCreate = () => {
   //query
   const { loading, error, data, refetch } = useQuery(CATEGORY_QUERY);
   //mutation
-  const [createEquipmentMutation] = useMutation(EQUIPMENT_MUTATION);
+  const [createEquipmentMutation] = useMutation(EQUIPMENT_MUTATION,
+    {
+      refetchQueries: [{ query: EQUIPMENTS_QUERY }],
+    });
   const [createCategoryMutation] = useMutation(CATEGORY_MUTATION);
 
   useEffect(() => {
@@ -141,7 +160,7 @@ const EquipmentsCreate = () => {
         icon: "success",
         title: "Create Equipment Success",
         showConfirmButton: false,
-        // timer: 3000
+        timer: 2000
       });
 
       navigate("/equipments") 
