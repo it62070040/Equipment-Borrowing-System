@@ -36,7 +36,7 @@ const startApolloServer = async () => {
     context: ({ req }) => {
       const token = getReqToken(req)
       const user = decodeToken(token, process.env.JWT_SECRET ?? '')
-      console.log(user)
+      // console.log(user)
       return { user }
       // if (token) {
       //   const payload = jsonwebtoken.verify(token, process.env.JWT_SECRET)
