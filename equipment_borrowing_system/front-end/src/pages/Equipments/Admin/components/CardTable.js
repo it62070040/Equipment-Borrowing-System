@@ -89,20 +89,12 @@ const CardTable = ({ searchResult, value, refetch }) => {
         ) : (
           <h4 style={{ textAlign: "center" }}>ไม่พบข้อมูลที่ค้นหา</h4>
         )}
-
+        
         {searchResult.map((item, index) => (
+          <Link to={`/equipmentInfo/${item._id}`} >
+            <div className="eq-item-row">
           <Box
             key={item._id}
-            sx={{
-              flexGrow: 1,
-              backgroundColor: "#f2f2f2",
-              borderRadius: "10px",
-              height: "145px",
-              flexDirection: "column",
-              display: "flex",
-              justifyContent: "center",
-              my: 2,
-            }}
           >
             <Grid container>
               <Grid item xs={8}>
@@ -171,6 +163,8 @@ const CardTable = ({ searchResult, value, refetch }) => {
               </Grid>
             </Grid>
           </Box>
+          </div>
+          </Link>
         ))}
       </Box>
     </>

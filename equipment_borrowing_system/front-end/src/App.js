@@ -21,10 +21,10 @@ function App() {
             <Navbar />            
                 <Routes>
                     <Route path='/' element={<Home/>} />
+                    <Route path='/equipmentInfo/:id' element={<EquipmentInfo/>}/>
 
                     <Route element={<RequireAuth allowedRoles={"user"} />}>
                         <Route path='/equipments-user' element={<EquipmentUser/>} />
-                        <Route path='/equipmentInfo/:id' element={<EquipmentInfo/>}/>
                         <Route path='/borrow-history-user' element={<BorrowHisUser/>} />
                     </Route>
 

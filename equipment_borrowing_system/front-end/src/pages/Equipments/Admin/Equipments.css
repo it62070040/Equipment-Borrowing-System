@@ -105,3 +105,14 @@
     justify-content: center;
     align-items: center;
 }
+.eq-item-row {
+    background-color: #F2F2F2;
+    border-radius: 10px;
+    padding: 10px 0px;
+    cursor: pointer;
+    margin: 10px 0px;
+  }
+.eq-item-row:hover {
+    background-color: #ddd;
+    transition: 0.4s;
+  }
