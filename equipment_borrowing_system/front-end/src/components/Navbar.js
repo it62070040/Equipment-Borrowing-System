@@ -15,7 +15,7 @@ import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
 import Swal from "sweetalert2";
 
-const clientId = "603908162609-jl9gm19hq7lhb5nu4gi1i59c689oq4s5.apps.googleusercontent.com"
+const clientId = "1089120979699-n7sk5a13656m9rlrhcf3kkdvj77m1n4v.apps.googleusercontent.com"
 const settings = ["Logout"];
 const styleModal = {
   position: "absolute",
