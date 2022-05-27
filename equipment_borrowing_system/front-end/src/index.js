@@ -11,7 +11,7 @@ import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const client = new ApolloClient({
-  uri: 'https://equipment-borrowing-system-hmxbux209-it62070040.vercel.app/',
+  uri: 'https://equipment-borrowing-system-hmxbux209-it62070040.vercel.app/graphql',
   cache: new InMemoryCache(),
   credentials: 'include'
 });
