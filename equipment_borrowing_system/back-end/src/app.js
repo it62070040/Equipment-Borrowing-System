@@ -16,7 +16,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // app.use(cors({ origin: ['abc.com', '*.test.com'] }))
 app.use(cookieParser())
-app.use(cors({ origin: ['https://equipment-borrowing-system.vercel.app'], credentials: true }))
+app.use(cors({ origin: ['http://localhost:3000', 'https://equipment-borrowing-system.vercel.app'], credentials: true }))
 // app.use(cors({credentials: true }))
 
 app.get('/', (req, res) => {
@@ -28,10 +28,10 @@ const startApolloServer = async () => {
   const apolloServer = new ApolloServer({
     schema,
     introspection: true,
-    plugins: [
-      ApolloServerPluginDrainHttpServer({ httpServer }),
-      ApolloServerPluginLandingPageGraphQLPlayground(),
-    ],
+    // plugins: [
+    //   ApolloServerPluginDrainHttpServer({ httpServer }),
+    //   ApolloServerPluginLandingPageGraphQLPlayground(),
+    // ],
     context: ({ req }) => {
       const token = getReqToken(req)
       const user = decodeToken(token, process.env.JWT_SECRET ?? '')
@@ -49,7 +49,7 @@ const startApolloServer = async () => {
   apolloServer.applyMiddleware({
     app,
     path: '/graphql',
-    cors: { origin: ['https://equipment-borrowing-system.vercel.app'], credentials: true },
+    cors: { origin: ['http://localhost:3000', 'https://equipment-borrowing-system.vercel.app'], credentials: true },
   })
   httpServer.listen({ port: process.env.PORT || 3001 })
 }

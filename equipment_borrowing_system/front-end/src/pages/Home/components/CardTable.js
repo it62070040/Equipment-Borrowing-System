@@ -15,7 +15,7 @@ const ORDER_MUTATION = gql`
 `;
 
 export default function CardTable({ data, refetch }) {
-  console.log(data);
+  //console.log(data);
   const Swal = require("sweetalert2");
   const [updateOrderId] = useMutation(ORDER_MUTATION);
   const approved = async (id) => {
@@ -45,7 +45,7 @@ export default function CardTable({ data, refetch }) {
 
   const unApproved = async (id) => {
     const item = data[id];
-    console.log(item._id);
+    //console.log(item._id);
     try {
       await updateOrderId({
         variables: {
@@ -69,7 +69,7 @@ export default function CardTable({ data, refetch }) {
 
   const success = async (id) => {
     const item = data[id];
-    console.log(item._id);
+    //console.log(item._id);
     try {
       await updateOrderId({
         variables: {
@@ -93,7 +93,7 @@ export default function CardTable({ data, refetch }) {
 
   const fail = async (id) => {
     const item = data[id];
-    console.log(item._id);
+    //(item._id);
     try {
       await updateOrderId({
         variables: {

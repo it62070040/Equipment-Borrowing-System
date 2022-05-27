@@ -21,7 +21,7 @@ export default function CardTable({ data, refetch }) {
 
   const handleReturn = async (id) => {
     const item = data[id];
-    console.log(item._id);
+    //console.log(item._id);
     try {
       await updateOrderId({
         variables: {
@@ -46,7 +46,7 @@ export default function CardTable({ data, refetch }) {
 
   const handleCancel = async (id) => {
     const item = data[id];
-    console.log(item._id);
+    //console.log(item._id);
     try {
       await updateOrderId({
         variables: {
