@@ -162,10 +162,21 @@ function Navbar() {
     return (
       <div className={checkUserLogin ? "hi" : "profile-mobile"}>
         <Tooltip title="Logout">
-          <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-            <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
+          {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+          <Avatar src="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png" />
             <div className="userName">{user.fullname}</div>
-          </IconButton>
+          </IconButton> */}
+          {user.role === "user" ? (
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png" />
+                  <div className="userName">{user.fullname}</div>
+                </IconButton>
+              ) : (
+                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
+                  <div className="userName">{user.fullname}</div>
+                </IconButton>
+              )}
         </Tooltip>
         <Menu
           sx={{ mt: "45px" }}

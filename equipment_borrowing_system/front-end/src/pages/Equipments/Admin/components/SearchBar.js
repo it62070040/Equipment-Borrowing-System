@@ -81,7 +81,7 @@ const SearchBar = () => {
             <button className="btn-search" onClick={searchItem} >Search</button>
           </Grid>
         </Grid>
-        <h5 className="center">Amount : {searchResult.length}</h5>
+        
       <Box
         className="table"
         sx={{

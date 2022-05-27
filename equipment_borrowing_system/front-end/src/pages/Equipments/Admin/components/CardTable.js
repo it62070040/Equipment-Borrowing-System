@@ -64,8 +64,9 @@ const CardTable = ({ searchResult, value, refetch }) => {
               <Grid container>
                 <Grid item xs={4}>
                   <p className="table-status">Status</p>
+                  
                 </Grid>
-                <Grid item xs={8}></Grid>
+                <Grid item xs={8}><p className="table-status">Amount : {searchResult.length}</p></Grid>
               </Grid>
             </Grid>
           </Grid>
