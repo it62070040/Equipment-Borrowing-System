@@ -1,6 +1,6 @@
 import { createServer } from 'http'
 
-import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground } from 'apollo-server-core'
+import { ApolloServerPluginDrainHttpServer, ApolloServerPluginLandingPageGraphQLPlayground, ApolloServerPluginLandingPageDisabled } from 'apollo-server-core'
 import { ApolloServer } from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
@@ -28,7 +28,6 @@ const startApolloServer = async () => {
     schema,
     introspection: true,
     plugins: [
-      ApolloServerPluginLandingPageDisabled(),
       // ApolloServerPluginDrainHttpServer({ httpServer }),
       // ApolloServerPluginLandingPageGraphQLPlayground(),
     ],
