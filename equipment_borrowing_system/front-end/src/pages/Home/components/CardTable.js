@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import React, { useState } from "react";
+import React from "react";
 import "./MiniBar.css";
 import Moment from "moment";
 import { Link } from "react-router-dom";

@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./EquipmentTable.css";
 // import data from "../../Admin/components/ListData.json"
