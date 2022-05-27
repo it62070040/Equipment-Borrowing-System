@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
 import "./EquipmentInfoCard.css";
-import { containerClasses, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
