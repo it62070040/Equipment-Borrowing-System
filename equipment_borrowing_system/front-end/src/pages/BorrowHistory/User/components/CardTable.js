@@ -14,10 +14,18 @@ const ORDER_MUTATION = gql`
   }
 `;
 
+const EQUIPMENTAMOUNT_MUTATION = gql`
+  mutation ($id: MongoID!, $record: UpdateByIdEquipmentInput!) {
+    updateEquipmentId(_id: $id, record: $record) {
+      recordId
+    }
+  }
+`;
 
 export default function CardTable({ data, refetch }) {
   const Swal = require("sweetalert2");
   const [updateOrderId] = useMutation(ORDER_MUTATION);
+  const [updateEquipmentAmount] = useMutation(EQUIPMENTAMOUNT_MUTATION);
 
   const handleReturn = async (id) => {
     const item = data[id];
@@ -64,10 +72,30 @@ export default function CardTable({ data, refetch }) {
         showConfirmButton: false,
         // timer: 3000
       });
+      handleUpdateEquipment(item.order_amount, item.equipment.amount, id)
       refetch()
     } catch (err) {
       console.error(err.message);
     }
+  };
+
+  const handleUpdateEquipment = async (orderAmount, equipmentAmount, id) => {
+    const item = data[id];
+    const amountUpdate = equipmentAmount + orderAmount;
+      // console.log("updateAmount: "+ amountUpdate);
+      try {
+        await updateEquipmentAmount({
+          variables: {
+            id: item.equipment._id,
+            record: {
+              amount: amountUpdate,
+            },
+          },
+        });
+        refetch();
+      } catch (err) {
+        console.error(err.message);
+      }
   };
 
   return (

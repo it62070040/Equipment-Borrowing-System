@@ -43,7 +43,7 @@ export default function MiniBar() {
     refetch()
     if (loading === false && data) {
       const neworder = data.Orders;
-      setOrder(neworder.filter((item) => item.orderstatus === click));
+      setOrder(neworder.filter((item) => item.orderstatus === click).sort((a,b)=>a.createdAt-b.createdAt));
       // console.log(data.Orders);
     }
   }, [loading, data, order, click, refetch]);
