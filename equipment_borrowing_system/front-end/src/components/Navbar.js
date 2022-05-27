@@ -56,10 +56,8 @@ function Navbar() {
   const [checkUserLogin, setCheckUserLogin] = useState(false);
   useEffect(() => {
     if (user === null) {
-      console.log("User is null")
       setCheckUserLogin(false);
     } else {
-      console.log(user)
       setCheckUserLogin(true);
       setShowUsername(true);
       setShowloginButton(false);
@@ -80,7 +78,6 @@ function Navbar() {
       } else if (
         String(res.profileObj.email).slice(-15) === "@it.kmitl.ac.th"
       ) {
-        console.log("Login Success:", res.profileObj);
         setFullname(res.profileObj.name);
         setStudentId(String(res.profileObj.email).slice(0, 8));
         setEmail(res.profileObj.email);
@@ -99,13 +96,11 @@ function Navbar() {
           });
           await login(email);
           console.log(`Welcome new user, Your're logged in as : ${email}`);
-          console.log(user)
         } catch (err) {
           if (err.message.startsWith("E11000")) {
             try {
               await login(email);
               console.log(`Logged in as : ${email}`);
-              console.log(user)
             } catch (err) {
               console.log("You're not logged in");
             }
