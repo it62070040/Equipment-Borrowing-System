@@ -2,11 +2,11 @@
 
 [Visit demo website](https://github.com/it62070040/Equipment-Borrowing-System)
 
-## Setup Front-end 
-
 ```
 git clone https://github.com/it62070040/Equipment-Borrowing-System.git
 ```
+
+## Setup Front-end 
 
 ```
 cd Equipment-Borrowing-System/equipment_borrowing_system/front-end
