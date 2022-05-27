@@ -151,9 +151,7 @@ function EquipmentsEdit() {
       setQueryUrl_pic(dataE.equipmentId.url_pic);
       if (loadingC === false && dataC) {
             setqueryCategory(dataC.categorys);
-            console.log(queryCategory)
           }
-      // previewUrl_pic()
     }
   }, [loadingE, dataE, loadingC, dataC]);
 
@@ -169,16 +167,11 @@ function EquipmentsEdit() {
     return <h4> Error: {errorE.message}</h4>;
   }
 
-  
-
-  // console.log("query ", url_pic)
 
   const toAdd = () => {
-    console.log("add");
     setAmount(amount + 1);
   };
   const toDel = () => {
-    console.log("del");
     if (amount <= 1) {
       setAmount(1);
     } else {
@@ -200,7 +193,6 @@ function EquipmentsEdit() {
 
   const handleCreateCategory = async (e) => {
     e.preventDefault();
-    console.log("click");
     try {
       await createCategoryMutation({
         variables: {
@@ -234,7 +226,6 @@ function EquipmentsEdit() {
 
   const handleEditEquipments = async (e) => {
     e.preventDefault();
-    console.log("click");
     try {
 
       formData.append("file", fileImage);
@@ -253,17 +244,6 @@ function EquipmentsEdit() {
         url_pic = imagePreview
       }
 
-     
-      console.log(
-        currentId,
-        name,
-            description,
-            category,
-            url_pic,
-            status,
-            why_unavailable,
-            amount,
-      )
       await updateEquipmentId({
         variables: {
           id: currentId,

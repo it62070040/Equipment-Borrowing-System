@@ -79,6 +79,7 @@ const SearchBar = () => {
             <button className="btn-search" onClick={searchItem} >Search</button>
           </Grid>
         </Grid>
+        <h5 className="center">Amount : {searchResult.length}</h5>
       <Box
         className="table"
         sx={{
@@ -90,11 +91,6 @@ const SearchBar = () => {
         }}
       >
         <CardTable searchResult={searchResult} value={value} refetch={refetch}/>
-        {/* {data.equipments.map((eq) => (
-          <div key={eq._id}>
-            <p>{eq.name}</p>
-          </div>
-        ))} */}
       </Box>
     </>
   );

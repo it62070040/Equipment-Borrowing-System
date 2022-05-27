@@ -7,7 +7,6 @@ import { Box, Button, Stack, IconButton, Icon } from "@mui/material";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 
 function Equipments() {
-  // add equipement but wait to research and DB
   return (
     <div className="equipments">
       <div className="equipments-container">

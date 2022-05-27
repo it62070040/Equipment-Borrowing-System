@@ -165,7 +165,6 @@ const EquipmentsCreate = () => {
 
       navigate("/equipments") 
       
-      // window.location = `/equipments`;
     } catch (err) {
       console.error(err.message);
       // alert error
@@ -181,7 +180,6 @@ const EquipmentsCreate = () => {
 
   const handleCreateCategory = async (e) => {
     e.preventDefault();
-    console.log("click");
     try {
       await createCategoryMutation({
         variables: {
@@ -202,11 +200,9 @@ const EquipmentsCreate = () => {
   };
 
   const toAdd = () => {
-    console.log("add");
     setAmount(amount + 1);
   };
   const toDel = () => {
-    console.log("del");
     if (amount <= 1) {
       setAmount(1);
     } else {
