@@ -1,5 +1,6 @@
 // import { Schema } from 'mongoose'
 
+import { CategoryModel } from '../models/category'
 import { EquipmentModel } from '../models/equipment'
 import { OrderModel } from '../models/order'
 import { UserModel } from '../models/user'
@@ -10,8 +11,26 @@ const USERS = [
     studentId: 'admin1',
     fullname: 'Admin',
     email: 'ebsystem.adm@gmail.com',
-    role: "admin"
+    role: 'admin',
     // roles: {Admin : 5150},
+  },
+]
+
+const CATEGORYS = [
+  {
+    category: 'Electronics',
+  },
+  {
+    category: 'Arduino',
+  },
+  {
+    category: 'Tools',
+  },
+  {
+    category: 'Furnitures',
+  },
+  {
+    category: 'Recreations',
   },
 ]
 
@@ -259,6 +278,7 @@ const main = async () => {
   await OrderModel.deleteMany({})
   await UserModel.deleteMany({})
   await UserModel.create(USERS)
+  await CategoryModel.create(CATEGORYS)
   await EquipmentModel.create(EQUIPMENTS)
   //   await OrderModel.create({ ORDERS, userId: users[0]._id, equipmentId: equipments[0]._id })
   process.exit(0)
