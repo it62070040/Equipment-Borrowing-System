@@ -27,10 +27,11 @@ const startApolloServer = async () => {
   const apolloServer = new ApolloServer({
     schema,
     introspection: true,
-    // plugins: [
-    //   ApolloServerPluginDrainHttpServer({ httpServer }),
-    //   ApolloServerPluginLandingPageGraphQLPlayground(),
-    // ],
+    plugins: [
+      ApolloServerPluginLandingPageDisabled(),
+      // ApolloServerPluginDrainHttpServer({ httpServer }),
+      // ApolloServerPluginLandingPageGraphQLPlayground(),
+    ],
     context: ({ req }) => {
       const token = getReqToken(req)
       const user = decodeToken(token, process.env.JWT_SECRET ?? '')
