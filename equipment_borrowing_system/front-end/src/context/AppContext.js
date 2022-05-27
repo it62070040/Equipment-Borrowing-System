@@ -55,8 +55,11 @@ export const AppProvider = ({ children }) => {
       if (data?.me) {
         setUser(data.me ?? null)
       }
+      else{
+        console.log(cookies)
+      }
     },
-    [data],
+    [data, cookies],
   )
   useEffect(
     () => {

@@ -56,6 +56,7 @@ function Navbar() {
   const [checkUserLogin, setCheckUserLogin] = useState(false);
   useEffect(() => {
     if (user === null) {
+      console.log("User is null")
       setCheckUserLogin(false);
     } else {
       console.log(user)
@@ -79,13 +80,13 @@ function Navbar() {
       } else if (
         String(res.profileObj.email).slice(-15) === "@it.kmitl.ac.th"
       ) {
+        console.log("Login Success:", res.profileObj);
         setFullname(res.profileObj.name);
         setStudentId(String(res.profileObj.email).slice(0, 8));
         setEmail(res.profileObj.email);
         let fullname = res.profileObj.name;
         let studentId = String(res.profileObj.email).slice(0, 8);
         let email = res.profileObj.email;
-        // console.log("Login Success:", res.profileObj);
         try {
           await createUserMutation({
             variables: {

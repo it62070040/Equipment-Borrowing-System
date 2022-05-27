@@ -5,7 +5,6 @@ import { ApolloServer } from 'apollo-server-express'
 import cookieParser from 'cookie-parser'
 import cors from 'cors'
 import express from 'express'
-
 import { decodeToken, getReqToken } from './lib/generateUserToken'
 import './mongoose-connect'
 // eslint-disable-next-line import/order
