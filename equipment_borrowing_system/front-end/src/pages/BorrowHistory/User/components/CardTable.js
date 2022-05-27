@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import "./MiniBar.css";
 import Moment from 'moment';
 import { gql, useMutation } from "@apollo/client";
+import Swal from "sweetalert2";
 
 const ORDER_MUTATION = gql`
   mutation ($id: MongoID!, $record: UpdateByIdOrderInput!) {
@@ -15,6 +16,7 @@ const ORDER_MUTATION = gql`
 
 
 export default function CardTable({ data, refetch }) {
+  const Swal = require("sweetalert2");
   const [updateOrderId] = useMutation(ORDER_MUTATION);
 
   const handleReturn = async (id) => {
@@ -29,6 +31,12 @@ export default function CardTable({ data, refetch }) {
               returnstatus: "Pending",
           }
         },
+      });
+      Swal.fire({
+        icon: "success",
+        title: `Send Return Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
       });
       refetch()
     } catch (err) {
@@ -49,6 +57,12 @@ export default function CardTable({ data, refetch }) {
               returnstatus: "",
           }
         },
+      });
+      Swal.fire({
+        icon: "success",
+        title: `Cancel Borrow Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
       });
       refetch()
     } catch (err) {

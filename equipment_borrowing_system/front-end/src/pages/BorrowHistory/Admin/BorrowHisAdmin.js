@@ -7,7 +7,7 @@ function BorrowHisAdmin() {
   return (
     <div className="borrow">
       <div className="borrow-container">
-        <h1 className="Header-title-Bor">History</h1>
+        <h1 className="Header-title-Bor">Order</h1>
         <Box
           className="search-bar"
           sx={{

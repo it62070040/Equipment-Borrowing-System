@@ -29,10 +29,11 @@ function Equipments() {
   const { loading, error, data, refetch } = useQuery(EQUIPMENTS_QUERY)
     
   useEffect(() => {
+    refetch()
     if(loading === false && data){
       setSearchResult(data.equipments);
     }
-  }, [loading, data])
+  }, [loading, data, refetch])
 
   if (loading) {
     return <h4>Loading...</h4>
@@ -85,7 +86,6 @@ function Equipments() {
       <div className="eq-container">
         <div className="eq-header">
           Equipments
-          <Link to="/equipments">Admin Site</Link>
         </div>
         <div className="eq-body">
           <Box className="eq-body-container">

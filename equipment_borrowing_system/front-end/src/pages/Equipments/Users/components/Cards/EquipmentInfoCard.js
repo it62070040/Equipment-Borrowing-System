@@ -7,6 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useApp } from '../../../../../context/AppContext'
+import Swal from "sweetalert2";
 
 import { gql, useMutation } from "@apollo/client";
 
@@ -27,6 +28,7 @@ const EQUIPMENTAMOUNT_MUTATION = gql`
 `;
 
 function EquipmentInfoCard({equipment, refetch }) {
+  const Swal = require("sweetalert2");
   const { user } = useApp();
   const [userId, setUserId] = useState(user._id);
   const [borrowDate, setBorrowDate] = useState(null);
@@ -39,7 +41,7 @@ function EquipmentInfoCard({equipment, refetch }) {
   const onClickBorrow = useCallback(
     async (e) => {
     e.preventDefault();
-    console.log("click");
+    // console.log("click");
         // console.log({ borrowDate, returnDate, order_amount})
         try {
             await createOrderMutation({ variables: {
@@ -53,6 +55,12 @@ function EquipmentInfoCard({equipment, refetch }) {
             }
           })
           console.log("Make Borrow!!");
+          Swal.fire({
+            icon: "success",
+            title: "Create Borrow Request Success",
+            showConfirmButton: false,
+            // timer: 3000
+          });
           handleUpdateEquipment(order_amount, equipment.amount)
             setBorrowDate(null)
             setReturnDate(null)

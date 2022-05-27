@@ -4,6 +4,7 @@ import * as React from "react";
 import "./MiniBar.css";
 import Moment from 'moment';
 import { gql, useMutation } from "@apollo/client";
+import Swal from "sweetalert2";
 
 const ORDER_MUTATION = gql`
   mutation ($id: MongoID!, $record: UpdateByIdOrderInput!) {
@@ -14,8 +15,9 @@ const ORDER_MUTATION = gql`
 `;
 
 export default function CardTable({ data, refetch }) {
+  console.log(data);
+  const Swal = require("sweetalert2");
   const [updateOrderId] = useMutation(ORDER_MUTATION);
-
   const approved = async (id) => {
     const item = data[id];
     console.log(item._id);
@@ -28,6 +30,12 @@ export default function CardTable({ data, refetch }) {
               returnstatus: "Borrowing"
           }
         },
+      });
+      Swal.fire({
+        icon: "success",
+        title: `Approve Borrow Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
       });
       refetch()
     } catch (err) {
@@ -47,6 +55,12 @@ export default function CardTable({ data, refetch }) {
           }
         },
       });
+      Swal.fire({
+        icon: "success",
+        title: `Unapprove Borrow Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
+      });
       refetch()
     } catch (err) {
       console.error(err.message);
@@ -65,6 +79,12 @@ export default function CardTable({ data, refetch }) {
           }
         },
       });
+      Swal.fire({
+        icon: "success",
+        title: `Approve Return Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
+      });
       refetch()
     } catch (err) {
       console.error(err.message);
@@ -82,6 +102,12 @@ export default function CardTable({ data, refetch }) {
               returnstatus: "Fail",
           }
         },
+      });
+      Swal.fire({
+        icon: "success",
+        title: `Unapprove Return Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
       });
       refetch()
     } catch (err) {

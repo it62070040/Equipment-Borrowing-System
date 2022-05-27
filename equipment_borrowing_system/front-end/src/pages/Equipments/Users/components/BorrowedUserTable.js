@@ -30,10 +30,11 @@ export default function BorrowedUserTable({ equipment }) {
     })
 
     useEffect(() => {
+      refetch()
       if(loading === false && data){
         setOrder(data.OrderEquipmentId);
       }
-    }, [loading, data])
+    }, [loading, data, refetch])
 
   
   if (loading) {
@@ -44,7 +45,7 @@ export default function BorrowedUserTable({ equipment }) {
   }
 
   const returnData = () => {
-    console.log(Object.keys(order).length === 0)
+    // console.log(Object.keys(order).length === 0)
     return (
       <>
       <div className="borrow-table-header-row-con">

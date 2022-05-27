@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import "./EquipmentCreate.css";
+import { Link, useNavigate  } from "react-router-dom";
 import {
   Box,
   Grid,
@@ -45,6 +46,7 @@ const CATEGORY_MUTATION = gql`
 
 const EquipmentsCreate = () => {
   const Swal = require("sweetalert2");
+  const navigate  = useNavigate()
   const [queryCategory, setqueryCategory] = useState([]);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -137,11 +139,14 @@ const EquipmentsCreate = () => {
       // alert loading
       Swal.fire({
         icon: "success",
-        title: "Creat Equipment Success",
+        title: "Create Equipment Success",
         showConfirmButton: false,
         // timer: 3000
       });
-      window.location = `/equipments`;
+
+      navigate("/equipments") 
+      
+      // window.location = `/equipments`;
     } catch (err) {
       console.error(err.message);
       // alert error
