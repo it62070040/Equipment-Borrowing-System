@@ -113,17 +113,17 @@ function Navbar() {
             console.log("Server error");
           }
         }
-      } else {
+      } else if(
+        String(res.profileObj.email).slice(-15) !== "@it.kmitl.ac.th" || String(res.profileObj.email) !== "ebsystem.adm@gmail.com"
+      ){
         // alert
         // Swal.fire({
         //   title: "Please Login again Use only @it.kmitl.ac.th",
         //   icon: "warning",
         //   showConfirmButton: false,
-        //   timer: 1000
-
+        //   timer: 3000
         // })
-
-        alert("Please Login again Use only @it.kmitl.ac.th");
+        alert("Please login with account @it.kmitl.ac.th");
       }
     },
     [login, email, fullname, studentId, createUserMutation, user]
@@ -135,7 +135,6 @@ function Navbar() {
 
   const onSignoutSuccess = useCallback(() => {
     logout();
-
     console.clear();
     window.location.reload();
     // setShowloginButton(true);
