@@ -81,7 +81,7 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "Borrow" ? "#2196F3" : "#000",
+                color: click === "Borrow" ? "rgb(231 198 252)" : "#000",
                 textDecoration: click === "Borrow" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}
@@ -98,7 +98,7 @@ export default function MiniBar() {
                 fontWeight: "600",
                 fontSize: "16px",
                 textTransform: "none",
-                color: click === "Return" ? "#2196F3" : "#000",
+                color: click === "Return" ? "rgb(231 198 252)" : "#000",
                 textDecoration: click === "Return" ? "underline" : "none",
                 textUnderlineOffset: "2px",
               }}

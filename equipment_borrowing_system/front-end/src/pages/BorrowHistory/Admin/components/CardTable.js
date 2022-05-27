@@ -132,7 +132,7 @@ export default function CardTable({ data, refetch }) {
                 <p className="table-title">Borrow date</p>
               </Grid>
               <Grid item xs={2}>
-                <p className="table-title">Borrow date</p>
+                <p className="table-title">Return date</p>
               </Grid>
             </Grid>
           </Grid>

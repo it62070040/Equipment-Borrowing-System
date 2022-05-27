@@ -1,5 +1,5 @@
 import { Box, Grid } from "@mui/material";
-import React, { useState, useEffect, useCallback } from "react";
+import * as React from "react";
 // import data from './ListData.json';
 import "./MiniBar.css";
 import Moment from 'moment';
@@ -14,12 +14,11 @@ const ORDER_MUTATION = gql`
   }
 `;
 
-
 export default function CardTable({ data, refetch }) {
+  console.log(data);
   const Swal = require("sweetalert2");
   const [updateOrderId] = useMutation(ORDER_MUTATION);
-
-  const handleReturn = async (id) => {
+  const approved = async (id) => {
     const item = data[id];
     console.log(item._id);
     try {
@@ -27,14 +26,14 @@ export default function CardTable({ data, refetch }) {
         variables: {
           id: item._id,
           record: {
-              orderstatus: "Return",
-              returnstatus: "Pending",
+              borrowstatus: "Approved",
+              returnstatus: "Borrowing"
           }
         },
       });
       Swal.fire({
         icon: "success",
-        title: `Send Return Request Success`,
+        title: `Approve Borrow Request Success`,
         showConfirmButton: false,
         // timer: 3000
       });
@@ -44,7 +43,7 @@ export default function CardTable({ data, refetch }) {
     }
   };
 
-  const handleCancel = async (id) => {
+  const unApproved = async (id) => {
     const item = data[id];
     console.log(item._id);
     try {
@@ -52,15 +51,61 @@ export default function CardTable({ data, refetch }) {
         variables: {
           id: item._id,
           record: {
-              orderstatus: "Cancel",
-              borrowstatus: "",
-              returnstatus: "",
+              borrowstatus: "Unapproved",
           }
         },
       });
       Swal.fire({
         icon: "success",
-        title: `Cancel Borrow Request Success`,
+        title: `Unapprove Borrow Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
+      });
+      refetch()
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const success = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              returnstatus: "Success",
+          }
+        },
+      });
+      Swal.fire({
+        icon: "success",
+        title: `Approve Return Request Success`,
+        showConfirmButton: false,
+        // timer: 3000
+      });
+      refetch()
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  const fail = async (id) => {
+    const item = data[id];
+    console.log(item._id);
+    try {
+      await updateOrderId({
+        variables: {
+          id: item._id,
+          record: {
+              returnstatus: "Fail",
+          }
+        },
+      });
+      Swal.fire({
+        icon: "success",
+        title: `Unapprove Return Request Success`,
         showConfirmButton: false,
         // timer: 3000
       });
@@ -74,26 +119,28 @@ export default function CardTable({ data, refetch }) {
     <div style={{ width: "100%" }}>
       <Box>
         <Grid container>
-          <Grid item xs={8}>
+          <Grid item xs={10}>
             <Grid container>
               <Grid item xs={3}></Grid>
               <Grid item xs={3}>
                 <p className="table-title">Title</p>
               </Grid>
-              <Grid item xs={3}>
-                <p className="table-status">Borrow date</p>
+              <Grid item xs={2}>
+                <p className="table-title">User</p>
               </Grid>
-              <Grid item xs={3}>
-                <p className="table-status">Return date</p>
+              <Grid item xs={2} className="style-status-bor">
+                <p className="table-title">Borrow date</p>
+              </Grid>
+              <Grid item xs={2} className="style-status-bor">
+                <p className="table-title">Return date</p>
               </Grid>
             </Grid>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item xs={2}>
             <Grid container>
-              <Grid item xs={4}>
+              <Grid item xs={12} className="style-status-bor">
                 <p className="table-status">Status</p>
               </Grid>
-              <Grid item xs={8}></Grid>
             </Grid>
           </Grid>
         </Grid>
@@ -112,18 +159,14 @@ export default function CardTable({ data, refetch }) {
             }}
           >
             <Grid container>
-              <Grid item xs={8}>
+              <Grid item xs={10}>
                 <Grid container>
                   <Grid
                     item
                     xs={3}
                     sx={{ display: "flex", justifyContent: "center" }}
                   >
-                    <img
-                      className="table-img"
-                      alt="complex"
-                      src={item.equipment.url_pic}
-                    />
+                    <img className="table-img" alt="complex" src={item.equipment.url_pic} />
                   </Grid>
                   <Grid
                     item
@@ -135,35 +178,48 @@ export default function CardTable({ data, refetch }) {
                     }}
                   >
                     <p className="style-name">{item.equipment.name}</p>
-                    <p className="style-name">amount : {item.order_amount}</p>
                   </Grid>
                   <Grid
                     item
-                    xs={3}
+                    xs={2}
                     sx={{
                       flexDirection: "column",
                       display: "flex",
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-status-bor">{Moment(item.borrowDate).format('DD/MM/YYYY')}</p>
+                    <p className="style-name">{item.user.studentId}</p>
+                    <p className="style-name">{item.user.fullname}</p>
                   </Grid>
                   <Grid
                     item
-                    xs={3}
+                    xs={2}
+                    className="style-status-bor"
                     sx={{
                       flexDirection: "column",
                       display: "flex",
                       justifyContent: "center",
                     }}
                   >
-                    <p className="style-status-bor">{Moment(item.returnDate).format('DD/MM/YYYY')}</p>
+                    <p className="style-name">{Moment(item.borrowDate).format('DD/MM/YYYY')}</p>
+                  </Grid>
+                  <Grid
+                    item
+                    xs={2}
+                    className="style-status-bor"
+                    sx={{
+                      flexDirection: "column",
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <p className="style-name">{Moment(item.returnDate).format('DD/MM/YYYY')}</p>
                   </Grid>
                 </Grid>
               </Grid>
               <Grid
                 item
-                xs={4}
+                xs={2}
                 sx={{
                   flexDirection: "column",
                   display: "flex",
@@ -171,49 +227,17 @@ export default function CardTable({ data, refetch }) {
                 }}
               >
                 <Grid container>
-                  <Grid item xs={4} className="style-status-bor">
-                    {item.borrowstatus === "Approved" && item.returnstatus === "Borrowing" ? (
-                      <p style={{ color: "#008000" }}>
-                        {item.returnstatus}
-                      </p>
-                    ) : item.returnstatus === "Success" ? (
-                      <p style={{ color: "#008000" }}>
-                        {item.returnstatus}
-                      </p>
+                  <Grid item xs={12} className="style-status-bor">
+                    {item.returnstatus === "Success" ? (
+                      <p style={{ color: "#008000" }}>{item.returnstatus}</p>
+                    ) : item.borrowstatus === "Approved" && item.returnstatus === "Borrowing" ? (
+                      <p style={{ color: "#008000" }}>{item.borrowstatus}</p>
                     ) : item.borrowstatus === "Unapproved" ? (
                       <p style={{ color: "#FF0000" }}>{item.borrowstatus}</p>
                     ) : item.returnstatus === "Fail" ? (
                       <p style={{ color: "#FF0000" }}>{item.returnstatus}</p>
-                    ) : item.orderstatus === "Cancel" ? (
-                      <p style={{ color: "#FF0000" }}>{item.orderstatus}</p>
                     ) : (
-                      <p style={{ color: "#2196F3" }}>
-                        {item.borrowstatus}
-                        {item.returnstatus}
-                      </p>
-                    )}
-                  </Grid>
-                  <Grid item xs={8} className="style-btn-bor">
-                    {item.borrowstatus === "Pending" &&
-                    item.orderstatus === "Borrow" ? (
-                      <button
-                        className="btn-del-bor"
-                        onClick={(e) => handleCancel(e.target.value)}
-                        value={index}
-                      >
-                        Cancel
-                      </button>
-                    ) : item.orderstatus === "Borrow" &&
-                      item.borrowstatus === "Approved" ? (
-                      <button
-                        className="btn-return"
-                        onClick={(e) => handleReturn(e.target.value)}
-                        value={index}
-                      >
-                        Return Equipment
-                      </button>
-                    ) : (
-                      <div></div>
+                      <p style={{ color: "#2196F3" }}>{item.returnstatus}{item.borrowstatus}</p>
                     )}
                   </Grid>
                 </Grid>

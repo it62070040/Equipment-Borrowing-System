@@ -74,7 +74,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
         )}
 
         {searchResult.map((item, index) => (
-          <div className="eq-item-row">
+          <div className="eq-item-row-admin">
             <Box key={item._id}>
               <Grid container>
                 <Grid item xs={8}>
