@@ -13,7 +13,7 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 const client = new ApolloClient({
   uri: 'https://equipment-borrowing-system-api.vercel.app/graphql',
   cache: new InMemoryCache(),
-  credentials: 'same-origin'
+  credentials: 'include'
 });
 root.render(
   <React.StrictMode>
