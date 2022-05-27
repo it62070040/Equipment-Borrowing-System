@@ -113,7 +113,6 @@ export default function MiniBar() {
           className="table"
           sx={{
             p: 1,
-
             mt: 4,
             backgroundColor: "#fff",
             borderRadius: "10px",

@@ -1,3 +1,9 @@
+.equipments {
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    overflow: "auto"
+}
 .Header-title{
     text-align: center;
     padding: 20px;

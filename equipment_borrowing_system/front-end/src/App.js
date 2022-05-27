@@ -11,6 +11,7 @@ import EquipmentInfo from './pages/Equipments/Users/EquipmentInfo';
 import EquipmentAdmin from './pages/Equipments/Admin/Equipments';
 import EquipmentsEdit from './pages/Equipments/Admin/EquipmentsEdit';
 import EquipmentsCreate from './pages/Equipments/Admin/EquipmentsCreate';
+import Footer from './components/Footer';
 
 function App() {
 
@@ -36,6 +37,7 @@ function App() {
                     </Route>
                     
                 </Routes>
+            <Footer/>
             </Router>
         </div>
 

@@ -236,7 +236,7 @@ export default function CardTable({ data, refetch }) {
                     ) : item.returnstatus === "Fail" ? (
                       <p style={{ color: "#FF0000" }}>{item.returnstatus}</p>
                     ) : (
-                      <p style={{ color: "#2196F3" }}>{item.returnstatus}</p>
+                      <p style={{ color: "#2196F3" }}>{item.returnstatus}{item.borrowstatus}</p>
                     )}
                   </Grid>
                   <Grid item xs={8} className="style-btn-bor">
