@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Box from "@mui/material/Box";
 // import data from "../Admin/components/ListData.json";
 import EquipmentTable from "./components/EquipmentTable";
+import { Container, Skeleton } from "@mui/material";
 import { gql, useQuery } from "@apollo/client";
 
 const EQUIPMENTS_QUERY = gql`
@@ -36,10 +37,12 @@ function Equipments() {
   }, [loading, data, refetch])
 
   if (loading) {
-    return <h4>Loading...</h4>
-  }
-  if (error) {
-    return <h4> Error: {error.message}</h4>
+    return (
+    <Container >
+      <Skeleton height={100}/>
+      <Skeleton height={200}/>
+    </Container>
+    );
   }
 
 

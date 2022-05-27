@@ -11,7 +11,9 @@ import {
   Radio,
   RadioGroup,
   MenuItem,
-  Button
+  Button,
+  Container,
+  Skeleton
 } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
@@ -81,10 +83,10 @@ function EquipmentsEdit() {
   const Swal = require("sweetalert2");
   const pathArray = window.location.pathname.split("/");
   const currentId = pathArray[2];
-  const { loading: loadingE, error: errorE, data: dataE } = useQuery(EQUIPMENTS_QUERY, {
+  const { loading: loadingE, data: dataE } = useQuery(EQUIPMENTS_QUERY, {
     variables: { id: currentId },
   });
-  const {loading: loadingC ,error: errorC, data: dataC, refetch} = useQuery(CATEGORY_QUERY);
+  const {loading: loadingC , data: dataC, refetch} = useQuery(CATEGORY_QUERY);
   // mutation
   const [updateEquipmentId] = useMutation(EQUIPMENT_MUTATION, {
     refetchQueries: [{ query: EQUIPMENTS_QUERY_Many }],
@@ -161,10 +163,12 @@ function EquipmentsEdit() {
   
 
   if (loadingE) {
-    return <h4>Loading...</h4>;
-  }
-  if (errorE) {
-    return <h4> Error: {errorE.message}</h4>;
+    return (
+    <Container >
+      <Skeleton height={100}/>
+      <Skeleton height={200}/>
+    </Container>
+    );
   }
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Grid, Button, Container, Skeleton } from "@mui/material";
 import "./MiniBar.css";
 import CardTable from "./CardTable";
 import { gql, useQuery } from "@apollo/client";
@@ -37,7 +37,7 @@ export default function MiniBar() {
   const [click, setClick] = useState("Borrow");
   const [order, setOrder] = useState([]);
   const { user } = useApp()
-  const { loading, error, data, refetch } = useQuery(ORDER_QUERY, {
+  const { loading, data, refetch } = useQuery(ORDER_QUERY, {
     variables: {
       _id: user._id,
     },
@@ -50,13 +50,15 @@ export default function MiniBar() {
       setOrder(neworder.filter((item) => item.orderstatus === click));
       // console.log(data.userId);
     }
-  }, [loading, data, order, click]);
+  }, [loading, data, order, click, refetch]);
 
   if (loading) {
-    return <h4>Loading...</h4>;
-  }
-  if (error) {
-    return <h4> Error: {error.message}</h4>;
+    return (
+    <Container >
+      <Skeleton height={100}/>
+      <Skeleton height={200}/>
+    </Container>
+    );
   }
   const handleClick = (value) => {
     setClick(value);

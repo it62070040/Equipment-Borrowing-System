@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import "./BorrowedUserTable.css";
 import Moment from 'moment';
+import { Container, Skeleton } from "@mui/material";
 import { gql, useQuery } from '@apollo/client';
 
 const OrderEquipmentId_QUERY = gql`
@@ -37,12 +38,14 @@ export default function BorrowedUserTable({ equipment }) {
     }, [loading, data, refetch])
 
   
-  if (loading) {
-    return <h4>Loading...</h4>
-  }
-  if (error) {
-    return <h4> Error: {error.message}</h4>
-  }
+    if (loading) {
+      return (
+      <Container >
+        <Skeleton height={100}/>
+        <Skeleton height={200}/>
+      </Container>
+      );
+    }
 
   const returnData = () => {
     // console.log(Object.keys(order).length === 0)

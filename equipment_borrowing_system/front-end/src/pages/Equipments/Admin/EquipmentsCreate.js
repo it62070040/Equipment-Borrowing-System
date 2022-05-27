@@ -12,6 +12,8 @@ import {
   Radio,
   RadioGroup,
   Button,
+  Container,
+  Skeleton
 } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -106,7 +108,7 @@ const EquipmentsCreate = () => {
   const [errorCategory, setErrorCategory] = useState(false);
 
   //query
-  const { loading, error, data, refetch } = useQuery(CATEGORY_QUERY);
+  const { loading, data, refetch } = useQuery(CATEGORY_QUERY);
   //mutation
   const [createEquipmentMutation] = useMutation(EQUIPMENT_MUTATION,
     {
@@ -121,10 +123,12 @@ const EquipmentsCreate = () => {
   }, [loading, data]);
 
   if (loading) {
-    return <h4>Loading...</h4>;
-  }
-  if (error) {
-    return <h4> Error: {error.message}</h4>;
+    return (
+    <Container >
+      <Skeleton height={100}/>
+      <Skeleton height={200}/>
+    </Container>
+    );
   }
 
   const handleCreateEquipments = async (e) => {

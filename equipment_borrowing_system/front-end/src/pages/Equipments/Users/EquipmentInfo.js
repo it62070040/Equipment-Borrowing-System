@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import EquipmentInfoCard from "./components/Cards/EquipmentInfoCard";
 import "./EquipmentInfo.css";
-import BorrowedUserTable from "./components/BorrowedUserTable"
+import BorrowedUserTable from "./components/BorrowedUserTable";
+import { Container, Skeleton } from "@mui/material";
 import { gql, useQuery } from '@apollo/client';
 
 const EQUIPMENTID_QUERY = gql`
@@ -25,7 +26,7 @@ function EquipmentInfo() {
   // console.log(equipmentId)
   const [equipment, setEquipment] = useState([]);
 
-    const { loading, error, data, refetch } = useQuery(
+    const { loading, data, refetch } = useQuery(
       EQUIPMENTID_QUERY,
       { 
         variables: { 
@@ -40,9 +41,14 @@ function EquipmentInfo() {
         }
       }, [loading, data])
     
-    if (loading) {
-      return <h4>Loading...</h4>
-    }
+      if (loading) {
+        return (
+        <Container >
+          <Skeleton height={100}/>
+          <Skeleton height={200}/>
+        </Container>
+        );
+      }
 
   return (
     <div className="equipmentInfo">

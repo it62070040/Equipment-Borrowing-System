@@ -5,7 +5,7 @@ import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
 //test mock data for search
 import CardTable from "./CardTable";
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Container, Skeleton } from "@mui/material";
 import { gql, useQuery } from "@apollo/client";
 
 const EQUIPMENTS_QUERY = gql`
@@ -26,7 +26,7 @@ const SearchBar = () => {
   const [inputText, setInputText] = React.useState("");
   const [searchResult, setSearchResult] = React.useState([]);
   const [value, setValue] = React.useState(true);
-  const { loading, error, data, refetch} = useQuery(EQUIPMENTS_QUERY);
+  const { loading, data, refetch} = useQuery(EQUIPMENTS_QUERY);
 
   useEffect(() => {
     if (loading === false && data) {
@@ -35,10 +35,12 @@ const SearchBar = () => {
   }, [loading, data]);
 
   if (loading) {
-    return <h4>Loading...</h4>;
-  }
-  if (error) {
-    return <h4> Error: {error.message}</h4>;
+    return (
+    <Container >
+      <Skeleton height={100}/>
+      <Skeleton height={200}/>
+    </Container>
+    );
   }
 
   const searchItem = () => {
