@@ -58,6 +58,7 @@ function Navbar() {
     if (user === null) {
       setCheckUserLogin(false);
     } else {
+      console.log(user)
       setCheckUserLogin(true);
       setShowUsername(true);
       setShowloginButton(false);
@@ -97,11 +98,13 @@ function Navbar() {
           });
           await login(email);
           console.log(`Welcome new user, Your're logged in as : ${email}`);
+          console.log(user)
         } catch (err) {
           if (err.message.startsWith("E11000")) {
             try {
               await login(email);
               console.log(`Logged in as : ${email}`);
+              console.log(user)
             } catch (err) {
               console.log("You're not logged in");
             }
