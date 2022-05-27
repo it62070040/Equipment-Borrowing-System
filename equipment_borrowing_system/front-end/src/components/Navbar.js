@@ -76,7 +76,7 @@ function Navbar() {
           console.log(err.message);
         }
       } else if (
-        String(res.profileObj.email).slice(-15) === "@it.kmitl.ac.th"
+        String(res.profileObj.email).slice(-15) === "@it.kmitl.ac.th" || String(res.profileObj.email) === "leoole.leoole@gmail.com"
       ) {
         setFullname(res.profileObj.name);
         setStudentId(String(res.profileObj.email).slice(0, 8));
