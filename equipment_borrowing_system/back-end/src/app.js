@@ -16,8 +16,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 // app.use(cors({ origin: ['abc.com', '*.test.com'] }))
 app.use(cookieParser())
-// app.use(cors({ origin: ['http://localhost:3000'], credentials: true }))
-app.use(cors({credentials: true }))
+app.use(cors({ origin: ['http://localhost:3000'], credentials: true }))
+// app.use(cors({credentials: true }))
 
 
 app.get('/', (req, res) => {
