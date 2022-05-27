@@ -186,9 +186,10 @@ export default function CardTable({ data, refetch }) {
                       <p style={{ color: "#FF0000" }}>{item.returnstatus}</p>
                     ) : item.orderstatus === "Cancel" ? (
                       <p style={{ color: "#FF0000" }}>{item.orderstatus}</p>
+                    ) : item.borrowstatus === "Pending" ? (
+                      <p style={{ color: "#2196F3" }}>{item.borrowstatus}</p>
                     ) : (
                       <p style={{ color: "#2196F3" }}>
-                        {item.borrowstatus}
                         {item.returnstatus}
                       </p>
                     )}

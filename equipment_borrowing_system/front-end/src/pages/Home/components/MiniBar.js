@@ -45,12 +45,12 @@ export default function MiniBar() {
       setOrder(
         neworder.filter(
           (item) =>
-            item.borrowstatus === "Approve" || item.borrowstatus === "Pending"
+            item.borrowstatus === "Approved" || item.borrowstatus === "Pending"
         )
       );
       // console.log(data.Orders);
     }
-  }, [data, order, refetch]);
+  }, [ data, order, refetch ]);
 
   // const handleClick = (value) => {
   //   setClick(value);

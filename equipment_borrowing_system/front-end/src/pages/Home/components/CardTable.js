@@ -148,10 +148,11 @@ export default function CardTable({ data }) {
                           <p style={{ color: "#FF0000" }}>
                             {item.returnstatus}
                           </p>
+                        ) : item.borrowstatus === "Pending" ? (
+                          <p style={{ color: "#2196F3" }}>{item.borrowstatus}</p>
                         ) : (
                           <p style={{ color: "#2196F3" }}>
                             {item.returnstatus}
-                            {item.borrowstatus}
                           </p>
                         )}
                       </Grid>
