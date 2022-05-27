@@ -11,6 +11,7 @@ const NotificationSchema = new Schema({
   unread: {
     type: String, // true, false
     required: true,
+    default: 'true',
   },
   name: {
     type: String,

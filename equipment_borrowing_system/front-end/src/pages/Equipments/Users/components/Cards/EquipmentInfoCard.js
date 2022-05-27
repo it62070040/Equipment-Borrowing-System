@@ -7,6 +7,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import { useApp } from "../../../../../context/AppContext";
+import Moment from 'moment';
 import Swal from "sweetalert2";
 
 import { gql, useMutation } from "@apollo/client";
@@ -41,36 +42,55 @@ function EquipmentInfoCard({ equipment, refetch }) {
   const onClickBorrow = useCallback(
     async (e) => {
       e.preventDefault();
-      // console.log("click");
-      // console.log({ borrowDate, returnDate, order_amount})
+      
       try {
-        await createOrderMutation({
-          variables: {
-            record: {
-              userId,
-              equipmentId: equipment._id,
-              borrowDate,
-              returnDate,
-              order_amount,
-            },
-          },
-        });
-        console.log("Make Borrow!!");
+        if (borrowDate > returnDate) {
         Swal.fire({
-          icon: "success",
-          title: "Create Borrow Request Success",
-          showConfirmButton: false,
-          // timer: 3000
+          title: "Borrow date do not less than return date",
+          icon: "warning",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#3085d6",
+          reverseButtons: true,
         });
-        handleUpdateEquipment(order_amount, equipment.amount);
-        setBorrowDate(null);
-        setReturnDate(null);
-        // setUserI('')
-        setAmount(1);
-        refetch();
+      }
+        else {
+
+          await createOrderMutation({
+            variables: {
+              record: {
+                userId,
+                equipmentId: equipment._id,
+                borrowDate,
+                returnDate,
+                order_amount,
+              },
+            },
+          });
+          console.log("Make Borrow!!");
+          Swal.fire({
+            icon: "success",
+            title: "Create Borrow Request Success",
+            showConfirmButton: false,
+            // timer: 3000
+          });
+          handleUpdateEquipment(order_amount, equipment.amount);
+          setBorrowDate(null);
+          setReturnDate(null);
+          // setUserI('')
+          setAmount(1);
+          refetch();
+        }
+      
         // refetch({ postLimit: 10 })
       } catch (err) {
         console.error(err);
+        Swal.fire({
+          title: "Please fill your Request Information",
+          icon: "warning",
+          confirmButtonText: "Ok",
+          confirmButtonColor: "#3085d6",
+          reverseButtons: true,
+        });
       }
     },
     [userId, borrowDate, returnDate, order_amount, createOrderMutation, refetch]
@@ -126,6 +146,35 @@ function EquipmentInfoCard({ equipment, refetch }) {
     }
   };
 
+  const checkBorrowDate = (Bdate) => {
+    if(Bdate < Moment()){
+      Swal.fire({
+        title: "Please fill a correct borrow date",
+        icon: "warning",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#3085d6",
+        reverseButtons: true,
+      });
+    }
+    else {
+      setBorrowDate(Bdate)
+    }
+  }
+  const checkReturnDate = (Rdate) => {
+    if(Rdate < Moment()){
+      Swal.fire({
+        title: "Please fill a correct return date",
+        icon: "warning",
+        confirmButtonText: "Ok",
+        confirmButtonColor: "#3085d6",
+        reverseButtons: true,
+      });
+    }
+    else {
+      setReturnDate(Rdate)
+    }
+  }
+
   return (
     <div className="eqInfoCard">
       <div className="eqInfoCard-container">
@@ -166,11 +215,11 @@ function EquipmentInfoCard({ equipment, refetch }) {
                   <div className="date-picker">
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                       <DatePicker
+                      inputFormat="dd/MM/yyy"
                         label="Custom input"
                         value={borrowDate}
                         onChange={(newValue) => {
-                          setBorrowDate(newValue);
-                        }}
+                        checkBorrowDate(newValue) }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
                           // <Box sx={{ display: "flex", alignItems: "center" }}>
                           <div className="datePicker-border">
@@ -190,8 +239,9 @@ function EquipmentInfoCard({ equipment, refetch }) {
                       <DatePicker
                         label="Custom input"
                         value={returnDate}
+                        inputFormat="dd/MM/yyy"
                         onChange={(newValue) => {
-                          setReturnDate(newValue);
+                          checkReturnDate(newValue);
                         }}
                         renderInput={({ inputRef, inputProps, InputProps }) => (
                           // <Box sx={{ display: "flex", alignItems: "center" }}>

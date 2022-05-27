@@ -83,6 +83,8 @@
     position: absolute;
     right: 0;
     padding-right: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
   }
   .btn-signin{
     background-color: #2196F3;
@@ -100,8 +102,24 @@
     background-color: #0076d6;
     transition: 0.3s;
   }
+
+  .notification-container {
+    padding-left: 15px;
+    align-self: center;
+  }
   
   @media screen and (max-width: 960px) {
+    .profile-mobile{
+      margin: 10px;
+    }
+    
+    .btn-signin-contaier {
+      display: none;
+    }
+
+    .btn-signin {
+      display: none;
+    }
 
     .navbar-logo {
       margin-left: 20px;
@@ -181,6 +199,7 @@
       padding: 14px 20px;
       border: 1px solid #fff;
       transition: all 0.3s ease-out;
+      cursor: pointer;
     }
   
     .nav-links-mobile:hover {

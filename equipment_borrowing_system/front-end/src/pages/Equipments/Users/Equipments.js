@@ -22,6 +22,7 @@ query {
 }
 `
 
+
 function Equipments() {
   const [searchResult, setSearchResult] = useState([]);
   const [searchInput, setSearchInput] = useState("");

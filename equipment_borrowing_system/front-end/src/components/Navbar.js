@@ -258,7 +258,7 @@ function Navbar() {
               )}
             </li>
             <li>
-              {!checkUserLogin && showUsername ? (
+              {checkUserLogin && showUsername && !button ? (
                 showProfile()
               ) : (
                 <div className="nav-links-mobile" onClick={closeMobileMenu}>

@@ -46,7 +46,7 @@ export default function MiniBar() {
         neworder.filter(
           (item) =>
             item.borrowstatus === "Approved" || item.borrowstatus === "Pending"
-        )
+        ).sort((a,b)=>a.createdAt-b.createdAt)
       );
       // console.log(data.Orders);
     }
@@ -88,6 +88,12 @@ export default function MiniBar() {
             <h1>All Borrow Order</h1>
           </div>
         </Grid>
+
+       { order.length === 0 ?
+        <div className="no-order-container" style={{textAlign: "center", color: "white", paddingTop: "30px"}}>
+          <h2>No Borrow Order Found</h2>
+        </div>
+        :
         <Box
           className="table"
           sx={{
@@ -96,10 +102,13 @@ export default function MiniBar() {
             backgroundColor: "#fff",
             borderRadius: "10px",
             width: "100%",
+            maxHeight: "100vh",
+            overflowY: "scroll",
           }}
         >
           <CardTable data={order} refetch={refetch} />
         </Box>
+        }
       </Box>
     </div>
   );

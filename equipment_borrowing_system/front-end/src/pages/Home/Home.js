@@ -1,10 +1,20 @@
 /* eslint-disable jsx-a11y/alt-text */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Home.css";
 import { Link } from "react-router-dom";
 import Minibar from "./components/MiniBar";
+import { useApp } from "../../context/AppContext";
 
 function Home() {
+  const { user } = useApp();
+  const [userRole, setUserRole] = useState("");
+
+  // useEffect(() => {
+
+  //     setUserRole(user.role);
+
+  // }, [user]);
+
   return (
     <>
       <div className="home">
@@ -24,7 +34,11 @@ function Home() {
               Borrow Equipments
             </button> */}
                 <div className="btn-home-borrow">
-                  <Link to="/equipments-user">Borrow Equipments</Link>
+                  {user?.role === "admin" ? (
+                    <Link to="/equipments">Equipment Admin</Link>
+                  ) : (
+                    <Link to="/equipments-user">Borrow Equipments</Link>
+                  )}
                 </div>
               </div>
             </div>

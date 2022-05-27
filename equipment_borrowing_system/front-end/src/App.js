@@ -13,7 +13,9 @@ import EquipmentsEdit from './pages/Equipments/Admin/EquipmentsEdit';
 import EquipmentsCreate from './pages/Equipments/Admin/EquipmentsCreate';
 import Footer from './components/Footer';
 
+
 function App() {
+    
 
     return(
         <div className="App">
@@ -35,7 +37,6 @@ function App() {
                         <Route path='/equipment-edit/:id' element={<EquipmentsEdit/>} />
                         <Route path='/equipment-create' element={<EquipmentsCreate/>} />
                     </Route>
-                    
                 </Routes>
             <Footer/>
             </Router>

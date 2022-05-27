@@ -2,6 +2,7 @@
 
 import { CategoryModel } from '../models/category'
 import { EquipmentModel } from '../models/equipment'
+import { NotificationModel } from '../models/notification'
 import { OrderModel } from '../models/order'
 import { UserModel } from '../models/user'
 import '../mongoose-connect'
@@ -274,9 +275,12 @@ const EQUIPMENTS = [
 // }
 
 const main = async () => {
-  await EquipmentModel.deleteMany({})
+  await NotificationModel.deleteMany({})
   await OrderModel.deleteMany({})
   await UserModel.deleteMany({})
+  await CategoryModel.deleteMany({})
+  await EquipmentModel.deleteMany({})
+
   await UserModel.create(USERS)
   await CategoryModel.create(CATEGORYS)
   await EquipmentModel.create(EQUIPMENTS)
