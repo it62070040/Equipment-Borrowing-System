@@ -13,7 +13,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
-import Swal from "sweetalert2";
 
 const clientId = "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com"
 const settings = ["Logout"];
@@ -37,12 +36,10 @@ const USER_MUTATION_REG = gql`
 `;
 
 function Navbar() {
-  const Swal = require("sweetalert2");
   const { login } = useApp();
   const { logout } = useApp();
   const { user } = useApp();
   const [userRole, setUserRole] = useState("");
-  const [showloginButton, setShowloginButton] = useState(true);
   const [showUsername, setShowUsername] = useState(false);
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -60,7 +57,6 @@ function Navbar() {
     } else {
       setCheckUserLogin(true);
       setShowUsername(true);
-      setShowloginButton(false);
       setOpen(false);
       setUserRole(user.role);
     }
@@ -111,13 +107,6 @@ function Navbar() {
       } else if(
         String(res.profileObj.email).slice(-15) !== "@it.kmitl.ac.th" || String(res.profileObj.email) !== "ebsystem.adm@gmail.com"
       ){
-        // alert
-        // Swal.fire({
-        //   title: "Please Login again Use only @it.kmitl.ac.th",
-        //   icon: "warning",
-        //   showConfirmButton: false,
-        //   timer: 3000
-        // })
         alert("Please login with account @it.kmitl.ac.th");
       }
     },
@@ -132,8 +121,6 @@ function Navbar() {
     logout();
     console.clear();
     window.location.reload();
-    // setShowloginButton(true);
-    // setShowUsername(false);
   });
 
   const handleClick = () => setClick(!click);
@@ -144,7 +131,6 @@ function Navbar() {
   const showButton = () => {
     if (window.innerWidth <= 960) {
       setButton(false);
-      // console.log(button)
     }
   };
 
@@ -162,10 +148,6 @@ function Navbar() {
     return (
       <div className={checkUserLogin ? "hi" : "profile-mobile"}>
         <Tooltip title="Logout">
-          {/* <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar src="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png" />
-            <div className="userName">{user.fullname}</div>
-          </IconButton> */}
           {user.role === "user" ? (
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar src="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png" />
@@ -291,9 +273,7 @@ function Navbar() {
                 Sign In
               </button>
             ) : null}
-            {/* <button className="btn-signin" onClick={handleOpen}>
-                Sign In
-              </button> */}
+
 
             <Modal
               open={open}
