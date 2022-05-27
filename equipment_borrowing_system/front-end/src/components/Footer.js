@@ -14,9 +14,9 @@ function Footer() {
         }}
       >
         <Container style={{ color: "white" }}>
-            คณะเทคโนโลยีสารสนเทศ<br />
-            สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง เลขที่ 1<br />
-            ซอยฉลองกรุง 1 แขวงลาดกระบัง เขตลาดกระบัง กรุงเทพฯ 10520 <br />
+            Faculty of Information Technology<br />
+            King Mongkut's Institute of Technology Ladkrabang<br />
+            1, Chalong Krung 1, Ladkrabang, Bangkok 10520 <br />
             +66 (0)2723 4900 +66 (0) 2723 4910
         </Container>
       </Box>

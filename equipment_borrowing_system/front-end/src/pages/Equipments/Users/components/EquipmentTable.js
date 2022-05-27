@@ -1,10 +1,9 @@
-import  React, {useCallback} from "react";
+import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import "./EquipmentTable.css";
 // import data from "../../Admin/components/ListData.json"
 
-export default function EquipmentTable({searchResult}) {
-
+export default function EquipmentTable({ searchResult }) {
   return (
     <div className="table-container">
       {/* <img style={{ width: "60px", height: "auto"}} src={logo} alt="Logo" /> */}
@@ -16,32 +15,41 @@ export default function EquipmentTable({searchResult}) {
         </ul>
       </div>
       {searchResult.map((row, i) => (
-        <Link
-        className="eq-link"
-        key={i}
-        to={`/equipmentInfo/${row._id}`}
-        >
-
-      {/* <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row._id)}> */}
-      <div className="eq-item-row-con" key={row.name}>
-        <div className="eq-item-row">
-        <ul className="table-item-row">
-          <li className="table-item-img">
-            <img style={{ width: "70px", height: "70px", objectFit: "cover"}} src={row.url_pic} alt="Logo" />
-            <div className="table-item-title">
-              <h4>{row.name}</h4>
-              <p >{row.description}</p>
-
+        <Link className="eq-link" key={i} to={`/equipmentInfo/${row._id}`}>
+          {/* <div className="eq-item-row-con" key={row.name} onClick={() => clickEqCard(row._id)}> */}
+          <div className="eq-item-row-con" key={row.name}>
+            <div className="eq-item-row">
+              <ul className="table-item-row">
+                <li className="table-item-img">
+                  <img
+                    style={{
+                      width: "70px",
+                      height: "70px",
+                      objectFit: "cover",
+                    }}
+                    src={row.url_pic}
+                    alt="Logo"
+                  />
+                  <div className="table-item-title">
+                    <h4>{row.name}</h4>
+                    <p>{row.description}</p>
+                  </div>
+                </li>
+                <li className="table-item">{row.amount}</li>
+                <li
+                  className="table-item"
+                  style={
+                    row.status === "Available"
+                      ? { color: "green" }
+                      : { color: "gray" }
+                  }
+                >
+                  {row.status}
+                </li>
+              </ul>
             </div>
-            
-          </li>
-          <li className="table-item">{row.amount}</li>
-          <li className="table-item" style={row.status === "Available" ? {color: "green"} : {color: "gray"}}>{row.status}</li>
-        </ul>
-         
-        </div>
-      </div>
-            </Link>
+          </div>
+        </Link>
       ))}
     </div>
   );

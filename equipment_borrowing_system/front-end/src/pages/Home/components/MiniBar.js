@@ -1,58 +1,56 @@
 import React, { useState, useEffect, useCallback } from "react";
-import { Box, Grid, Button } from "@mui/material";
+import { Box, Grid, Button, Skeleton, Container } from "@mui/material";
 import "./MiniBar.css";
 import CardTable from "./CardTable";
 import { gql, useQuery } from "@apollo/client";
 
 const ORDER_QUERY = gql`
-query {
-  Orders {
-    _id
-    orderstatus
-    borrowstatus
-    returnstatus
-    borrowDate
-    returnDate
-    order_amount
-    equipmentId
-    userId
-    user {
-      studentId
-      fullname
-    }
-    equipment {
+  query {
+    Orders {
       _id
-      name
-      description
-      category
-      url_pic
-      status
-      amount
-      why_unavailable
+      orderstatus
+      borrowstatus
+      returnstatus
+      borrowDate
+      returnDate
+      order_amount
+      equipmentId
+      userId
+      user {
+        studentId
+        fullname
+      }
+      equipment {
+        _id
+        name
+        description
+        category
+        url_pic
+        status
+        amount
+        why_unavailable
+      }
     }
   }
-}
 `;
 
 export default function MiniBar() {
   const [order, setOrder] = useState([]);
-  const { loading, error, data, refetch } = useQuery(ORDER_QUERY);
+  const { loading, data, refetch } = useQuery(ORDER_QUERY);
 
   useEffect(() => {
-    refetch()
-    if (loading === false && data) {
+    refetch();
+    if (data) {
       const neworder = data.Orders;
-      setOrder(neworder.filter((item) => item.borrowstatus === "Approve" || item.borrowstatus === "Pending"));
+      setOrder(
+        neworder.filter(
+          (item) =>
+            item.borrowstatus === "Approve" || item.borrowstatus === "Pending"
+        )
+      );
       // console.log(data.Orders);
     }
-  }, [loading, data, order, refetch]);
-
-  if (loading) {
-    return <h4>Loading...</h4>;
-  }
-  if (error) {
-    return <h4> Error: {error.message}</h4>;
-  }
+  }, [data, order, refetch]);
 
   // const handleClick = (value) => {
   //   setClick(value);
@@ -64,23 +62,31 @@ export default function MiniBar() {
   //     setOrder(filorder);
   //   }
   // };
+  if (loading) {
+    return (
+    <Container >
+      <Skeleton height={100}/>
+      <Skeleton height={200}/>
+    </Container>
+    );
+  }
+
   return (
-    <div style={{ width: "100%" , padding: "0px 70px 30px 70px"}}>
+    <div style={{ width: "100%", padding: "0px 70px 30px 70px" }}>
       <Box>
         <Grid
           container
-          display= "flex"
+          display="flex"
           direction="row"
           justifyContent="center"
           alignItems="center"
-          backgroundColor= "white"
-          borderRadius= "15px"
-          padding= "10px 20px"
+          backgroundColor="white"
+          borderRadius="15px"
+          padding="10px 20px"
         >
           <div>
-            <h1 >All Borrow Order</h1>
+            <h1>All Borrow Order</h1>
           </div>
-          
         </Grid>
         <Box
           className="table"
