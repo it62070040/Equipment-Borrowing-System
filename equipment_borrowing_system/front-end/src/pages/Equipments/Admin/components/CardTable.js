@@ -154,7 +154,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
                     >
                       Edit
                     </button>
-                    </Link>;
+                    </Link>
                     <button
                       className="btn-del"
                       onClick={() => toDelete(item._id)}
