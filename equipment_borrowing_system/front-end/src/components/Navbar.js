@@ -13,7 +13,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
-import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
 
 const clientId =
@@ -44,7 +43,6 @@ function Navbar() {
   const { logout } = useApp();
   const { user } = useApp();
   const [userRole, setUserRole] = useState("");
-  const { setAuth } = useAuth();
   const [showloginButton, setShowloginButton] = useState(true);
   const [showUsername, setShowUsername] = useState(false);
   const [open, setOpen] = React.useState(false);
@@ -61,7 +59,6 @@ function Navbar() {
     if (user === null) {
       setCheckUserLogin(false);
     } else {
-      setAuth(user);
       setCheckUserLogin(true);
       setShowUsername(true);
       setShowloginButton(false);

@@ -1,28 +1,23 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import Swal from "sweetalert2";
+import { useApp } from "../context/AppContext";
 const RequireAuth = ({ allowedRoles }) => {
-    const { auth } = useAuth();
+    const { user } = useApp();
     const location = useLocation();
-    const Swal = require("sweetalert2");
-    if(!auth.role){
-        // alert error
-      Swal.fire({
-        title: "Please Login",
-        icon: "warning",
-        confirmButtonText: "OK",
-        confirmButtonColor: "#3085d6",
-        reverseButtons: true,
-      });
-    }
-    const check = () => {
-        if(auth.role === allowedRoles){
-            return true
+    var isAuth
+        if(user === null){
+          isAuth = false
         }
-        else{return false}
-    }
+        else{
+                if(user.role === allowedRoles){
+                    isAuth = true
+                }
+                else{isAuth = false}
+                console.log(user.role, isAuth)    
+        }
+    
     return (
-        check()
+            isAuth
             ? <Outlet />
             : <Navigate to="/" state={{ from: location }} replace />
     );

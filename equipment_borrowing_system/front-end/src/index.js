@@ -5,7 +5,6 @@ import {
   InMemoryCache,
   ApolloProvider
 } from "@apollo/client";
-import { AuthProvider } from '../src/context/AuthProvider';
 import { CookiesProvider } from 'react-cookie'
 import { AppProvider } from "./context/AppContext";
 import App from "./App";
@@ -21,9 +20,7 @@ root.render(
     <ApolloProvider client={client}>
       <CookiesProvider>
         <AppProvider>
-          <AuthProvider>
             <App />
-          </AuthProvider>
         </AppProvider>
       </CookiesProvider>
     </ApolloProvider>
