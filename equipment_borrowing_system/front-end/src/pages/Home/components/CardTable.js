@@ -77,6 +77,7 @@ export default function CardTable({ data }) {
                         }}
                       >
                         <p className="style-name">{item.equipment.name}</p>
+                        <p className="style-name">amount : {item.order_amount}</p>
                       </Grid>
                       <Grid
                         item
