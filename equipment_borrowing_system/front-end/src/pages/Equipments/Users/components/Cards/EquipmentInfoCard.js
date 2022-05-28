@@ -97,8 +97,8 @@ function EquipmentInfoCard({ equipment, refetch }) {
   );
   const handleUpdateEquipment = async (orderAmount, equipmentAmount) => {
     const amountUpdate = equipmentAmount - orderAmount;
-    if (amountUpdate >= 0) {
-      // console.log("updateAmount: "+ amountUpdate);
+    if (amountUpdate > 0) {
+      console.log("updateAmount: "+ amountUpdate);
       try {
         await updateEquipmentAmount({
           variables: {
@@ -112,7 +112,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
       } catch (err) {
         console.error(err.message);
       }
-    } else {
+    } else if (amountUpdate == 0)  {
       // Alert
       console.log("Out of order!!");
       try {
@@ -120,6 +120,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
           variables: {
             id: equipment._id,
             record: {
+              amount: amountUpdate,
               status: "Unavailable",
             },
           },
