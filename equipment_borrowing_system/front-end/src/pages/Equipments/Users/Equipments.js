@@ -21,23 +21,39 @@ query {
   }
 }
 `
-
+const CATEGORY_QUERY = gql`
+  query {
+    categorys {
+      category
+    }
+  }
+`;
 
 function Equipments() {
   const [searchResult, setSearchResult] = useState([]);
   const [searchInput, setSearchInput] = useState("");
+  const [category, setqueryCategory] = useState([]);
   const [click, setClick] = useState(false);
   const [pickCateArr, setPickCateArr] = useState([]);
-  const { loading, error, data, refetch } = useQuery(EQUIPMENTS_QUERY)
+  const {loading: loadingE, data: dataE, refetch: refetchE} = useQuery(EQUIPMENTS_QUERY)
+  const {loading: loadingC , data: dataC, refetch: refetchC} = useQuery(CATEGORY_QUERY);
     
   useEffect(() => {
-    refetch()
-    if(loading === false && data){
-      setSearchResult(data.equipments);
+    refetchE()
+    if(loadingE === false && dataE){
+      setSearchResult(dataE.equipments);
+      if (loadingC === false && dataC) {
+        let arr =[]
+        dataC.categorys.map((cate,i) => (
+          arr.push(Object.values(cate).slice(1))
+        ))
+        setqueryCategory([...arr]);
+        // console.log(arr);
+      }
     }
-  }, [loading, data, refetch])
+  }, [loadingE, dataE, refetchE, refetchC])
 
-  if (loading) {
+  if (loadingE) {
     return (
     <Container >
       <Skeleton height={100}/>
@@ -49,7 +65,7 @@ function Equipments() {
 
 
   const dropdownClick = () => setClick(!click);
-  const category = ["Arduino", "Electronics", "Tools", "Recreations", "Furnitures"];
+  // const category = ["Arduino", "Electronics", "Tools", "Recreations", "Furnitures"];
 
   const chooseCateClick = (cate) => {
     const updateArr = [...pickCateArr];
@@ -72,9 +88,9 @@ function Equipments() {
     let result;
     const lowerCase = searchInput.toLowerCase();
     if (pickCateArr.length === 0) {
-      result = data.equipments.filter((e) => e.name.toLowerCase().includes(lowerCase));
+      result = dataE.equipments.filter((e) => e.name.toLowerCase().includes(lowerCase));
     } else {
-      result = data.equipments.filter(
+      result = dataE.equipments.filter(
         (e) =>
           pickCateArr.some((r) => e.category.includes(r)) &&
           e.name.toLowerCase().includes(lowerCase)
@@ -181,7 +197,7 @@ function Equipments() {
               
 
             <div className="eq-item-container">
-              <EquipmentTable searchResult={searchResult} refetch={refetch}/>
+              <EquipmentTable searchResult={searchResult} refetch={refetchE}/>
             </div>
           </Box>
         </div>
