@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import "./EquipmentInfoCard.css";
 import { IconButton } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -32,29 +32,67 @@ const EQUIPMENTAMOUNT_MUTATION = gql`
 function EquipmentInfoCard({ equipment, refetch }) {
   const Swal = require("sweetalert2");
   const { user } = useApp();
-  const [userId, setUserId] = useState(user._id);
+  const [userId, setUserId] = useState(null);
   const [borrowDate, setBorrowDate] = useState(null);
   const [returnDate, setReturnDate] = useState(null);
   const [order_amount, setAmount] = useState(1);
   const [createOrderMutation] = useMutation(ORDER_MUTATION);
   const [updateEquipmentAmount] = useMutation(EQUIPMENTAMOUNT_MUTATION);
 
+  // if(user !== null) {
+  //   setUserId(user.id)
+  // }
+
+  useEffect(() => {
+    if(user !== null){
+      setUserId(user._id)
+    }
+    console.log(userId);
+  }, [user])
+
+  
   const onClickBorrow = useCallback(
     async (e) => {
       e.preventDefault();
-      
-      try {
-        if (borrowDate > returnDate) {
-        Swal.fire({
-          title: "Borrow date do not less than return date",
-          icon: "warning",
-          confirmButtonText: "Ok",
-          confirmButtonColor: "#3085d6",
-          reverseButtons: true,
-        });
-      }
-        else {
 
+      try {
+        if(user === null){
+          Swal.fire({
+              title: "Please Login",
+              icon: "warning",
+              confirmButtonText: "OK",
+              confirmButtonColor: "#3085d6",
+              reverseButtons: true,
+          });
+        }
+        else if (borrowDate === null) {
+          Swal.fire({
+            title: "Please choose borrow date",
+            icon: "warning",
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#3085d6",
+            reverseButtons: true,
+          });
+        }
+          else if (borrowDate > returnDate) {
+          Swal.fire({
+            title: "Borrow date do not less than return date",
+            icon: "warning",
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#3085d6",
+            reverseButtons: true,
+          });
+        }
+        else if (borrowDate > returnDate) {
+          Swal.fire({
+            title: "Borrow date do not less than return date",
+            icon: "warning",
+            confirmButtonText: "Ok",
+            confirmButtonColor: "#3085d6",
+            reverseButtons: true,
+          });
+        }
+        else {
           await createOrderMutation({
             variables: {
               record: {
@@ -85,7 +123,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
       } catch (err) {
         console.error(err);
         Swal.fire({
-          title: "Please fill your Request Information",
+          title: "Please fill your request information",
           icon: "warning",
           confirmButtonText: "Ok",
           confirmButtonColor: "#3085d6",
@@ -198,7 +236,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
               <div className="outOrder-container">
                 <h3>ขออภัย ขณะนี้ของหมด</h3>
               </div>
-            ) : user.role === "admin" ? (
+            ) : (user !== null && user.role === "admin")? (
               <div className="btn-borrow-container">
                 <Link to={`/equipment-edit/${equipment._id}`}>
                   <button className="btn-borrow">Edit Equipment</button>

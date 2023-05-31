@@ -23,8 +23,6 @@ const ORDER_QUERY = gql`
       equipment {
         _id
         name
-        description
-        category
         url_pic
         status
         amount
@@ -50,7 +48,7 @@ export default function MiniBar() {
       );
       // console.log(data.Orders);
     }
-  }, [ data, order, refetch ]);
+  }, [ data, refetch ]);
 
   // const handleClick = (value) => {
   //   setClick(value);

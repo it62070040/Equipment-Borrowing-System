@@ -24,15 +24,15 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Home/>} />
                     <Route path='/equipmentInfo/:id' element={<EquipmentInfo/>}/>
+                    <Route path='/equipments' element={<EquipmentUser/>} />
 
                     <Route element={<RequireAuth allowedRoles={"user"} />}>
-                        <Route path='/equipments-user' element={<EquipmentUser/>} />
                         <Route path='/borrow-history-user' element={<BorrowHisUser/>} />
                     </Route>
 
                     {/* link equipment detail */}
                     <Route element={<RequireAuth allowedRoles={"admin"} />}>
-                        <Route path='/equipments' element={<EquipmentAdmin/>} />
+                        <Route path='/equipments-admin' element={<EquipmentAdmin/>} />
                         <Route path='/borrow-history' element={<BorrowHisAdmin/>} />
                         <Route path='/equipment-edit/:id' element={<EquipmentsEdit/>} />
                         <Route path='/equipment-create' element={<EquipmentsCreate/>} />

@@ -37,7 +37,7 @@ function Home() {
                   {user?.role === "admin" ? (
                     <Link to="/equipments">Equipment Admin</Link>
                   ) : (
-                    <Link to="/equipments-user">Borrow Equipments</Link>
+                    <Link to="/equipments">Borrow Equipments</Link>
                   )}
                 </div>
               </div>

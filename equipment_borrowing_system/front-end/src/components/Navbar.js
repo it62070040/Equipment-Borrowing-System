@@ -230,7 +230,7 @@ function Navbar() {
                 </Link>
               ) : (
                 <Link
-                  to="/equipments-user"
+                  to="/equipments"
                   className="nav-links"
                   onClick={() => setClick(!click)}
                 >

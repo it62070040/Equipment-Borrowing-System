@@ -50,7 +50,7 @@ export default function MiniBar() {
       setOrder(neworder.filter((item) => item.orderstatus === click));
       // console.log(data.userId);
     }
-  }, [loading, data, order, click, refetch]);
+  }, [loading, data, click, refetch]);
 
   if (loading) {
     return (

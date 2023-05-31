@@ -40,8 +40,8 @@
 }
 
 .search-input {
+    padding-top: 8px;
     width: 80%;
-    height: 40px;
     font-size: 18px;
     border-style: hidden;
     border-color: #fff;
