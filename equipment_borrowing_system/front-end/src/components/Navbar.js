@@ -14,7 +14,8 @@ import Modal from "@mui/material/Modal";
 import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
 
-const clientId = "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com"
+const clientId =
+  "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com";
 const settings = ["Logout"];
 const styleModal = {
   position: "absolute",
@@ -104,9 +105,10 @@ function Navbar() {
             console.log("Server error");
           }
         }
-      } else if(
-        String(res.profileObj.email).slice(-15) !== "@it.kmitl.ac.th" || String(res.profileObj.email) !== "ebsystem.adm@gmail.com"
-      ){
+      } else if (
+        String(res.profileObj.email).slice(-15) !== "@it.kmitl.ac.th" ||
+        String(res.profileObj.email) !== "ebsystem.adm@gmail.com"
+      ) {
         alert("Please login with account @it.kmitl.ac.th");
       }
     },
@@ -149,16 +151,16 @@ function Navbar() {
       <div className={checkUserLogin ? "hi" : "profile-mobile"}>
         <Tooltip title="Logout">
           {user.role === "user" ? (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar src="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png" />
-                  <div className="userName">{user.fullname}</div>
-                </IconButton>
-              ) : (
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
-                  <div className="userName">{user.fullname}</div>
-                </IconButton>
-              )}
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar src="https://www.pngmart.com/files/21/Admin-Profile-Vector-PNG-Clipart.png" />
+              <div className="userName">{user.fullname}</div>
+            </IconButton>
+          ) : (
+            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+              <Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPJD6MgvgZse6oQb_zvtiWhIrdieoTyYCM8w&usqp=CAU" />
+              <div className="userName">{user.fullname}</div>
+            </IconButton>
+          )}
         </Tooltip>
         <Menu
           sx={{ mt: "45px" }}
@@ -238,25 +240,27 @@ function Navbar() {
                 </Link>
               )}
             </li>
-            <li className="nav-item">
-              {userRole === "admin" ? (
-                <Link
-                  to="/borrow-history"
-                  className="nav-links"
-                  onClick={() => setClick(!click)}
-                >
-                  Borrow Order
-                </Link>
-              ) : (
-                <Link
-                  to="/borrow-history-user"
-                  className="nav-links"
-                  onClick={() => setClick(!click)}
-                >
-                  Borrow History
-                </Link>
-              )}
-            </li>
+            {user === null ? null : (
+              <li className="nav-item">
+                {userRole === "user" ? (
+                  <Link
+                    to="/borrow-history-user"
+                    className="nav-links"
+                    onClick={() => setClick(!click)}
+                  >
+                    Borrow History
+                  </Link>
+                ) : (
+                  <Link
+                    to="/borrow-history"
+                    className="nav-links"
+                    onClick={() => setClick(!click)}
+                  >
+                    Borrow Order
+                  </Link>
+                )}
+              </li>
+            )}
             <li>
               {checkUserLogin && showUsername && !button ? (
                 showProfile()
@@ -273,7 +277,6 @@ function Navbar() {
                 Sign In
               </button>
             ) : null}
-
 
             <Modal
               open={open}
