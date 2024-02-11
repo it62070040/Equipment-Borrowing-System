@@ -40,6 +40,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
   const [updateEquipmentAmount] = useMutation(EQUIPMENTAMOUNT_MUTATION);
 
   const onClickBorrow = useCallback(
+    
     async (e) => {
       e.preventDefault();
       
@@ -58,7 +59,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
           await createOrderMutation({
             variables: {
               record: {
-                userId,
+                userId: user._id,
                 equipmentId: equipment._id,
                 borrowDate,
                 returnDate,
@@ -93,7 +94,7 @@ function EquipmentInfoCard({ equipment, refetch }) {
         });
       }
     },
-    [userId, borrowDate, returnDate, order_amount, createOrderMutation, refetch]
+    [user._id, borrowDate, returnDate, order_amount, createOrderMutation, refetch]
   );
   const handleUpdateEquipment = async (orderAmount, equipmentAmount) => {
     const amountUpdate = equipmentAmount - orderAmount;

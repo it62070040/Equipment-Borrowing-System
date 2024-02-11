@@ -84,7 +84,7 @@ export const AppProvider = ({ children }) => {
       loadMe,
       data
     }),
-    [refetch,loading, login, logout, user, loadMe, data],
+    [refetch, loading, login, logout, user, loadMe, data],
   )
   return (
     <AppContext.Provider value={value}>

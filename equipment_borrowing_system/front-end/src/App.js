@@ -38,7 +38,6 @@ function App() {
                         <Route path='/equipment-create' element={<EquipmentsCreate/>} />
                     </Route>
                 </Routes>
-            <Footer/>
             </Router>
         </div>
 

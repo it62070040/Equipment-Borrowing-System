@@ -21,7 +21,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
   //mutation
   const [deleteEquipmentId] = useMutation(EQUIPMENTS_MUTATION);
 
-  useEffect(() => {}, [refetch]);
+  useEffect(() => { }, [refetch]);
 
   const toDelete = async (current) => {
     let currentId = current;
@@ -52,7 +52,7 @@ const CardTable = ({ searchResult, value, refetch }) => {
       <Box sx={{ flexGrow: 1 }}>
         {value ? (
           <Grid container>
-            <Grid item xs={8}>
+            <Grid item xs={5}>
               <Grid container>
                 <Grid item xs={3}></Grid>
                 <Grid item xs={9}>
@@ -60,72 +60,139 @@ const CardTable = ({ searchResult, value, refetch }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={2}>
               <Grid container>
-                <Grid item xs={4}>
-                  <p className="table-status">Status</p>
-                  
+                <Grid item xs={2}></Grid>
+                <Grid item xs={10}>
+                  <p className="table-title">Amount</p>
                 </Grid>
-                <Grid item xs={8}><p className="table-status">Amount : {searchResult.length}</p></Grid>
+              </Grid>
+            </Grid>
+            <Grid item xs={5}>
+              <Grid container>
+                <Grid item xs={6}>
+
+                  <p className="table-status">Status</p>
+
+                </Grid>
+                <Grid item xs={6}><p className="table-status">Result : {searchResult.length}</p></Grid>
               </Grid>
             </Grid>
           </Grid>
+
         ) : (
           <h4 style={{ textAlign: "center" }}>ไม่พบข้อมูลที่ค้นหา</h4>
         )}
 
         {searchResult.map((item, index) => (
-          <div className="eq-item-row-admin">
-            <Box key={item._id}>
-              <Grid container>
-                <Grid item xs={8}>
-                  <Link to={`/equipmentInfo/${item._id}`}>
-                    <Grid container>
-                      <Grid
-                        item
-                        xs={3}
-                        sx={{ display: "flex", justifyContent: "center" }}
-                      >
-                        <img
-                          className="table-img"
-                          alt="complex"
-                          src={item.url_pic}
-                        />
-                      </Grid>
-                      <Grid
-                        item
-                        xs={9}
-                        sx={{
-                          flexDirection: "column",
-                          display: "flex",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <p className="style-name">{item.name}</p>
-                        <p className="style-des">{item.description}</p>
-                      </Grid>
-                    </Grid>
-                  </Link>
-                </Grid>
+          // <div className="eq-item-row-admin">
+          //   <Box key={item._id}>
+          //     <Grid container>
+          //       <Grid item xs={8}>
+          //         <Link to={`/equipmentInfo/${item._id}`}>
+          //           <Grid container>
+          //             <Grid
+          //               item
+          //               xs={3}
+          //               sx={{ display: "flex", justifyContent: "center" }}
+          //             >
+          //               <img
+          //                 style={{
+          //                   width: "120px",
+          //                   height: "120px",
+          //                   objectFit: "cover",
+          //                 }}
+          //                 className="table-img"
+          //                 alt="complex"
+          //                 src={item.url_pic}
+          //               />
+          //             </Grid>
+          //             <Grid
+          //               item
+          //               xs={9}
+          //               sx={{
+          //                 flexDirection: "column",
+          //                 display: "flex",
+          //                 justifyContent: "center",
+          //               }}
+          //             >
+          //               <p className="style-name">{item.name}</p>
+          //               <p className="style-des">{item.description}</p>
+          //             </Grid>
+          //           </Grid>
+          //         </Link>
+          //       </Grid>
 
-                <Grid
-                  item
-                  xs={4}
-                  sx={{
-                    flexDirection: "column",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Grid container>
-                    <Grid item xs={4} className="style-status">
-                      {item.status === "Available" ? (
-                        <p style={{ color: "#008000" }}>{item.status}</p>
-                      ) : (
-                        <p style={{ color: "#FF0000" }}>{item.status}</p>
-                      )}
-                    </Grid>
-                    <Grid item xs={8} className="style-btn">
+          //       <Grid
+          //         item
+          //         xs={4}
+          //         sx={{
+          //           flexDirection: "column",
+          //           display: "flex",
+          //           justifyContent: "center",
+          //         }}
+          //       >
+          //         <Grid container>
+          //           <Grid item xs={4} className="style-status">
+          //             {item.status === "Available" ? (
+          //               <p style={{ color: "#008000" }}>{item.status}</p>
+          //             ) : (
+          //               <p style={{ color: "#FF0000" }}>{item.status}</p>
+          //             )}
+          //           </Grid>
+          //           <Grid item xs={8} className="style-btn">
+          //             <Link to={`/equipment-edit/${item._id}`}>
+          //               <button className="btn-edit" key={index}>
+          //                 Edit
+          //               </button>
+          //             </Link>
+          //             <button
+          //               className="btn-del"
+          //               onClick={() => toDelete(item._id)}
+          //             >
+          //               Delete
+          //             </button>
+          //           </Grid>
+          //         </Grid>
+          //       </Grid>
+          //     </Grid>
+          //   </Box>
+          // </div>
+
+          <Link to={`/equipmentInfo/${item._id}`}>
+            <div className="eq-item-row-con" key={item._id}>
+              <div className="eq-item-row">
+                <ul className="table-item-row-admin">
+                  <li className="table-item-img">
+                    <img
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "cover",
+                      }}
+                      src={item.url_pic}
+                      alt="Logo"
+                    />
+                    <div className="table-item-title">
+                      <h4>{item.name}</h4>
+                      <p>{item.description}</p>
+                    </div>
+                  </li>
+                  <li className="table-item">{item.amount}</li>
+                  <li
+                    className="table-item"
+                    style={
+                      item.status === "Available"
+                        ? { color: "green" }
+                        : { color: "gray" }
+                    }
+                  >
+                    {item.status}
+                  </li>
+                  <li
+                    className="style-btn"
+                  >
+                    <div className="table-item-title">
                       <Link to={`/equipment-edit/${item._id}`}>
                         <button className="btn-edit" key={index}>
                           Edit
@@ -137,12 +204,12 @@ const CardTable = ({ searchResult, value, refetch }) => {
                       >
                         Delete
                       </button>
-                    </Grid>
-                  </Grid>
-                </Grid>
-              </Grid>
-            </Box>
-          </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </Link>
         ))}
       </Box>
     </>

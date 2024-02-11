@@ -13,8 +13,9 @@ import MenuItem from "@mui/material/MenuItem";
 import Modal from "@mui/material/Modal";
 import { gql, useMutation } from "@apollo/client";
 import { useApp } from "../context/AppContext";
+import { gapi } from "gapi-script";
 
-const clientId = "1089120979699-boinlps81kfjm5ptjhetjnbsj8cd1a2r.apps.googleusercontent.com"
+const clientId = "142120685823-aq2urul8cb1rjgrlkasdu7qvq8nn12vu.apps.googleusercontent.com"
 const settings = ["Logout"];
 const styleModal = {
   position: "absolute",
@@ -52,6 +53,15 @@ function Navbar() {
   const [email, setEmail] = useState("");
   const [checkUserLogin, setCheckUserLogin] = useState(false);
   useEffect(() => {
+    function start() {
+      gapi.client.init({
+        clientId: clientId,
+        scope: ""
+      })
+    };
+
+    gapi.load('client:auth2', start);
+
     if (user === null) {
       setCheckUserLogin(false);
     } else {
